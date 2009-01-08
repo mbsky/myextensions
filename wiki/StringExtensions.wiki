@@ -16,4 +16,4 @@ here is the functions:
   * *SafeTrim*
   * *SplitUppercase* 
   # Parses a camel cased or pascal cased string and returns an array
-  # The string "PascalCasing" will return an array with two elements "Pascal" and "Casing"
+  ## The string "PascalCasing" will return an array with two elements "Pascal" and "Casing"
