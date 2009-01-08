@@ -12,7 +12,7 @@ And ObjectDataProvider has made more features.
 They are:
   * *GetEntitySetName*
   {{{
-  public static string GetEntitySetName(this ObjectContext context, Type entityType)
+  string EntitySetName = context.GetEntitySetName(typeof(MyEntity));
   }}}
 
   * *SetEntityKey*
