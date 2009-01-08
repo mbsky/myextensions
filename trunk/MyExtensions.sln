@@ -9,10 +9,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Web", "MyExten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Web.Mvc", "MyExtensions.Web.Mvc\MyExtensions.Web.Mvc.csproj", "{3D63E324-807C-4FF9-9B1D-3AB067FBA416}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Tests", "MyExtensions.Tests\MyExtensions.Tests.csproj", "{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{25F0C3A1-64FD-4CD2-9BF2-B927950CBE9C}"
+	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		MyExtensions.vsmdi = MyExtensions.vsmdi
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MyExtensions.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +46,10 @@ Global
 		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
