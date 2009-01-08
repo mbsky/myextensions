@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+HttpHandlers under namespace System.Web.HttpHandlers.
+
+
+= Details =
+
+They are:
+  * *CompressionHandler*
+
+and more.
