@@ -11,11 +11,12 @@ use ObjectDataProvider with ObjectContext:
 
 Basic Sample:
 
+  <code>
   public class MyEntitiesDataProvider : ObjectDataProvider<MyEntities>
-
   {
-
   }
+
+  </code>
 
 
 
