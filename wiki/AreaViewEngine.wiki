@@ -10,6 +10,10 @@ Areas In Asp.Net MVC.
 
 Related Links:
 
-* *prototype of this* http://haacked.com/code/AreasDemo.zip
+  * *prototype of this* http://haacked.com/code/AreasDemo.zip
 
-* *areas-in-aspnetmvc* http://haacked.com/archive/2008/11/04/areas-in-aspnetmvc.aspx
+  * *areas-in-aspnetmvc* http://haacked.com/archive/2008/11/04/areas-in-aspnetmvc.aspx
+
+Usage:
+
+  * *AreaRouteHelper*
