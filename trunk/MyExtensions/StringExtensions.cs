@@ -1,6 +1,8 @@
 ﻿using System.Collections.Specialized;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Web.UI;
 
 namespace System
 {
@@ -20,7 +22,7 @@ namespace System
         public static bool IsEmpty(this string str)
         {
             return string.Empty == str;
-        } 
+        }
         #endregion
 
         #region [Center]
@@ -82,6 +84,38 @@ namespace System
         }
         #endregion
 
+        #region FormatWith 
+        public static string FormatWith(this string format, object source)
+        {
+            return FormatWith(format, null, source);
+        }
+
+        /// <summary>
+        ///  FormatWith Using DataBinder
+        /// </summary>
+        /// <remarks>http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables.aspx</remarks>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string FormatWith(this string format, IFormatProvider provider, object source)
+        {
+            if (format == null)
+                throw new ArgumentNullException("format");
+            Regex r = new Regex(@"(?<start>\{)+(?<property>[\w\.\[\]]+)(?<format>:[^}]+)?(?<end>\})+", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            List<object> values = new List<object>();
+            string rewrittenFormat = r.Replace(format, delegate(Match m)
+            {
+                Group startGroup = m.Groups["start"];
+                Group propertyGroup = m.Groups["property"];
+                Group formatGroup = m.Groups["format"];
+                Group endGroup = m.Groups["end"];
+                values.Add((propertyGroup.Value == "0") ? source : DataBinder.Eval(source, propertyGroup.Value));
+                return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value + new string('}', endGroup.Captures.Count);
+            }); return string.Format(provider, rewrittenFormat, values.ToArray());
+        } 
+        #endregion
+
         #region [RemoveDoubleCharacter]
         /// <summary>
         /// Removes any double instances of the specified character. 
@@ -119,7 +153,7 @@ namespace System
         public static string SafeTrim(this string obj, params char[] trimChars)
         {
             return obj == null ? null : obj.Trim(trimChars);
-        } 
+        }
         #endregion
 
         #region [SplitUppercase]
@@ -518,8 +552,10 @@ namespace System
             */
             MatchCollection matchs = Regex.Matches(name, @"([A-Z]+)[a-z]*|\d{1,}[a-z]{0,}");
             string str = "";
-            for (int i = 0; i < matchs.Count; i++) {
-                if (i != 0) {
+            for (int i = 0; i < matchs.Count; i++)
+            {
+                if (i != 0)
+                {
                     str = str + separator;
                 }
                 str = str + matchs[i].ToString().ToLower();
@@ -527,7 +563,7 @@ namespace System
             string format = string.IsNullOrEmpty(extension) ? "{0}{1}" : "{0}.{1}";
             return string.Format(format, str, extension);
 
-        } 
+        }
         #endregion
 
         #region ToLowerCamelCase
@@ -545,7 +581,7 @@ namespace System
                 return name.ToLower(CultureInfo.InvariantCulture);
 
             return name.Substring(0, 1).ToLower(CultureInfo.InvariantCulture) + name.Substring(1);
-        } 
+        }
 
         #endregion
 
