@@ -8,4 +8,8 @@ Areas In Asp.Net MVC.
 
 = Details =
 
-prototype of this : http://haacked.com/code/AreasDemo.zip, areas-in-aspnetmvc: http://haacked.com/archive/2008/11/04/areas-in-aspnetmvc.aspx:
+Related Links:
+
+* *prototype of this* http://haacked.com/code/AreasDemo.zip
+
+* *areas-in-aspnetmvc* http://haacked.com/archive/2008/11/04/areas-in-aspnetmvc.aspx:
