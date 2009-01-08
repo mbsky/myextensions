@@ -16,6 +16,10 @@ Related Links:
 
 Usage:
 
-  * With *AreaRouteHelper* We can coding:
+  * Create Areas Directory in your MVC project,and your area applications need to be place here and create the directory with the name of area you registered in the your global HttpApplication class (Global.asax.cs).
+
+  * With *AreaRouteHelper* We can coding
 
   MapAreas,MapRootArea.
+
+  To Register the areas and a root area
