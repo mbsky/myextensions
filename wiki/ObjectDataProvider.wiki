@@ -23,6 +23,8 @@ Functions Include in Your MyEntitiesDataProvider class:
   * *CreateQuery*
   * *EnsureLoaded*
   * *Get*
+    ///Get an EntityObject by an array of EntityKeyMember.
+    <pre>public virtual TEntity Get<TEntity>(params EntityKeyMember[] Keys) where TEntity : EntityObject, new()</pre>
   * *GetOriginalValue*
 
 Batch Update Functions:
