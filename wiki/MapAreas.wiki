@@ -12,7 +12,7 @@ routes.MapAreas("{controller}/{action}/{id}",
                 new string[] { "YourArea" }
             );
 
-            routes.MapRootArea("{controller}/{action}/{id}",
+routes.MapRootArea("{controller}/{action}/{id}",
                 "YourProject.Web",
                 new { controller = "Home", action = "Index", id = "" }
             );
