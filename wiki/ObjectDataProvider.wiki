@@ -4,7 +4,6 @@
 
 ObjectDataProvider Usage.
 
-
 = Details =
 
 use ObjectDataProvider with ObjectContext:
@@ -18,8 +17,18 @@ Basic Sample:
 
   </code>
 
+Functions Include in Your MyEntitiesDataProvider class:
 
+  * *GetEntitySetName*
+  * *SetEntityKey*
+  * *GetEntityName*
+  * *CreateQuery*
+  * *EnsureLoaded*
+  * *Get*
+  * *GetOriginalValue*
 
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Batch Update Functions:
+  * *InsertOnSubmit*
+  * *UpdateOnSubmit*
+  * *MarkToDelete*
+  * *ApplyChanges*
