@@ -1,0 +1,19 @@
+#summary MapRootArea Sample.
+
+= Introduction =
+
+MapArea Sample.
+
+= Details =
+
+{{{
+routes.MapAreas("{controller}/{action}/{id}",
+                "YourArea",
+                new string[] { "YourArea" }
+            );
+
+routes.MapRootArea("{controller}/{action}/{id}",
+                "YourProject.Web",
+                new { controller = "Home", action = "Index", id = "" }
+            );
+}}}
