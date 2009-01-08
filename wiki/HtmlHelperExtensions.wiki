@@ -10,4 +10,6 @@ Extensions To HtmlHelper.
 The Helpers are:
   * *IsCurrentActionHelper*
 
-  note: if you're using AreaViewEngine as the default ViewEngine in your ASP.NET MVC App,you should using {{{helper.IsCurrentAction(string actionName, string controllerName, string areaName)}}}
+  note: if you're using AreaViewEngine as the default ViewEngine,you should use 
+
+{{{helper.IsCurrentAction(string actionName, string controllerName, string areaName)}}}
