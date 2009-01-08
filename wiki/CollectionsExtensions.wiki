@@ -1,5 +1,5 @@
 #summary One-sentence summary of this page.
-#labels System.Collections
+#labels System.Collections,IEnumerable,NameValueCollection
 
 = Introduction =
 
@@ -11,4 +11,3 @@ Net Extensions Under System.Collections namepace.
 Thay are:
   * *IEnumerableExtensions*
   * *NameValueCollectionExtensions*
-  * Automatic links to other wiki pages
