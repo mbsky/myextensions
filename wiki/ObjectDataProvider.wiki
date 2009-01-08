@@ -22,7 +22,7 @@ Functions Include in Your MyEntitiesDataProvider class:
   * *GetEntityName*
   * *CreateQuery*
   * *EnsureLoaded*
-  * *Get*
+  * *Get(Methods)*
     /// Get an EntityObject by an array of EntityKeyMember.
     <pre>public virtual TEntity Get<TEntity>(params EntityKeyMember[] Keys) where TEntity : EntityObject, new()</pre>
     /// optional MergeOption
