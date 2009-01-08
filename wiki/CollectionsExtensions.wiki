@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+#labels System.Collections
+
+= Introduction =
+
+Net Extensions Under System.Collections namepace.
+
+
+= Details =
+
+Thay are:
+  * *IEnumerableExtensions*
+  * *NameValueCollectionExtensions*
+  * Automatic links to other wiki pages
