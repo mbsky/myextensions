@@ -7,7 +7,8 @@ What is *ADO.NET Entity Framework*, visit http://code.msdn.microsoft.com/adonete
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+EntityObject is the Base Object Class (abstract) in Entity Framework:
+  * it is a StructuralObject
+  * it is an IEntityWithKey
+  * it is an IEntityWithChangeTracker
+  * it is an IEntityWithRelationships
