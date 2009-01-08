@@ -1,0 +1,22 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+ObjectDataProvider Usage.
+
+
+= Details =
+
+use ObjectDataProvider with ObjectContext:
+
+Basic Sample:
+
+  public class MyEntitiesDataProvider : ObjectDataProvider<MyEntities>
+  {
+  }
+
+
+
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
