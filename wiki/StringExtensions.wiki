@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+String functions Extensions.
+
+
+= Details =
+
+here is the functions:
+  * *IsNullOrEmpty*
+  * *Center*
+  * *Contains*
+
+And More.
