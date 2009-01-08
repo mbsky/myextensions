@@ -7,6 +7,8 @@ namespace System.Reflection
 
     public class ObjectFactory
     {
+        #region CreateInstance
+
         public static T CreateInstance<T>()
         {
             return CreateInstance<T>(null);
@@ -79,6 +81,18 @@ namespace System.Reflection
                 return "null";
             return string.Concat(types);
         }
+        #endregion
 
+        public static object GetValue(object obj, string propertyName)
+        {
+            if (obj == null)
+                return null;
+
+            Check.AssertNotNullOrEmpty(propertyName, "propertyName");
+
+            DynamicPropertyAccessor property = new DynamicPropertyAccessor(obj.GetType(), propertyName);
+
+            return property.GetValue(obj);
+        }
     }
 }

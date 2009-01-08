@@ -17,7 +17,7 @@ namespace System.Reflection
         /// <summary>
         /// Get public field/property value
         /// </summary>
-        public static object GetFieldValue(object instance, string fieldName)
+        public static object GetFieldValue(this object instance, string fieldName)
         {
             Check.Require(instance, "instance");
             Check.Require(fieldName, "fieldName", Check.NotNullOrEmpty);
