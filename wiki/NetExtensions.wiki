@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Net Extensions Under System.Net.
+Net Extensions Under System.Net namepace.
 
 
 = Details =
