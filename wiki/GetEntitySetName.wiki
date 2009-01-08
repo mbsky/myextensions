@@ -10,4 +10,3 @@ GetEntitySetName Sample Code.
 MyEntities ctx = new MyEntities();
 
 string contactEntitySetName = ctx.GetEntitySetName(tyof(Contact));
-...
