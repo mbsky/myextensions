@@ -13,7 +13,7 @@ They are:
     
   * *TryGetEntityAndFieldNameFromExpression*
 
-   public static bool TryGetEntityAndFieldNameFromExpression(this Expression expression, out object entity, out string fieldName)  * Automatic links to other wiki pages
+   public static bool TryGetEntityAndFieldNameFromExpression(this Expression expression, out object entity, out string fieldName)
 
    ......
    
