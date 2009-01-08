@@ -10,10 +10,13 @@ String functions Extensions.
 here is the functions:
   * *IsNullOrEmpty*
   * *Center*
-  * *Contains* Returns true if the the specified container string contains the contained string
-  * *EnsureTrailingSlash* Ensure that the given string has a trailing slash
-  * *RemoveDoubleCharacter* Removes any double instances of the specified character,So "--" becomes "-" if the character is '-'
+  * *Contains* 
+  # Returns true if the the specified container string contains the contained string
+  * *EnsureTrailingSlash* 
+  # Ensure that the given string has a trailing slash
+  * *RemoveDoubleCharacter* 
+  #Removes any double instances of the specified character,So "--" becomes "-" if the character is '-'
   * *SafeTrim*
   * *SplitUppercase* 
   # Parses a camel cased or pascal cased string and returns an array
-  ## The string "PascalCasing" will return an array with two elements "Pascal" and "Casing"
+  # The string "PascalCasing" will return an array with two elements "Pascal" and "Casing"
