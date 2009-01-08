@@ -9,13 +9,10 @@ ObjectDataProvider Usage.
 use ObjectDataProvider with ObjectContext:
 
 Basic Sample:
-<p>
-  <code>
-  public class MyEntitiesDataProvider : ObjectDataProvider<MyEntities>
+
+ * public class MyEntitiesDataProvider : ObjectDataProvider<MyEntities>
   {
   }
-  </code>
-</p>
 
 Functions Include in Your MyEntitiesDataProvider class:
 
