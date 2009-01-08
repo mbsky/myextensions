@@ -11,5 +11,6 @@ here is the functions:
   * *IsNullOrEmpty*
   * *Center*
   * *Contains*
+  * *EnsureTrailingSlash* Ensure that the given string has a trailing slash.
 
 And More.
