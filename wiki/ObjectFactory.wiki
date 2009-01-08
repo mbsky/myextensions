@@ -9,5 +9,5 @@ ObjectFactory.
 = Details =
 
 Add your content here.  Format your content with:
-  * use ObjectFactory.CreateInstance instead of Activator.CreateInstance To *Saveing Your CPU Usage*
+  * use ObjectFactory's CreateInstance instead of Activator.CreateInstance To *Saveing Your CPU Usage*
   {{{public static T CreateInstance<T>(params object[] parameters)}}}
