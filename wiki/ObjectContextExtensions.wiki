@@ -9,6 +9,9 @@ ObjectContextExtensions Methods under System.Data.Objects Namespace.
 
 They are:
   * *GetEntitySetName*
+  public static string GetEntitySetName(this ObjectContext context, Type entityType)
+  ......
+
   * *SetEntityKey*
   * *AttachAsModified*
   * *ExecuteCommand*
