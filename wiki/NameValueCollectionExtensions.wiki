@@ -1,0 +1,14 @@
+#summary One-sentence summary of this page.
+#labels System.Collections,System.Collections.Specialized,NameValueCollection
+
+= Introduction =
+
+NameValueCollection Extension Methods under System.Collections.Specialized namepace.
+
+
+= Details =
+
+They are:
+  * <pre>CreateObject<T></pre>
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
