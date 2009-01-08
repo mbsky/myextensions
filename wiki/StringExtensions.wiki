@@ -12,6 +12,6 @@ here is the functions:
   * *Center*
   * *Contains* Returns true if the the specified container string contains the contained string
   * *EnsureTrailingSlash* Ensure that the given string has a trailing slash
-  * *RemoveDoubleCharacter* Removes any double instances of the specified character,So "--" becomes "-" if the character is '-'.
-
-And More.
+  * *RemoveDoubleCharacter* Removes any double instances of the specified character,So "--" becomes "-" if the character is '-'
+  * *SafeTrim* 
+  * *SplitUppercase* Parses a camel cased or pascal cased string and returns an array.The string "PascalCasing" will return an array with two elements, "Pascal" and "Casing".
