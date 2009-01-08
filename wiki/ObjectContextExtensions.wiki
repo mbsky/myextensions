@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+ObjectContextExtensions Methods under System.Data.Objects Namespace.
+
+
+= Details =
+
+They are:
+  * *GetEntitySetName*
+  * *SetEntityKey*
+  * *AttachAsModified*
+  * *ExecuteCommand*
+  * *ExecuteReader*
