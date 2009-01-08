@@ -10,7 +10,4 @@ wiki: http://en.wikipedia.org/wiki/ADO.NET_Entity_Framework
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ObjectContextExtension includes some useful Extensions for ObjectContext.
