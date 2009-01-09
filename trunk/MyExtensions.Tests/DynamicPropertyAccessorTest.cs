@@ -3,8 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 namespace MyExtensions.Tests
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for DynamicPropertyAccessorTest and is intended
     ///to contain all DynamicPropertyAccessorTest Unit Tests
@@ -12,8 +12,6 @@ namespace MyExtensions.Tests
     [TestClass()]
     public class DynamicPropertyAccessorTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -110,6 +108,62 @@ namespace MyExtensions.Tests
             watch3.Stop();
             Trace.WriteLine("Direct: " + watch3.Elapsed);
 
+        }
+
+        /// <summary>
+        ///A test for SetValue
+        ///</summary>
+        ///<remarks>
+        /// My Test Result
+        /// Reflection: 00:00:01.1411096
+        /// Lambda: 00:00:00.1267672
+        /// Direct: 00:00:00.0010728
+        /// </remarks>
+        [TestMethod()]
+        public void SetValueTest()
+        {
+            int expected = 100;
+
+            var t = new Temp { Value = null };
+
+            PropertyInfo propertyInfo = t.GetType().GetProperty("Value");
+            Stopwatch watch1 = new Stopwatch();
+            watch1.Start();
+            for (var i = 0; i < 1000000; i++)
+            {
+                propertyInfo.SetValue(t, expected, null);
+            }
+            watch1.Stop();
+            Trace.WriteLine("Reflection: " + watch1.Elapsed);
+
+            Assert.AreEqual(expected, t.Value.Value);
+
+            t.Value = 555;
+
+            DynamicPropertyAccessor property = new DynamicPropertyAccessor(t.GetType(), "Value");
+            Stopwatch watch2 = new Stopwatch();
+            watch2.Start();
+            for (var i = 0; i < 1000000; i++)
+            {
+                property.SetValue(t,expected);
+            }
+            watch2.Stop();
+            Trace.WriteLine("Lambda: " + watch2.Elapsed);
+
+            Assert.AreEqual(expected, t.Value.Value);
+
+            t.Value = 555;
+
+            Stopwatch watch3 = new Stopwatch();
+            watch3.Start();
+            for (var i = 0; i < 1000000; i++)
+            {
+                t.Value = expected;
+            }
+            watch3.Stop();
+            Trace.WriteLine("Direct: " + watch3.Elapsed);
+
+            Assert.AreEqual(expected, t.Value.Value);
         }
     }
 }

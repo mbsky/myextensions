@@ -59,6 +59,7 @@
     <Compile Include="Net\FTPHelper.String.cs" />
     <Compile Include="Net\IPAddressExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\DynamicExecutor.cs" />
     <Compile Include="Reflection\DynamicPropertyAccessor.cs" />
     <Compile Include="Reflection\DynamicPropertyAccessorCache.cs" />
     <Compile Include="Reflection\MemberInfoExtensions.cs" />
