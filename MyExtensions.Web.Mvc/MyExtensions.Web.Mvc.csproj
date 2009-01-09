@@ -80,8 +80,12 @@
     <Compile Include="IsCurrentActionHelper.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ControllerEx.XmlResults.cs" />
     <Compile Include="Results\ImageResult.cs" />
     <Compile Include="Results\JsonResultEx.cs" />
+    <Compile Include="Results\XDocumentResult.cs" />
+    <Compile Include="Results\XmlResult.cs" />
+    <Compile Include="Results\XmlViewResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyExtensions\MyExtensions.csproj">
