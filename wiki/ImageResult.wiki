@@ -1,13 +1,9 @@
-#summary ImageResult.
+#summary Read a Image Data from a Image or grab from a url and return jpeg image data.
+#labels MVC,ActionResult,ImageResult
 
 = Introduction =
 
-Read a Image Data from a Image or grab from a url and return jpeg image data..
+Read a Image Data from a Image or grab from a url and return jpeg image data.
 
 
 = Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
