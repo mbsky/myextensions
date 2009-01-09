@@ -9,6 +9,9 @@ Extensions under System.Reflection Namepace.
 
 Thay are:
   * *ObjectFactory*
+  * *DynamicExecutor*
+  * *DynamicPropertyAccessor*
+  * *DynamicPropertyAccessorCache*
   * *PropertyInfoExtensions*
   * *MemberInfoExtensions*
   * *TypeExtensions*
