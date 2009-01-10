@@ -1,8 +1,8 @@
-#summary One-sentence summary of this page.
+#summary Static Compressed file resources handler.
+#labels Compressed
 
 = Introduction =
 
-Static Compress resources handler.
 To Use this Handler you must gzip your resources 1st and upload them.
 The FileCompress Tool is here http://myextensions.googlecode.com/svn/trunk/Tools/FileCompression.exe
 
