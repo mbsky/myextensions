@@ -1,0 +1,14 @@
+#summary Serialize a object to use XmlSerializer and return a XML document.
+
+= Simple Sample =
+
+{{{
+
+public ActionResult GetMyProfile(){
+
+   MyProfile profile = new MyProfile(userName);
+
+   return Xml(profile);
+}
+
+}}}
