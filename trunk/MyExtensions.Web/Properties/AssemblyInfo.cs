@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MyExtensions.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Feng Lu")]
+[assembly: AssemblyCompany("Feng Lui")]
 [assembly: AssemblyProduct("MyExtensions.Web")]
-[assembly: AssemblyCopyright("Copyright © Feng Lu 2009")]
+[assembly: AssemblyCopyright("Copyright © Feng Lui 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
