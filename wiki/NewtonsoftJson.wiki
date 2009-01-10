@@ -4,6 +4,6 @@
 
 Newtonsoft.Json http://www.codeplex.com/Json.
 
-= Licenses =
+= License =
 
 http://code.google.com/p/myextensions/source/browse/trunk/Licenses/Newtonsoft.Json.txt
