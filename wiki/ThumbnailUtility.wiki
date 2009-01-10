@@ -16,6 +16,6 @@ ThumbnailUtility Has 5 Type of Thumbnail Mode,they are:
   * _Percent By *the Lower one* of the Height And Width_
 
 
-With *ThumbnailUtility* you can Add a water-mark Text to builded Thumbnail,such as your website name.
+With *ThumbnailUtility* you can Add a water-mark Text to the builded Thumbnail,such as your website name. 
 
-With *ThumbnailUtility* you can Add a water-mark Picture to builded Thumbnail,such as your website logo.
+With *ThumbnailUtility* you can Add a water-mark Picture to the builded Thumbnail,such as your website logo.
