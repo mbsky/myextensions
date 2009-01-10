@@ -58,4 +58,17 @@ Site.css.de
 </configuration>
 }}}
 
+==== ASP.NET Mvc Application ====
+{{{
+public static void RegisterRoutes(RouteCollection routes)
+{
+  /// your code
+  routes.IgnoreRoute("{pathInfo*}/{resource}.c");
+  routes.IgnoreRoute("{pathInfo*}/{subpathInfo*}/{resource}.c");
+  routes.IgnoreRoute("{pathInfo*}/{subpathInfo*}/{subpathInfo1*}/{resource}.c");  
+  /// your code
+}
+
+}}}
+
  
