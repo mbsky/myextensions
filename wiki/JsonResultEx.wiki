@@ -6,7 +6,7 @@ You can Make a choise that which *JsonProvider* you'd like to use in your curren
 
 
 = Details =
-The Newtonsoft.Json is added to these choise now.
+The NewtonsoftJson is added to these choise now.
 
 {{{
 public enum JsonProvider
