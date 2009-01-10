@@ -3,3 +3,7 @@
 = Introduction =
 
 Newtonsoft.Json http://www.codeplex.com/Json.
+
+= Licenses =
+
+http://code.google.com/p/myextensions/source/browse/trunk/Licenses/Newtonsoft.Json.txt
