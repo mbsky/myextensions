@@ -48,3 +48,7 @@ Usage:
                 new { action = "Index", id = (string)null }
             );
 }}}
+
+===Areas Folder===
+
+<img src="http://myextensions.googlecode.com/svn/trunk/Samples/images/areaviewengine.jpg" alt="" style="border:0px"/>
