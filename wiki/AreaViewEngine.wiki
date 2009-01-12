@@ -23,3 +23,29 @@ Usage:
   MapAreas,MapRootArea.
 
   To Register the areas and a root area
+
+{{{
+
+ routes.MapAreas("{controller}/{action}/{id}",
+                "Blog",
+                new string[] { "blog" }
+                // appSettings.GetArray("MapAreas")
+            );
+
+            routes.MapAreas("{controller}/{action}/{id}",
+                "MySpace",
+                new string[] { "myspace" }
+                            // appSettings.GetArray("MapAreas")
+            );
+
+            routes.MapRootArea("{controller}/{action}/{id}",
+                "MyPortal.Web",
+                new { controller = "Home", action = "Index", id = "" }
+            );
+
+            routes.MapRoute(
+                "default",
+                "{controller}/{action}/{id}",
+                new { action = "Index", id = (string)null }
+            );
+}}}
