@@ -61,5 +61,5 @@ Usage:
 }}}
 * *Link to an area application action view*
 {{{
-<%= Html.ActionLink<MySpaceController>(c => c.Index(), Lang.Development, "myspace")%>
+<%= Html.ActionLink<MySpaceController>(c => c.Index(), "MySpace Home", "myspace")%>
 }}}
