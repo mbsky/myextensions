@@ -59,7 +59,7 @@ Usage:
 {{{
 <%= Html.ActionLink<HomeController>("c => c.Index(), "Index Page", "root")%>
 }}}
-* *Link to an area applcation action view*
+* *Link to an area application action view*
 {{{
 <%= Html.ActionLink<MySpaceController>(c => c.Index(), Lang.Development, "myspace")%>
 }}}
