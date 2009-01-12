@@ -29,13 +29,12 @@ Usage:
  routes.MapAreas("{controller}/{action}/{id}",
                 "Blog",
                 new string[] { "blog" }
-                // appSettings.GetArray("MapAreas")
             );
 
             routes.MapAreas("{controller}/{action}/{id}",
                 "MySpace",
                 new string[] { "myspace" }
-                            // appSettings.GetArray("MapAreas")
+                // appSettings.GetArray("MapAreas")
             );
 
             routes.MapRootArea("{controller}/{action}/{id}",
