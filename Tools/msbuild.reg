@@ -1,7 +1,7 @@
 Windows Registry Editor Version 5.00 
 [HKEY_CLASSES_ROOT\VisualStudio.Launcher.sln\shell\msbuild] 
 [HKEY_CLASSES_ROOT\VisualStudio.Launcher.sln\shell\msbuild\command]
-@="\"C:\\WINDOWS\\Microsoft.NET\\Framework\\v3.5\\MSBuild.exe\" /target:Rebuild /p:Configuration=Debug;TargetFrameworkVersion=v3.5 /fileLogger \"%1\""
+@="\"C:\\WINDOWS\\Microsoft.NET\\Framework\\v3.5\\MSBuild.exe\" /target:Rebuild /maxcpucount /p:Configuration=Debug;TargetFrameworkVersion=v3.5 /fileLogger \"%1\""
 [HKEY_CLASSES_ROOT\VisualStudio.Launcher.sln\shell\msbuild-release] 
 [HKEY_CLASSES_ROOT\VisualStudio.Launcher.sln\shell\msbuild-release\command]
-@="\"C:\\WINDOWS\\Microsoft.NET\\Framework\\v3.5\\MSBuild.exe\" /target:Rebuild /p:Configuration=Release;TargetFrameworkVersion=v3.5 /fileLogger \"%1\""
+@="\"C:\\WINDOWS\\Microsoft.NET\\Framework\\v3.5\\MSBuild.exe\" /target:Rebuild /maxcpucount /p:Configuration=Release;TargetFrameworkVersion=v3.5 /fileLogger \"%1\""
