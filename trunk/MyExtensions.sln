@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+# SharpDevelop 3.0.0.3683
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions", "MyExtensions\MyExtensions.csproj", "{B507DBC6-AA38-4C9E-9129-612FCF5DF109}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Data", "MyExtensions.Data\MyExtensions.Data.csproj", "{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}"
