@@ -46,12 +46,7 @@ namespace System.Web
         {
             get
             {
-                string theme = appSettings.Get("Theme");
-
-                if (theme.IsNullOrEmpty())
-                {
-                    theme = appSettings.Get("DefaultTheme");
-                }
+                string theme = appSettings.Get("DefaultTheme", string.Empty);
 
                 return theme;
             }
