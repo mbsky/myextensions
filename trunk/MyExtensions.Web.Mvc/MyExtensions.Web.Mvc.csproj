@@ -79,6 +79,7 @@
     <Compile Include="ControllerEx.Json.cs" />
     <Compile Include="Html\HtmlHelperExtensions.cs" />
     <Compile Include="IsCurrentActionHelper.cs" />
+    <Compile Include="IViewDataContainerExtensions.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControllerEx.XmlResults.cs" />
@@ -87,8 +88,18 @@
     <Compile Include="Results\XDocumentResult.cs" />
     <Compile Include="Results\XmlResult.cs" />
     <Compile Include="Results\XmlViewResult.cs" />
+    <Compile Include="ViewMasterPageEx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewPageEx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyExtensions.Web\MyExtensions.Web.csproj">
+      <Project>{37E17105-7211-4F58-8A28-7947852E8657}</Project>
+      <Name>MyExtensions.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyExtensions\MyExtensions.csproj">
       <Project>{B507DBC6-AA38-4C9E-9129-612FCF5DF109}</Project>
       <Name>MyExtensions</Name>
