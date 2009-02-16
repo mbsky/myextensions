@@ -52,6 +52,7 @@
     <Compile Include="Collections\Generic\IEnumerableExtensions.cs" />
     <Compile Include="Collections\IEnumerableExtensions.cs" />
     <Compile Include="Collections\Specialized\NameValueCollectionExtensions.cs" />
+    <Compile Include="CryptoHelper.cs" />
     <Compile Include="DesignByContract.cs" />
     <Compile Include="DesignByContractEx.cs" />
     <Compile Include="Linq\Expressions\ExpressionExtensions.cs" />
