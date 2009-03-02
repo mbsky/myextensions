@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Web.Security;
 using System.Web.UI.HtmlControls;
 using System.Web.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.Web.Mvc
 {
@@ -51,11 +52,6 @@ namespace System.Web.Mvc
             base.OnPreInit(e);
         }
 
-        protected override void Render(System.Web.UI.HtmlTextWriter writer)
-        {
-            base.Render(writer);
-        }
-
         public bool IsDebugging
         {
             get
@@ -95,7 +91,27 @@ namespace System.Web.Mvc
 
         private ViewDataDictionary<TModel> _viewData;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public new AjaxHelper<TModel> Ajax
+        {
+            get;
+            set;
+        }
+
+        public new HtmlHelper<TModel> Html
+        {
+            get;
+            set;
+        }
+
+        public new TModel Model
+        {
+            get
+            {
+                return ViewData.Model;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public new ViewDataDictionary<TModel> ViewData
         {
             get
@@ -110,6 +126,14 @@ namespace System.Web.Mvc
             {
                 SetViewData(value);
             }
+        }
+
+        public override void InitHelpers()
+        {
+            base.InitHelpers();
+
+            Ajax = new AjaxHelper<TModel>(ViewContext, this);
+            Html = new HtmlHelper<TModel>(ViewContext, this);
         }
 
         protected override void SetViewData(ViewDataDictionary viewData)

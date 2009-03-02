@@ -55,6 +55,9 @@
     <Compile Include="Objects\EntityHelper.cs" />
     <Compile Include="Objects\ObjectDataProvider.cs" />
     <Compile Include="Objects\ObjectContextExtensions.cs" />
+    <Compile Include="Objects\ObjectParameterEx.cs" />
+    <Compile Include="PagedList.cs" />
+    <Compile Include="Pagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

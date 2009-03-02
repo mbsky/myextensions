@@ -145,6 +145,16 @@ namespace System.Data.Objects
 
         public virtual TEntity Get<TEntity>(MergeOption mergeOption, params ObjectParameter[] prm) where TEntity : EntityObject, new()
         {
+            return GetQuery<TEntity>(mergeOption, prm).FirstOrDefault();
+        }
+
+        public virtual ObjectQuery<TEntity> GetQuery<TEntity>(MergeOption mergeOption, params ObjectParameter[] prm) where TEntity : EntityObject, new()
+        {
+            return GetQuery<TEntity>(mergeOption, ObjectParameterOption.And, prm);
+        }
+
+        public virtual ObjectQuery<TEntity> GetQuery<TEntity>(MergeOption mergeOption, ObjectParameterOption option, params ObjectParameter[] prm) where TEntity : EntityObject, new()
+        {
             string where = string.Empty;
 
             string tpl = "it.{0}=@{0}";
@@ -153,7 +163,15 @@ namespace System.Data.Objects
             {
                 if (where != string.Empty)
                 {
-                    where += " and ";
+                    switch (option)
+                    {
+                        default:
+                            where += " and ";
+                            break;
+                        case ObjectParameterOption.Or:
+                            where += " or ";
+                            break;
+                    }
                 }
 
                 where += string.Format(tpl, pm.Name);
@@ -161,7 +179,7 @@ namespace System.Data.Objects
 
             ObjectQuery<TEntity> qry = CreateQuery<TEntity>(mergeOption);
 
-            return qry.Where(where, prm).FirstOrDefault();
+            return qry.Where(where, prm);
         }
 
         #endregion
