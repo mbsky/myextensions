@@ -7,6 +7,7 @@ using System.Configuration;
 
 namespace System.Web.Mvc
 {
+    [AspNetHostingPermission(System.Security.Permissions.SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
     public interface IViewDataContainerEx
     {
         ViewContext ViewContext { get;}
