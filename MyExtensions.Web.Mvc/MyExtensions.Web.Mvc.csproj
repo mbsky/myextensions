@@ -135,6 +135,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\misc.css" />
+    <Content Include="Content\validate.htc" />
     <Content Include="Views\Shared\style.MountainBlue.css" />
     <Content Include="Views\Shared\ActionButton.ascx" />
     <Content Include="Views\Shared\FormMessage.ascx" />
