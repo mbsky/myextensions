@@ -83,6 +83,26 @@
     <Compile Include="AreaViewEngine\HtmlActionLinkExtensions.AreaViewEngine.cs" />
     <Compile Include="ControllerEx.cs" />
     <Compile Include="ControllerEx.Json.cs" />
+    <Compile Include="FormControls\CheckBox.cs" />
+    <Compile Include="FormControls\CheckboxList.cs" />
+    <Compile Include="FormControls\EmailField.cs" />
+    <Compile Include="FormControls\FieldBase.cs" />
+    <Compile Include="FormControls\FieldClientConfig.cs" />
+    <Compile Include="FormControls\FieldType.cs" />
+    <Compile Include="FormControls\FormModel.cs" />
+    <Compile Include="FormControls\HiddenField.cs" />
+    <Compile Include="FormControls\IActionCaller.cs" />
+    <Compile Include="FormControls\ImageField.cs" />
+    <Compile Include="FormControls\IRegField.cs" />
+    <Compile Include="FormControls\ListField.cs" />
+    <Compile Include="FormControls\MessageModel.cs" />
+    <Compile Include="FormControls\NumberField.cs" />
+    <Compile Include="FormControls\NumberMode.cs" />
+    <Compile Include="FormControls\PasswordField.cs" />
+    <Compile Include="FormControls\RadioFieldList.cs" />
+    <Compile Include="FormControls\TextArea.cs" />
+    <Compile Include="FormControls\TextField.cs" />
+    <Compile Include="FormControls\TextFieldBase.cs" />
     <Compile Include="Html\FamIcon.cs" />
     <Compile Include="Html\HtmlExtensions.Icon.cs" />
     <Compile Include="Html\HtmlHelperExtensions.cs" />
@@ -113,6 +133,30 @@
       <Project>{B507DBC6-AA38-4C9E-9129-612FCF5DF109}</Project>
       <Name>MyExtensions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\style.MountainBlue.css" />
+    <Content Include="Views\Shared\ActionButton.ascx" />
+    <Content Include="Views\Shared\FormMessage.ascx" />
+    <Content Include="Views\Shared\FormPanel.ascx" />
+    <Content Include="Views\Shared\jQuery.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Views\Shared\ListField.ascx" />
+    <Content Include="Views\Shared\Pagination.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Views\Shared\readme.txt" />
+    <Content Include="Views\Shared\TextAreaField.ascx" />
+    <Content Include="Scripts\jquery-1.3.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.3.2.min.js" />
+    <Content Include="Scripts\jquery.fn.Extensions.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\jquery-1.3.2.min.js.de" />
+    <None Include="Scripts\jquery-1.3.2.min.js.gz" />
+    <None Include="Scripts\jquery.fn.Extensions.js.de" />
+    <None Include="Scripts\jquery.fn.Extensions.js.gz" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
