@@ -83,7 +83,10 @@
     <Compile Include="AreaViewEngine\HtmlActionLinkExtensions.AreaViewEngine.cs" />
     <Compile Include="ControllerEx.cs" />
     <Compile Include="ControllerEx.Json.cs" />
+    <Compile Include="Html\FamIcon.cs" />
+    <Compile Include="Html\HtmlExtensions.Icon.cs" />
     <Compile Include="Html\HtmlHelperExtensions.cs" />
+    <Compile Include="Html\HtmlIconLinkExtensions.cs" />
     <Compile Include="IsCurrentActionHelper.cs" />
     <Compile Include="IViewDataContainerExtensions.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
