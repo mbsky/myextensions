@@ -20,146 +20,42 @@ namespace System.Web.Data
     /// Generic class for a perssitable object. Encapsulates the logic to load/save data from/to the filesystem. To speed up the acces, caching is used.
     /// </summary>
     /// <typeparam name="T">class or struct with all the data-fields that must be persisted</typeparam>
-    public class XmlPersistable<T>
+    public class XmlPersistable<T> : BasePersistable<T>
     {
-        private String _path;
 
-        protected T _data;
+        //cache the XmlSerializer if you need to use it often
 
-        public T Data
+        string getCachedsSerializerKey = typeof(T).FullName + "_XmlPersistable";
+
+        protected virtual XmlSerializer CachedsSerializer
         {
             get
             {
-                return _data;
+                object o = HttpContext.Current.Cache[getCachedsSerializerKey];
+                if (o == null)
+                {
+                    o = new XmlSerializer(typeof(T));
+                    InsertCache(getCachedsSerializerKey, o, null);
+                }
+
+                return (XmlSerializer)o;
             }
         }
 
-        /// <summary>
-        /// Creates a instance of Persistable. Also creates a instance of T
-        /// </summary>
-        public XmlPersistable()
+        protected override void Deserialize(string path, out T _data)
         {
-            _data = ObjectFactory.CreateInstance<T>();
-        }
-
-                /// <summary>
-        /// Creates a instance of Persistable.
-        /// </summary>
-        public XmlPersistable(bool loadFirst)
-        {
-            if (loadFirst)
-                LoadData();
-
-            if (null == _data)
-                _data = ObjectFactory.CreateInstance<T>();
-        }
-
-        public XmlPersistable(T data)
-        {
-            this._data = data;
-        }
-
-        /// <summary>
-        /// Loads the data from the filesystem. For deserialization a XmlSeralizer is used.
-        /// </summary>
-        protected void LoadData()
-        {
-            _path = HttpContext.Current.Server.MapPath(GetDataFilename());
-            lock (_path)
+            using (FileStream reader = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                //first check, if the object is maybe already in the cache
-                object o = HttpContext.Current.Cache[_path];
-                if (o != null)
-                {
-                    _data = (T)o;
-                }
-                else
-                {
-                    if (File.Exists(_path))
-                    {
-                        //if nothing was found in the cache, the data must be loaded from the disk
-                        //load and deserialize the data from the filesystem
-                        using (FileStream reader = File.Open(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                        {
-                            XmlSerializer serializer = new XmlSerializer(typeof(T));
-                            _data = (T)serializer.Deserialize(reader);
-                        }
-
-                        InsertCache();
-                    }
-                    else
-                    {
-                        if (_data == null)
-
-                            _data = ObjectFactory.CreateInstance<T>();
-
-                        this.SaveData();
-                    }
-                }
+                _data = (T)CachedsSerializer.Deserialize(reader);
             }
         }
 
-        protected virtual void InsertCache()
+        protected override void Serialize(string path, T _data)
         {
-            HttpContext.Current.Cache.Insert(_path, _data, new CacheDependency(_path), System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromHours(1), CacheItemPriority.Normal, null);
-        }
-
-        /// <summary>
-        /// Persists the data back to the filesystem
-        /// </summary>
-        public void SaveData()
-        {
-            _path = HttpContext.Current.Server.MapPath(GetDataFilename());
-            lock (_path)
+            using (FileStream writer = File.Create(path))
             {
-                try
-                {
-                    //if the given path does not exist yet, create it
-                    if (!Directory.Exists(Path.GetDirectoryName(_path)))
-                        Directory.CreateDirectory(Path.GetDirectoryName(_path));
-
-                    //serialize and store the data to the filesystem
-
-                    using (FileStream writer = File.Create(_path))
-                    {
-                        XmlSerializer serializer = new XmlSerializer(typeof(T));
-                        serializer.Serialize(writer, _data);
-                    }
-
-                    //insert the data into the cache
-                    InsertCache();
-
-                }
-                catch (Exception  /*UnauthorizedAccessException*/ ex)
-                {
-                    throw ex;
-                }
+                CachedsSerializer.Serialize(writer, _data);
             }
-        }
-
-        //Deletes the data from the cache and filesystem
-        public virtual bool Delete()
-        {
-            bool success = true;
-
-            if (File.Exists(_path))
-            {
-                lock (_path)
-                {
-                    try
-                    {
-                        File.Delete(_path);
-                        HttpContext.Current.Cache.Remove(_path);
-                    }
-                    catch { success = false; }
-                }
-            }
-            return success;
-        }
-
-        public virtual string GetDataFilename()
-        {
-            return string.Format("~/App_Data/{0}.config", typeof(T).Name);
         }
     }
 }
