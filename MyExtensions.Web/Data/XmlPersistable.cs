@@ -22,6 +22,20 @@ namespace System.Web.Data
     /// <typeparam name="T">class or struct with all the data-fields that must be persisted</typeparam>
     public class XmlPersistable<T> : BasePersistable<T>
     {
+        public XmlPersistable()
+            : base()
+        {
+        }
+
+        public XmlPersistable(bool loadFirst)
+            : base(loadFirst)
+        {
+        }
+
+        public XmlPersistable(T data)
+            : base(data)
+        {
+        }
 
         //cache the XmlSerializer if you need to use it often
 
