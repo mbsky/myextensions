@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CookieHelper.cs" />
+    <Compile Include="Data\BasePersistable.cs" />
+    <Compile Include="Data\JsonPersistable.cs" />
     <Compile Include="Data\XmlPersistable.cs" />
     <Compile Include="FastEvalExtensions.cs" />
     <Compile Include="HttpContextExtensions.cs" />

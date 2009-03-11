@@ -18,6 +18,14 @@ namespace System.Data
 
     public class PagedList<T> : List<T>, IPagedList
     {
+        public PagedList(List<T> pagedSource, int page, int pageSize, int total)
+        {
+            this.TotalCount = total;
+            this.PageNumber = page;
+            this.PageSize = pageSize;
+            if (total > 0 && null != pagedSource)
+                this.AddRange(pagedSource);
+        }
 
         public PagedList(IQueryable<T> source, int page, int pageSize)
         {
