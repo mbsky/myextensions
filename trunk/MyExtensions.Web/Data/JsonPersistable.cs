@@ -53,7 +53,7 @@ namespace System.Web.Data
             //}
             //保存对象
             string jsonText = JsonConvert.SerializeObject(_data, Formatting.Indented, defautNewtonSerializerSettings);
-            using (StreamWriter sw = new StreamWriter(path))
+            using (StreamWriter sw = new StreamWriter(path, false))
             {
                 sw.Write(jsonText);
             }
