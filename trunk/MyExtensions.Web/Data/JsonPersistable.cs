@@ -14,6 +14,21 @@ namespace System.Web.Data
 {
     public class JsonPersistable<T> : BasePersistable<T>
     {
+        public JsonPersistable()
+            : base()
+        {
+        }
+
+        public JsonPersistable(bool loadFirst)
+            : base(loadFirst)
+        {
+        }
+
+        public JsonPersistable(T data)
+            : base(data)
+        {
+        }
+
         static JsonConverter[] defautNewtonConverters = new JsonConverter[] { new JavaScriptDateTimeConverter() };
 
         static JsonSerializerSettings defautNewtonSerializerSettings = new JsonSerializerSettings
