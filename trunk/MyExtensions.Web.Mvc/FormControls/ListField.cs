@@ -69,13 +69,6 @@ namespace System.Web.Mvc.Html
         public virtual SelectList Options { get; set; }
     }
 
-    //public class EnumModel
-    //{
-    //    public object Value { get; set; }
-
-    //    public string Text { get; set; }
-    //}
-
     public static class ListFieldExtensions
     {
         public static IEnumerable<ListItem> ToListItems(this Type enumType)
@@ -85,20 +78,18 @@ namespace System.Web.Mvc.Html
                 throw new InvalidCastException();
             }
 
-            //Type internalEnumType = enumType;
-
             FieldInfo[] staticFiles = enumType.GetFields(BindingFlags.Public | BindingFlags.Static);
 
             List<ListItem> items = new List<ListItem>(staticFiles.Length);
 
-            foreach  (FieldInfo fi in staticFiles)
+            foreach (FieldInfo fi in staticFiles)
             {
+
+
                 items.Add(new ListItem()
                 {
                     Text = fi.Name,
-                    //Value = fi.GetRawConstantValue().ToString(),
-
-                    Value = fi.Name
+                    Value = fi.GetRawConstantValue().ToString() // fi.Name
                 });
             }
 
