@@ -81,8 +81,11 @@
     <Compile Include="AreaViewEngine\AreaRouteHelper.cs" />
     <Compile Include="AreaViewEngine\AreaViewEngine.cs" />
     <Compile Include="AreaViewEngine\HtmlActionLinkExtensions.AreaViewEngine.cs" />
+    <Compile Include="ControllerEx.Auto.cs" />
     <Compile Include="ControllerEx.cs" />
     <Compile Include="ControllerEx.Json.cs" />
+    <Compile Include="FormControls\ActionButton.cs" />
+    <Compile Include="FormControls\BaseActionCaller.cs" />
     <Compile Include="FormControls\CheckBox.cs" />
     <Compile Include="FormControls\CheckboxList.cs" />
     <Compile Include="FormControls\EmailField.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="ModelStateDictionaryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControllerEx.XmlResults.cs" />
+    <Compile Include="Results\AutoResult.cs" />
     <Compile Include="Results\ImageResult.cs" />
     <Compile Include="Results\JsonResultEx.cs" />
     <Compile Include="Results\XDocumentResult.cs" />

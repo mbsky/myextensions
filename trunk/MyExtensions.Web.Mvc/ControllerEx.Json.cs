@@ -12,7 +12,7 @@ namespace System.Web.Mvc
     {
         // TODO DefaultJsonProvider AppSettings
 
-        protected virtual JsonProvider DefaultJsonProvider
+        public virtual JsonProvider DefaultJsonProvider
         {
             get
             {
