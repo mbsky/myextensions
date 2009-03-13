@@ -1,6 +1,4 @@
 ﻿///<reference path="jquery-1.3.2-vsdoc.js" />
-///<reference path="ext/ext-jquery-adapter.js" />
-///<reference path="ext/ext-core-debug.js" />
 
 String.prototype.format = function() {
     var args = arguments;
@@ -125,6 +123,67 @@ $.fn.extend({
     }
 });
 
+$.extend({
+    selectFromContainer: function(selector, containerId) {
+        if (containerId)
+            var container = $("#" + containerId);
+        if (container && container.length != 0) {
+            return $(selector, container);
+        } else {
+            return $(selector);
+        }
+    }
+});
+
+$.extend({
+    getMsgIcon: "<img src='/Content/icons/tag_green.png' alt='' class='icon' />",
+    getErrorIcon: "<img src='/Content/icons/server_error.png' alt='' class='icon' />",
+
+    getMsgContainer: function(containerId) {
+        return $.selectFromContainer("div[class=message] div[class=success]:first", containerId);
+    },
+    getErrorContainer: function(containerId) {
+        return $.selectFromContainer("div[class=message] div[class=error]:first", containerId);
+    },
+    ajaxActionCallback: function(res) {
+    },
+    ajaxFormCallback: function(res) {
+        var success = typeof (res.Success) == "undefined" ? true : res.Success;
+        var containerId = res.ContainerId;
+        var sucDiv = $.getMsgContainer(containerId);
+        var errDiv = $.getErrorContainer(containerId);
+        var uls = $("ul:first", sucDiv);
+        var ule = $("ul:first", errDiv);
+        uls.empty();
+        ule.empty();
+        if (res.Msg) {
+            uls.html("<li>" + $.getMsgIcon + res.Msg + "&nbsp;&nbsp;(" + new Date().toLocaleTimeString() + ")</li>");
+            var options = {};
+            //callback function to bring a hidden box back
+            var cbBlind = function() {
+                //                                    setTimeout(function() {
+                //                                        sucDiv.removeAttr('style').hide().fadeOut();
+                //                                    }, 1000);
+            };
+            sucDiv.show("blind", options, 500, cbBlind);
+        } else {
+            sucDiv.hide();
+        }
+        if (res.Errors) {
+            var errstr = "";
+            var i = 1;
+            for (var err in res.Errors) {
+                errstr += "<li>" + $.getErrorIcon + "<span>" + i + ".</span>" + res.Errors[err] + "</li>";
+                i++;
+            }
+            ule.html(errstr);
+            errDiv.show();
+        } else {
+            errDiv.hide();
+        }
+    }
+});
+
 $.fn.extend({
     //ajaxInit
     ajaxInit: function() {
@@ -174,18 +233,21 @@ $.fn.extend({
         linkSubmit.each(function(idx) {
             var url = this.href;
             if (url && url != "") {
-                $(this).click(function() {
+                var submitlink = $(this);
+                submitlink.ajaxSuccess(function() {
+                    var ajaxContainer = $(this).parents("div[url]:first");
+                    ajaxContainer.ajaxLoad();
+                });
+                submitlink.click(function() {
                     $.post(url, null, function(res) {
-
                         var success = typeof (res.Success) == "undefined" ? true : res.Success;
-
                         if (res.Msg) {
                             alert(res.Msg);
                         }
                     }, "json");
-
                     return false;
                 });
+                submitlink.attr("href", "#");
             }
         });
     },
@@ -193,16 +255,13 @@ $.fn.extend({
     ajaxFormInit: function(cb) {
 
         var btnSub = $("input[type=submit],button[type=submit],a[class=submit],img[class=submit]", this);
-        //alert(btnSub.length);
+
         btnSub.each(function(idx) {
             var me = $(this);
             var f = me.parents("form[class=ajax]:first");
-            //alert(f.length);
             if (f.length != 0) {
 
-                if (me.is("a,img")) {//1.31 
-                    //me.is(a img) 1.2.6
-                    // alert('is a img');
+                if (me.is("a,img")) {
                     me.attr("href", "#");
 
                     $(this).click(function() {
@@ -214,27 +273,17 @@ $.fn.extend({
                 me.removeAttr("onclick");
 
                 f.attr("SubmitDisabledControls", true);
-                /*
-                f.ajaxError(function() {
-                $(this).fadeIn("fast");
-                });
 
-                f.ajaxSend(function(evt, request, settings) {
-                $(this).fadeOut('normal');
-                });
-
-                f.ajaxComplete(function(event, request, settings) {
-                $(this).fadeIn("normal");
-                });
-                */
-                f.ajaxError(function(event, request, settings, thrownError) {
+                var ajaxError = function(event, request, settings, thrownError) {
                     var container = $("#" + f.attr("id") + "_Container:first");
                     var error = $("div[class=error]:first", container);
                     var ul = $("ul:first", error);
                     var d = new Date();
-                    ul.append('<li><img class="icon" src="/Content/icons/error.png" />' + d.toLocaleTimeString() + "&nbsp;" + settings.url + '</li>');
+                    ul.append('<li>' + $.getErrorIcon + d.toLocaleTimeString() + "&nbsp;" + settings.url + '</li>');
                     error.show();
-                });
+                };
+
+                f.ajaxError(ajaxError);
 
                 f.submit(function() {
 
@@ -246,74 +295,7 @@ $.fn.extend({
 
                         var act = f.attr("action") || window.location.toString();
 
-                        var callback = (cb && typeof (cb) == "function") ? cb : function(res) {
-
-                            var success = typeof (res.Success) == "undefined" ? true : res.Success;
-
-                            var containerId = res.ContainerId;
-
-                            if (containerId) {
-                                var sucDiv = $("#" + containerId + " div[class=message] div[class=success]:first");
-                                var errDiv = $("#" + containerId + " div[class=message] div[class=error]:first");
-                            }
-                            else {
-                                var sucDiv = $("div[class=message] div[class=success]:first");
-                                var errDiv = $("div[class=message] div[class=error]:first");
-                            }
-
-                            var uls = $("ul:first", sucDiv);
-                            var ule = $("ul:first", errDiv);
-
-                            uls.empty();
-                            ule.empty();
-
-                            if (res.Msg) {
-
-                                uls.html("<li>" + res.Msg + "</li>");
-
-                                sucDiv.show();
-                            } else {
-                                sucDiv.hide();
-                            }
-
-                            if (res.Errors) {
-
-                                var errstr = "";
-                                var i = 1;
-                                for (var err in res.Errors) {
-                                    errstr += "<li><span>" + i + ".</span>" + res.Errors[err] + "</li>";
-                                    i++;
-                                    //alert(res.Errors[err]);
-                                }
-
-                                ule.html(errstr);
-
-                                errDiv.show();
-                            } else {
-                                errDiv.hide();
-                            }
-                        }
-
-                        /*
-                        Ext.Ajax.request({
-                        url: act,
-                        data: '',
-                        params: { method: 'post' },
-                        success: function(res) {
-                        var o = Ext.util.JSON.decode(res.responseText);
-                        if (o.Msg) {
-                        }
-                        },
-                        failure: function(res) {
-                        //  var respText = Ext.util.JSON.decode(res.responseText);
-                        var container = $("#" + f.attr("id") + "_Container:first");
-                        var error = $("div[class=error]:first", container);
-                        var ul = $("ul:first", error);
-                        ul.append("<li>出错页面:" + res.responseText + "</li>");
-                        error.show();
-                        }
-                        });
-                        */
+                        var callback = (cb && typeof (cb) == "function") ? cb : $.ajaxFormCallback;
 
                         $.post(act, serializedForm, callback, "json");
 
@@ -321,6 +303,119 @@ $.fn.extend({
                     }
                     return true;
                 });
+            }
+        });
+    }
+});
+
+//预定义的检查模式 
+var regArray = new Array(
+new Array("int+0", "^\\d+$", "", "需要输入一个非负整数，请重新检查"), //非负整数（正整数 + 0） 
+new Array("int+", "^[0-9]*[1-9][0-9]*$", "^\\d+$", "需要输入一个正整数，请重新检查"), //正整数 
+new Array("int-0", "^((-\\d+)|(0+))$", "^(-|(-\\d+)|(0+))$", "需要输入一个非正整数，请重新检查"), //非正整数（负整数 + 0） 
+new Array("int-", "^-[0-9]*[1-9][0-9]*$", "^(-|(-\\d+)|(0+))$", "需要输入一个负整数，请重新检查"), //负整数 
+new Array("int", "^-?\\d+$", "^-|(-?\\d+)$", "需要输入一个整数，请重新检查"), //整数 
+new Array("double+0", "^\\d+(\\.\\d+)?$", "^((\\d+\\.)|(\\d+(\\.\\d+)?))$", "需要输入一个非负浮点数，请重新检查"), //非负浮点数（正浮点数 + 0） 
+new Array("double+", "^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$", "^((\\d+\\.)|(\\d+(\\.\\d+)?))$", "需要输入一个正浮点数，请重新检查"), //正浮点数 
+new Array("double-0", "^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$", "^(-|(-\\d+\\.)|(0+\\.)|(-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$", "需要输入一个非正浮点数，请重新检查"), //非正浮点数（负浮点数 + 0） 
+new Array("double-", "^(-(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*)))$", "^(-|(-\\d+\\.?)|(-\\d+\\.\\d+))$", "需要输入一个负浮点数，请重新检查"), //负浮点数 
+new Array("double", "^(-?\\d+)(\\.\\d+)?$", "^(-|((-?\\d+)(\\.\\d+)?)|(-?\\d+)\\.)$", "需要输入一个浮点数，请重新检查"), //浮点数
+new Array("letter", "^[A-Za-z]+$", "", "您只能输入英文字母，请重新检查"), //由26个英文字母组成的字符串 
+new Array("upperchar", "^[A-Z]+$", "", "您只能输入英文大写字母，请重新检查"), //由26个英文字母的大写组成的字符串 
+new Array("lowerchar", "^[a-z]+$", "", "您只能输入英文小写字母，请重新检查"), //由26个英文字母的小写组成的字符串 
+new Array("digitchar", "^[A-Za-z0-9]+$", "", "您只能输入数字和英文字母，请重新检查"), //由数字和26个英文字母组成的字符串
+new Array("digitchar_", "^\\w+$", "", "您只能输入数字、英文字母和下划线，请重新检查"), //由数字、26个英文字母或者下划线组成的字符串
+new Array("email", "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$", "^(([\\w-]+(\\.[\\w-]+)*@?)|([\\w-]+(\\.[\\w-]+)*@[\\w-]+)|([\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+)|([\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+))$", "需要输入正确的email地址，请重新检查"), //email地址 
+new Array("url", "^[a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?$", "^([a-zA-z]+:?)|([a-zA-z]+:/{1,2})|([a-zA-z]+://(\\w+(-\\w+)*))|([a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?)$", "需要输入正确的url地址，请重新检查"), //url
+new Array("chinese", "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$", "", "请输入中文"),
+new Array("username", "^\\w+$", "", "用户名可由数字、26个英文字母或者下划线组成"),
+new Array("idcard", "^[1-9]([0-9]{14}|[0-9]{17})$", "", "需要输入正确的身份证号码"),
+new Array("zipcode", "^\\d{6}$", "", "需要输入正确的邮编"),
+new Array("color", "^[a-fA-F0-9]{6}$", "", "需要输入正确的颜色"),
+new Array("picture", "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$", "", "图片必须是jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga"),
+new Array("tel", "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$", "", "需要输入正确的电话号码 如:086-0512-52810434")
+);
+
+function doInputEvent() {
+
+    //得到触发事件的类型
+    var type = window.event.type;
+    //得到触发元素的值。 
+    var value = window.event.srcElement.value;
+    if (type == "keypress") { //如果是键盘按下事件，得到键盘按下后的值 
+        var keyCode = window.event.keyCode;
+        if (typeof (window.event.srcElement.upper) != "undefined") { //如果定义了转换大写 
+            if (keyCode >= 97 && keyCode <= 122)
+                keyCode = window.event.keyCode = keyCode - 32;
+        }
+        else if (typeof (window.event.srcElement.lower) != "undefined") { //如果定义了转换小写 
+            if (keyCode >= 65 && keyCode <= 90)
+                keyCode = window.event.keyCode = keyCode + 32;
+        }
+        value += String.fromCharCode(keyCode);
+    }
+    else if (type == "paste") {
+        value += window.clipboardData.getData("Text");
+    }
+    //如果触发元素的值为空，则表示用户没有输入，不接受检查。 
+    if (value == "") return;
+    //如果触发元素没有设置reg属性，则返回不进行任何检查。 
+    if (typeof (window.event.srcElement.reg) == "undefined") return;
+    //如果触发元素没有定义check属性，则在按键和粘贴事件中不做检查 
+    if ((type == "keypress" || type == "paste") && typeof (window.event.srcElement.check) == "undefined") return;
+    //如果没有通过检查模式，出现的错误信息 
+    var msg = "";
+    //得到检查模式 
+    var reg = window.event.srcElement.reg;
+    //正则表达式对象 
+    var regExp = null;
+    //从预定义的检查模式中查找正则表达式对象 
+    for (var i = 0; i < regArray.length; i++) {
+        if (regArray[i][0] == reg) {
+            if ((type == "keypress" || type == "paste") && regArray[i][2] != "")
+                regExp = new RegExp(regArray[i][2]); //查找到预定义的检查模式 
+            else
+                regExp = new RegExp(regArray[i][1]); //查找到预定义的检查模式 
+            msg = regArray[i][3]; //定义预定义的报错信息 
+            break; //查找成功，退出循环 
+        }
+    }
+    if (regExp == null) { //如果没有查找到预定义的检查模式，说明reg本身就为正则表达式对象。 
+        if ((type == "keypress" || type == "paste") && typeof (window.event.srcElement.regcheck) != "undefined")
+            regExp = new RegExp(window.event.srcElement.regcheck); //按照用户自定义的正则表达式生成正则表达式对象。 
+        else
+            regExp = new RegExp(reg); //按照用户自定义的正则表达式生成正则表达式对象。 
+        msg = "输入错误，请重新检查"; //错误信息 
+    }
+    //检查触发元素的值符合检查模式，直接返回。 
+    if (regExp.test(value)) return;
+    if (type == "blur") { //如果是失去焦点并且检查不通过，则需要出现错误警告框。 
+        //判断用户是否自己定义了错误信息 
+        if (typeof (window.event.srcElement.msg) != "undefined")
+            msg = window.event.srcElement.msg;
+        //显示错误信息 
+        alert(msg);
+        //将焦点重新聚回触发元素 
+        window.event.srcElement.focus();
+        window.event.srcElement.select();
+    }
+    else { //如果是键盘按下或者粘贴事件并且检查不通过，则取消默认动作。 
+        //取消此次键盘按下或者粘贴操作 
+        window.event.returnValue = false;
+    }
+}
+
+$.fn.extend({
+    bindClientFormValidate: function() {
+        var inputs = $("input[type=text]", this);
+
+        inputs.each(function() {
+            var ipt = $(this);
+            var reg = ipt.attr("reg"); 
+            if (typeof (reg) == "string" && reg != "") {
+                //ipt.keypress(doInputEvent);
+                ipt.blur(doInputEvent);
+                ipt.bind('paste', doInputEvent);
             }
         });
     }
