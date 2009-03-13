@@ -76,9 +76,10 @@ namespace System.Web.Mvc
 
             ViewData["Message"] = Message;
 
-            ViewResult vr = new ViewResult();
-
-            vr.ViewData = ViewData;
+            ViewResult vr = new ViewResult()
+            {
+                ViewData = controller.ViewData,
+            };
 
             vr.ExecuteResult(context);
         }
