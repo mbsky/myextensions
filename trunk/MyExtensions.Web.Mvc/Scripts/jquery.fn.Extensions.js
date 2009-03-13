@@ -94,13 +94,6 @@ $.fn.reload = function() {
         this.load(url);
 };
 
-//默认的验证函数
-$.fn.extend({
-    isValid: function() {
-        return true;
-    }
-});
-
 $.fn.extend({
     ajaxLoad: function() {
         var u = this.attr("url");
@@ -132,6 +125,194 @@ $.extend({
         } else {
             return $(selector);
         }
+    }
+});
+
+//预定义的检查模式 
+var regArray = new Array(
+new Array("int+0", "^\\d+$", "", "需要输入一个非负整数，请重新检查"), //非负整数（正整数 + 0） 
+new Array("int+", "^[0-9]*[1-9][0-9]*$", "^\\d+$", "需要输入一个正整数，请重新检查"), //正整数 
+new Array("int-0", "^((-\\d+)|(0+))$", "^(-|(-\\d+)|(0+))$", "需要输入一个非正整数，请重新检查"), //非正整数（负整数 + 0） 
+new Array("int-", "^-[0-9]*[1-9][0-9]*$", "^(-|(-\\d+)|(0+))$", "需要输入一个负整数，请重新检查"), //负整数 
+new Array("int", "^-?\\d+$", "^-|(-?\\d+)$", "需要输入一个整数，请重新检查"), //整数 
+new Array("double+0", "^\\d+(\\.\\d+)?$", "^((\\d+\\.)|(\\d+(\\.\\d+)?))$", "需要输入一个非负浮点数，请重新检查"), //非负浮点数（正浮点数 + 0） 
+new Array("double+", "^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$", "^((\\d+\\.)|(\\d+(\\.\\d+)?))$", "需要输入一个正浮点数，请重新检查"), //正浮点数 
+new Array("double-0", "^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$", "^(-|(-\\d+\\.)|(0+\\.)|(-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$", "需要输入一个非正浮点数，请重新检查"), //非正浮点数（负浮点数 + 0） 
+new Array("double-", "^(-(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*)))$", "^(-|(-\\d+\\.?)|(-\\d+\\.\\d+))$", "需要输入一个负浮点数，请重新检查"), //负浮点数 
+new Array("double", "^(-?\\d+)(\\.\\d+)?$", "^(-|((-?\\d+)(\\.\\d+)?)|(-?\\d+)\\.)$", "需要输入一个浮点数，请重新检查"), //浮点数
+new Array("letter", "^[A-Za-z]+$", "", "您只能输入英文字母，请重新检查"), //由26个英文字母组成的字符串 
+new Array("upperchar", "^[A-Z]+$", "", "您只能输入英文大写字母，请重新检查"), //由26个英文字母的大写组成的字符串 
+new Array("lowerchar", "^[a-z]+$", "", "您只能输入英文小写字母，请重新检查"), //由26个英文字母的小写组成的字符串 
+new Array("digitchar", "^[A-Za-z0-9]+$", "", "您只能输入数字和英文字母，请重新检查"), //由数字和26个英文字母组成的字符串
+new Array("digitchar_", "^\\w+$", "", "您只能输入数字、英文字母和下划线，请重新检查"), //由数字、26个英文字母或者下划线组成的字符串
+new Array("email", "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$", "", "需要输入正确的email地址，请重新检查"), //email地址
+new Array("url", "^[a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?$", "^([a-zA-z]+:?)|([a-zA-z]+:/{1,2})|([a-zA-z]+://(\\w+(-\\w+)*))|([a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?)$", "需要输入正确的url地址，请重新检查"), //url
+new Array("chinese", "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$", "", "请输入中文"),
+new Array("username", "^\\w+$", "", "用户名可由数字、26个英文字母或者下划线组成"),
+new Array("idcard", "^[1-9]([0-9]{14}|[0-9]{17})$", "", "需要输入正确的身份证号码"),
+new Array("zipcode", "^\\d{6}$", "", "需要输入正确的邮编"),
+new Array("color", "^[a-fA-F0-9]{6}$", "", "需要输入正确的颜色"),
+new Array("picture", "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$", "", "图片必须是jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga"),
+new Array("tel", "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$", "", "需要输入正确的电话号码 如:086-0512-52810434")
+);
+
+function doInputEvent() {
+
+    //得到触发事件的类型
+    var type = window.event.type;
+    //得到触发元素的值。
+    var el = window.event.srcElement;
+    var value = window.event.srcElement.value;
+    if (type == "keypress") { //如果是键盘按下事件，得到键盘按下后的值 
+        var keyCode = window.event.keyCode;
+        if (typeof (el.upper) != "undefined") { //如果定义了转换大写 
+            if (keyCode >= 97 && keyCode <= 122)
+                keyCode = window.event.keyCode = keyCode - 32;
+        }
+        else if (typeof (el.lower) != "undefined") { //如果定义了转换小写 
+            if (keyCode >= 65 && keyCode <= 90)
+                keyCode = window.event.keyCode = keyCode + 32;
+        }
+        value += String.fromCharCode(keyCode);
+    }
+    else if (type == "paste") {
+        value += window.clipboardData.getData("Text");
+    }
+    //如果触发元素的值为空，则表示用户没有输入，不接受检查。 
+    if (value == "") return;
+    //如果触发元素没有设置reg属性，则返回不进行任何检查。
+    if (typeof (el.reg) == "undefined") return;
+    //如果触发元素没有定义check属性，则在按键和粘贴事件中不做检查
+    if ((type == "keypress" || type == "paste") && typeof (el.check) == "undefined") return;
+    //如果没有通过检查模式，出现的错误信息 
+    var msg = "";
+    //得到检查模式
+    var reg = el.reg;
+    //正则表达式对象 
+    var regExp = null;
+    //从预定义的检查模式中查找正则表达式对象 
+    for (var i = 0; i < regArray.length; i++) {
+        if (regArray[i][0] == reg) {
+            if ((type == "keypress" || type == "paste") && regArray[i][2] != "")
+                regExp = new RegExp(regArray[i][2]); //查找到预定义的检查模式 
+            else
+                regExp = new RegExp(regArray[i][1]); //查找到预定义的检查模式 
+            msg = regArray[i][3]; //定义预定义的报错信息 
+            break; //查找成功，退出循环 
+        }
+    }
+    if (regExp == null) { //如果没有查找到预定义的检查模式，说明reg本身就为正则表达式对象。
+        if ((type == "keypress" || type == "paste") && typeof (el.regcheck) != "undefined")
+            regExp = new RegExp(el.regcheck); //按照用户自定义的正则表达式生成正则表达式对象。 
+        else
+            regExp = new RegExp(reg); //按照用户自定义的正则表达式生成正则表达式对象。 
+        msg = "输入错误，请重新检查"; //错误信息 
+    }
+    //检查触发元素的值符合检查模式，直接返回。 
+    if (regExp.test(value)) return;
+    if (type == "blur") { //如果是失去焦点并且检查不通过，则需要出现错误警告框。 
+        //判断用户是否自己定义了错误信息
+        if (typeof (el.msg) != "undefined")
+            msg = el.msg;
+        //显示错误信息 
+        alert(msg);
+        //将焦点重新聚回触发元素
+        el.focus();
+        el.select();
+    }
+    else { //如果是键盘按下或者粘贴事件并且检查不通过，则取消默认动作。 
+        //取消此次键盘按下或者粘贴操作 
+        window.event.returnValue = false;
+    }
+}
+
+$.fn.extend({
+    validateRequired: function() {
+        return ({ validate: $.trim(ipt.val()).length != 0, msg: "是必填项" });
+    },
+    validateInput: function() {
+
+        var ipt = $(this);
+        var reg = $.trim(ipt.attr("reg"));
+
+        var isRequired = ipt.attr("class") == "input-validation-error";
+        if (isRequired) {
+
+            var r = $.trim(ipt.val()).length != 0;
+            if (!r) {
+                //alert(isRequired);
+                return ({ validate: false, msg: "是必填项" });
+            }
+        }
+
+        if (!reg || reg.length == 0) {
+            return { validate: true };
+        }
+
+        var regExp = null;
+        var msg = null;
+        //从预定义的检查模式中查找正则表达式对象 
+        for (var i = 0; i < regArray.length; i++) {
+            if (regArray[i][0] == reg) {
+                regExp = new RegExp(regArray[i][1]); //查找到预定义的检查模式 
+                msg = regArray[i][3]; //定义预定义的报错信息 
+                break; //查找成功，退出循环 
+            }
+        }
+        if (regExp) {
+            return ({ validate: regExp.test(ipt.val()), msg: msg });
+        }
+        return { validate: true };
+    }
+});
+
+//默认的验证函数
+$.fn.extend({
+    isValid: function() {
+        var fm = this;
+        //<input type="hidden" name="formContainerId" value="fm_Container" />
+        var containerId = $("input[type=hidden][name=formContainerId]:first", this).val();
+        var errDiv = $.getErrorContainer(containerId);
+        errDiv.hide();
+        var ule = $("ul:first", ule);
+        ule.empty();
+        var errors = "";
+        var isValid = true;
+
+        var inputs = $("input[type=text],input[type=password]", fm);
+
+        inputs.each(function() {
+            var ipt = $(this);
+            var v = ipt.validateInput();
+            if (!v.validate) {
+                var lbl = $("label[for=" + ipt.attr("name") + "]", fm).text().replace(":", "");
+                errors += "<li>" + $.getErrorIcon + lbl + v.msg + "</li>";
+            }
+            isValid = isValid && v.validate;
+        });
+
+        if (!isValid) {
+            errDiv.html(errors);
+            errDiv.show();
+        }
+
+        return isValid;
+    }
+});
+
+$.fn.extend({
+    bindClientFormValidate: function() {
+        var inputs = $("input[type=text][reg]", this);
+
+        inputs.each(function() {
+            var ipt = $(this);
+            var reg = ipt.attr("reg");
+            if (typeof (reg) == "string" && reg != "") {
+                //ipt.keypress(doInputEvent);
+                //ipt.blur(doInputEvent);
+                //ipt.bind('paste', doInputEvent);
+            }
+        });
     }
 });
 
@@ -170,6 +351,7 @@ $.extend({
             sucDiv.hide();
         }
         if (res.Errors) {
+            errDiv.hide();
             var errstr = "";
             var i = 1;
             for (var err in res.Errors) {
@@ -251,180 +433,75 @@ $.fn.extend({
             }
         });
     },
+    bindClientValidateForm: function() {
+        var f = $(this);
+        //        var me = $("input[type=submit],button[type=submit]:first", f);
+        //        me.click(function() {
+        //            return f.isValid();
+        //        });
+        f.submit(function() {
+            if (!f.isValid()) {
+                return false;
+            }
+            return true;
+        });
+    },
+    bindAjaxPostForm: function(cb) {
+        var f = $(this);
+        var me = $("input[type=submit],button[type=submit],a[class=submit],img[class=submit]:first", f);
+        if (me.is("a,img")) {
+            me.attr("href", "#");
+            $(this).click(function() {
+                f.submit();
+                return false;
+            });
+        }
+
+        me.removeAttr("onclick");
+
+        var ajaxError = function(event, request, settings, thrownError) {
+            var container = $("#" + f.attr("id") + "_Container:first");
+            var error = $("div[class=error]:first", container);
+            var ul = $("ul:first", error);
+            var d = new Date();
+            ul.append('<li>' + $.getErrorIcon + d.toLocaleTimeString() + "&nbsp;" + settings.url + '</li>');
+            error.show();
+        };
+
+        f.ajaxError(ajaxError);
+
+        f.submit(function() {
+            if (!f.isValid()) {
+                return false;
+            }
+            else {
+                var serializedForm = f.serialize();
+                var act = f.attr("action") || window.location.toString();
+                var callback = (cb && typeof (cb) == "function") ? cb : $.ajaxFormCallback;
+                $.post(act, serializedForm, callback, "json");
+                return false;
+            }
+            return true;
+        });
+    },
     //ajaxFormInit
     ajaxFormInit: function(cb) {
 
-        var btnSub = $("input[type=submit],button[type=submit],a[class=submit],img[class=submit]", this);
-
-        btnSub.each(function(idx) {
-            var me = $(this);
-            var f = me.parents("form[class=ajax]:first");
-            if (f.length != 0) {
-
-                if (me.is("a,img")) {
-                    me.attr("href", "#");
-
-                    $(this).click(function() {
-                        f.submit();
-                        return false;
-                    });
-                }
-
-                me.removeAttr("onclick");
-
-                f.attr("SubmitDisabledControls", true);
-
-                var ajaxError = function(event, request, settings, thrownError) {
-                    var container = $("#" + f.attr("id") + "_Container:first");
-                    var error = $("div[class=error]:first", container);
-                    var ul = $("ul:first", error);
-                    var d = new Date();
-                    ul.append('<li>' + $.getErrorIcon + d.toLocaleTimeString() + "&nbsp;" + settings.url + '</li>');
-                    error.show();
-                };
-
-                f.ajaxError(ajaxError);
-
-                f.submit(function() {
-
-                    if (!f.isValid()) { return false; }
-
-                    if (f.attr("class") == "ajax") {
-
-                        var serializedForm = f.serialize();
-
-                        var act = f.attr("action") || window.location.toString();
-
-                        var callback = (cb && typeof (cb) == "function") ? cb : $.ajaxFormCallback;
-
-                        $.post(act, serializedForm, callback, "json");
-
-                        return false;
-                    }
-                    return true;
-                });
-            }
-        });
-    }
-});
-
-//预定义的检查模式 
-var regArray = new Array(
-new Array("int+0", "^\\d+$", "", "需要输入一个非负整数，请重新检查"), //非负整数（正整数 + 0） 
-new Array("int+", "^[0-9]*[1-9][0-9]*$", "^\\d+$", "需要输入一个正整数，请重新检查"), //正整数 
-new Array("int-0", "^((-\\d+)|(0+))$", "^(-|(-\\d+)|(0+))$", "需要输入一个非正整数，请重新检查"), //非正整数（负整数 + 0） 
-new Array("int-", "^-[0-9]*[1-9][0-9]*$", "^(-|(-\\d+)|(0+))$", "需要输入一个负整数，请重新检查"), //负整数 
-new Array("int", "^-?\\d+$", "^-|(-?\\d+)$", "需要输入一个整数，请重新检查"), //整数 
-new Array("double+0", "^\\d+(\\.\\d+)?$", "^((\\d+\\.)|(\\d+(\\.\\d+)?))$", "需要输入一个非负浮点数，请重新检查"), //非负浮点数（正浮点数 + 0） 
-new Array("double+", "^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$", "^((\\d+\\.)|(\\d+(\\.\\d+)?))$", "需要输入一个正浮点数，请重新检查"), //正浮点数 
-new Array("double-0", "^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$", "^(-|(-\\d+\\.)|(0+\\.)|(-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$", "需要输入一个非正浮点数，请重新检查"), //非正浮点数（负浮点数 + 0） 
-new Array("double-", "^(-(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*)))$", "^(-|(-\\d+\\.?)|(-\\d+\\.\\d+))$", "需要输入一个负浮点数，请重新检查"), //负浮点数 
-new Array("double", "^(-?\\d+)(\\.\\d+)?$", "^(-|((-?\\d+)(\\.\\d+)?)|(-?\\d+)\\.)$", "需要输入一个浮点数，请重新检查"), //浮点数
-new Array("letter", "^[A-Za-z]+$", "", "您只能输入英文字母，请重新检查"), //由26个英文字母组成的字符串 
-new Array("upperchar", "^[A-Z]+$", "", "您只能输入英文大写字母，请重新检查"), //由26个英文字母的大写组成的字符串 
-new Array("lowerchar", "^[a-z]+$", "", "您只能输入英文小写字母，请重新检查"), //由26个英文字母的小写组成的字符串 
-new Array("digitchar", "^[A-Za-z0-9]+$", "", "您只能输入数字和英文字母，请重新检查"), //由数字和26个英文字母组成的字符串
-new Array("digitchar_", "^\\w+$", "", "您只能输入数字、英文字母和下划线，请重新检查"), //由数字、26个英文字母或者下划线组成的字符串
-new Array("email", "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$", "^(([\\w-]+(\\.[\\w-]+)*@?)|([\\w-]+(\\.[\\w-]+)*@[\\w-]+)|([\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+)|([\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+))$", "需要输入正确的email地址，请重新检查"), //email地址 
-new Array("url", "^[a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?$", "^([a-zA-z]+:?)|([a-zA-z]+:/{1,2})|([a-zA-z]+://(\\w+(-\\w+)*))|([a-zA-z]+://(\\w+(-\\w+)*)(\\.(\\w+(-\\w+)*))*(\\?\\S*)?)$", "需要输入正确的url地址，请重新检查"), //url
-new Array("chinese", "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$", "", "请输入中文"),
-new Array("username", "^\\w+$", "", "用户名可由数字、26个英文字母或者下划线组成"),
-new Array("idcard", "^[1-9]([0-9]{14}|[0-9]{17})$", "", "需要输入正确的身份证号码"),
-new Array("zipcode", "^\\d{6}$", "", "需要输入正确的邮编"),
-new Array("color", "^[a-fA-F0-9]{6}$", "", "需要输入正确的颜色"),
-new Array("picture", "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$", "", "图片必须是jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga"),
-new Array("tel", "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$", "", "需要输入正确的电话号码 如:086-0512-52810434")
-);
-
-function doInputEvent() {
-
-    //得到触发事件的类型
-    var type = window.event.type;
-    //得到触发元素的值。 
-    var value = window.event.srcElement.value;
-    if (type == "keypress") { //如果是键盘按下事件，得到键盘按下后的值 
-        var keyCode = window.event.keyCode;
-        if (typeof (window.event.srcElement.upper) != "undefined") { //如果定义了转换大写 
-            if (keyCode >= 97 && keyCode <= 122)
-                keyCode = window.event.keyCode = keyCode - 32;
-        }
-        else if (typeof (window.event.srcElement.lower) != "undefined") { //如果定义了转换小写 
-            if (keyCode >= 65 && keyCode <= 90)
-                keyCode = window.event.keyCode = keyCode + 32;
-        }
-        value += String.fromCharCode(keyCode);
-    }
-    else if (type == "paste") {
-        value += window.clipboardData.getData("Text");
-    }
-    //如果触发元素的值为空，则表示用户没有输入，不接受检查。 
-    if (value == "") return;
-    //如果触发元素没有设置reg属性，则返回不进行任何检查。 
-    if (typeof (window.event.srcElement.reg) == "undefined") return;
-    //如果触发元素没有定义check属性，则在按键和粘贴事件中不做检查 
-    if ((type == "keypress" || type == "paste") && typeof (window.event.srcElement.check) == "undefined") return;
-    //如果没有通过检查模式，出现的错误信息 
-    var msg = "";
-    //得到检查模式 
-    var reg = window.event.srcElement.reg;
-    //正则表达式对象 
-    var regExp = null;
-    //从预定义的检查模式中查找正则表达式对象 
-    for (var i = 0; i < regArray.length; i++) {
-        if (regArray[i][0] == reg) {
-            if ((type == "keypress" || type == "paste") && regArray[i][2] != "")
-                regExp = new RegExp(regArray[i][2]); //查找到预定义的检查模式 
-            else
-                regExp = new RegExp(regArray[i][1]); //查找到预定义的检查模式 
-            msg = regArray[i][3]; //定义预定义的报错信息 
-            break; //查找成功，退出循环 
-        }
-    }
-    if (regExp == null) { //如果没有查找到预定义的检查模式，说明reg本身就为正则表达式对象。 
-        if ((type == "keypress" || type == "paste") && typeof (window.event.srcElement.regcheck) != "undefined")
-            regExp = new RegExp(window.event.srcElement.regcheck); //按照用户自定义的正则表达式生成正则表达式对象。 
-        else
-            regExp = new RegExp(reg); //按照用户自定义的正则表达式生成正则表达式对象。 
-        msg = "输入错误，请重新检查"; //错误信息 
-    }
-    //检查触发元素的值符合检查模式，直接返回。 
-    if (regExp.test(value)) return;
-    if (type == "blur") { //如果是失去焦点并且检查不通过，则需要出现错误警告框。 
-        //判断用户是否自己定义了错误信息 
-        if (typeof (window.event.srcElement.msg) != "undefined")
-            msg = window.event.srcElement.msg;
-        //显示错误信息 
-        alert(msg);
-        //将焦点重新聚回触发元素 
-        window.event.srcElement.focus();
-        window.event.srcElement.select();
-    }
-    else { //如果是键盘按下或者粘贴事件并且检查不通过，则取消默认动作。 
-        //取消此次键盘按下或者粘贴操作 
-        window.event.returnValue = false;
-    }
-}
-
-$.fn.extend({
-    bindClientFormValidate: function() {
-        var inputs = $("input[type=text]", this);
-
-        inputs.each(function() {
-            var ipt = $(this);
-            var reg = ipt.attr("reg"); 
-            if (typeof (reg) == "string" && reg != "") {
-                //ipt.keypress(doInputEvent);
-                ipt.blur(doInputEvent);
-                ipt.bind('paste', doInputEvent);
-            }
+        var forms = $("form");
+        forms.each(function() {
+            var f = $(this);
+            f.attr("SubmitDisabledControls", true);
+            var isAjax = f.attr("class") == "ajax";
+            f.bindClientValidateForm(f);
+            if (isAjax)
+                f.bindAjaxPostForm(f);
         });
     }
 });
 
 $(document).ready(function() {
-    $(this).ajaxInit();
+    var doc = $(this);
+    doc.ajaxInit();
     setTimeout("$(document).ajaxInitDur();", 4000);
-    if ($("form[class=ajax]").length != 0)
-        $(this).ajaxFormInit();
-
+    doc.ajaxFormInit();
 });
