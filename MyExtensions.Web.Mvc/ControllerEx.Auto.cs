@@ -17,10 +17,18 @@ namespace System.Web.Mvc
             return new AutoResult(message);
         }
 
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="returnUrl"></param>
+        /// <remarks>Note : You should override this method in your baseController inherited from ControllerEx to write your custom ViewData</remarks>
+        /// <returns></returns>
         protected virtual AutoResult Auto(string message,string returnUrl)
         {
             Check.AssertNotNullOrEmpty(message, "message");
             Check.AssertNotNullOrEmpty(returnUrl, "returnUrl");
+
             return new AutoResult(message, returnUrl);
         }
     }
