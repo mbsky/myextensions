@@ -3,7 +3,7 @@
    { %>
 <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 
-<script src="../../Scripts/jquery-vsdoc.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-1.3.2-vsdoc.js" type="text/javascript"></script>
 
 <% } %>
 <%       
@@ -25,13 +25,15 @@
 
                      string checkAtt = string.Empty;
 
-                     if (null != evalValue && evalValue.ToString() == x.Value) //x.Text
+                     if (null != evalValue) //x.Text
                      {
-                         checkAtt = "checked";
+                         string v = evalValue.ToString().Trim();
+
+                         if (v == x.Value || v == x.Text )
+                             checkAtt = "checked";
                      }
     %>
-<%--    调试信息
-    evalValue.ToString()=<%=evalValue.ToString() %>
+   <%-- 调试信息 evalValue.ToString()=<%=evalValue.ToString() %>
     x.Value=<%=x.Value %>--%>
     <input name="<%=field.Name %>" type="radio" value="<%=x.Value %>" <%=checkAtt %> />
     <%=x.Text%>
@@ -39,7 +41,7 @@
                  case FieldType.CheckBoxList: %>
     <%=Html.CheckBox(field.Name, field)%><%=x.Text%>
     <% break;
-                                 case FieldType.Select: %>
+                 case FieldType.Select: %>
     <% break; %>
     <% }
          }%>
