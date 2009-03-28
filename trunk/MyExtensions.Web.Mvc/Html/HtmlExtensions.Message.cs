@@ -10,6 +10,18 @@ namespace System.Web.Mvc.Html
     [AspNetHostingPermission(System.Security.Permissions.SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
     public static class HtmlMessageExtensions
     {
+        public static void RenderMessage(this HtmlHelper html)
+        {
+            html.RenderMessage(null);
+        }
+
+        public static void RenderMessage(this HtmlHelper html, string prefix)
+        {
+            MessageModel model = html.GetMessage(prefix);
+            
+            html.RenderPartial("FormMessage", model);
+        }
+
         public static MessageModel GetMessage(this HtmlHelper html)
         {
             return html.GetMessage(null, null);
