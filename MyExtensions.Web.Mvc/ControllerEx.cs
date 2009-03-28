@@ -28,17 +28,6 @@ namespace System.Web.Mvc
             this.View(actionName).ExecuteResult(this.ControllerContext);
         }
 
-        //public virtual bool IsAjaxRequest
-        //{
-        //    get
-        //    {
-        //        return Request != null && Request.QueryString != null && Request.Headers != null &&
-        //            ("true".Equals(Request.QueryString["__mvcajax"]) || !String.IsNullOrEmpty(Request.Headers["Ajax"]) || "XMLHttpRequest".Equals(Request.Headers["X-Requested-With"],
-        //          StringComparison.InvariantCultureIgnoreCase));
-        //    }
-
-        //}
-
         public virtual string GetReferrerUrl
         {
             get
