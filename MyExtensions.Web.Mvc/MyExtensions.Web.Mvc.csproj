@@ -109,6 +109,7 @@
     <Compile Include="Html\FamIcon.cs" />
     <Compile Include="Html\HtmlExtensions.Icon.cs" />
     <Compile Include="Html\HtmlExtensions.Message.cs" />
+    <Compile Include="Html\HtmlExtensions.SubmitLink.cs" />
     <Compile Include="Html\HtmlHelperExtensions.cs" />
     <Compile Include="Html\HtmlIconLinkExtensions.cs" />
     <Compile Include="IsCurrentActionHelper.cs" />
