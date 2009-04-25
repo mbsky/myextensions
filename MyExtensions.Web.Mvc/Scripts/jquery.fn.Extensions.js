@@ -274,7 +274,7 @@ $.fn.extend({
         var containerId = $("input[type=hidden][name=formContainerId]:first", this).val();
         var errDiv = $.getErrorContainer(containerId);
         errDiv.hide();
-        var ule = $("ul:first", ule);
+        var ule = $("ul:first", errDiv);
         ule.empty();
         var errors = "";
         var isValid = true;
@@ -308,7 +308,7 @@ $.fn.extend({
             var ipt = $(this);
             var reg = ipt.attr("reg");
             if (typeof (reg) == "string" && reg != "") {
-                //ipt.keypress(doInputEvent);
+                ipt.keypress(doInputEvent);
                 //ipt.blur(doInputEvent);
                 //ipt.bind('paste', doInputEvent);
             }
@@ -367,27 +367,7 @@ $.extend({
 });
 
 $.fn.extend({
-    //ajaxInit
-    ajaxInit: function() {
-
-        var a = $("a", this);
-        //去掉超链接虚线框
-        a.bind("focus", function() {
-            if (this.blur) {
-                this.blur();
-            }
-        });
-
-        //去掉超链接下划线
-        a.css("text-decoration", "none");
-
-        //对class包含ajax并且有正确的url标签的对象自动执行ajax内容请求
-        //var ajax = $("div[url]", this);
-        var ajax = $("h1:not([class=ajaxDuring])[url],div:not([class=ajaxDuring])[url],p:not([class=ajaxDuring])[url]", this);
-
-        ajax.each(function(i) {
-            $(this).ajaxLoad();
-        });
+    ajaxLinkInit: function() {
 
         var lnkAjax = $("a[class=ajax][href][target]", this);
 
@@ -413,25 +393,60 @@ $.fn.extend({
         var linkSubmit = $("a[class=submitlink][href]", this);
 
         linkSubmit.each(function(idx) {
+
             var url = this.href;
             if (url && url != "") {
                 var submitlink = $(this);
-                submitlink.ajaxSuccess(function() {
-                    var ajaxContainer = $(this).parents("div[url]:first");
-                    ajaxContainer.ajaxLoad();
-                });
+
                 submitlink.click(function() {
+
+                    var lnk = event.srcElement;
                     $.post(url, null, function(res) {
                         var success = typeof (res.Success) == "undefined" ? true : res.Success;
                         if (res.Msg) {
                             alert(res.Msg);
                         }
+
+                        var ajaxContainer = $(lnk).parents("div[url]:first");
+                        ajaxContainer.ajaxLoad();
+
                     }, "json");
                     return false;
                 });
                 submitlink.attr("href", "#");
             }
         });
+    }
+});
+
+$.fn.extend({
+    //ajaxInit
+    ajaxInit: function() {
+
+        var isReload = this.attr("loaded") == "1";
+        this.attr("loaded", "1");
+
+        var a = $("a", this);
+        //去掉超链接虚线框
+        a.bind("focus", function() {
+            if (this.blur) {
+                this.blur();
+            }
+        });
+
+        //去掉超链接下划线
+        a.css("text-decoration", "none");
+
+        //对class包含ajax并且有正确的url标签的对象自动执行ajax内容请求
+        //var ajax = $("div[url]", this);
+
+        var ajax = $("h1:not([class=ajaxDuring])[url],div:not([class=ajaxDuring])[url],p:not([class=ajaxDuring])[url]", this);
+
+        ajax.each(function(i) {
+            $(this).ajaxLoad();
+        });
+
+        this.ajaxLinkInit();
     },
     bindClientValidateForm: function() {
         var f = $(this);
