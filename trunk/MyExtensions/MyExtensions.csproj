@@ -60,6 +60,7 @@
     <Compile Include="Net\EmailSender.cs" />
     <Compile Include="Net\FTPHelper.cs" />
     <Compile Include="Net\FTPHelper.String.cs" />
+    <Compile Include="Net\GetRemoteObj.cs" />
     <Compile Include="Net\IPAddressExtensions.cs" />
     <Compile Include="Drawing\ThumbnailUtility.cs" />
     <Compile Include="Net\IpHelper.cs" />
