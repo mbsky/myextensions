@@ -326,11 +326,19 @@ $.extend({
     getErrorContainer: function(containerId) {
         return $.selectFromContainer("div[class=message] div[class=error]:first", containerId);
     },
-    ajaxActionCallback: function(res) {
+    ajaxReloadCallback: function(res) {
+        //ReloadUrl , ReloadOption
+        if (res.ReloadUrl && res.ReloadUrl != '') {
+            if (res.ReloadOption == 0 /* ajaxload*/) {
+                var div = $("div .ajax[url=" + res.ReloadUrl + "]");
+                div.ajaxLoad();
+            }
+        }
     },
     ajaxFormCallbackDefault: function(res) {
         if (res.Msg)
             alert(res.Msg);
+        eval("$.ajaxReloadCallback(res)");
     },
     ajaxFormCallback: function(res) {
         var success = typeof (res.Success) == "undefined" ? true : res.Success;
@@ -340,6 +348,7 @@ $.extend({
 
         if ((!sucDiv) || sucDiv.length == 0) {
             eval("$.ajaxFormCallbackDefault(res)");
+            return;
         }
 
         var errDiv = $.getErrorContainer(containerId);
@@ -373,6 +382,8 @@ $.extend({
         } else {
             errDiv.hide();
         }
+
+        eval("$.ajaxReloadCallback(res)");
     }
 });
 
