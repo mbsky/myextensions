@@ -328,10 +328,20 @@ $.extend({
     },
     ajaxActionCallback: function(res) {
     },
+    ajaxFormCallbackDefault: function(res) {
+        if (res.Msg)
+            alert(res.Msg);
+    },
     ajaxFormCallback: function(res) {
         var success = typeof (res.Success) == "undefined" ? true : res.Success;
         var containerId = res.ContainerId;
+
         var sucDiv = $.getMsgContainer(containerId);
+
+        if ((!sucDiv) || sucDiv.length == 0) {
+            eval("$.ajaxFormCallbackDefault(res)");
+        }
+
         var errDiv = $.getErrorContainer(containerId);
         var uls = $("ul:first", sucDiv);
         var ule = $("ul:first", errDiv);
