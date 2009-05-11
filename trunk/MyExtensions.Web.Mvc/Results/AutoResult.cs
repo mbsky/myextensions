@@ -7,19 +7,33 @@ namespace System.Web.Mvc
 {
     public class AutoResult : ActionResult
     {
+
+        public enum ReloadAction : byte
+        {
+            AjaxLoad = 0,
+            Redirect
+        }
+
         public string Message;
 
         public string ReloadUrl;
+
+        public ReloadAction ReloadOption { get; set; }
 
         public AutoResult(string message)
             : this(message, null)
         {
         }
 
-        public AutoResult(string message, string reloadUrl)
+        public AutoResult(string message, string reloadUrl):this(message,reloadUrl,ReloadAction.AjaxLoad)
+        {
+        }
+
+        public AutoResult(string message, string reloadUrl, ReloadAction reloadOption)
         {
             Message = message;
             ReloadUrl = reloadUrl;
+            ReloadOption = reloadOption;
         }
 
         public override void ExecuteResult(ControllerContext context)
@@ -51,13 +65,16 @@ namespace System.Web.Mvc
                 {
                 };
 
+                //ReloadUrl = reloadUrl;
+                //ReloadOption = reloadOption;
+
                 if (!modelState.IsValid)
                 {
-                    jr.Data = new { Msg = Message, Errors = modelState.GetErrors(), ContainerId = request.Form["formContainerId"] };
+                    jr.Data = new { Msg = Message, Errors = modelState.GetErrors(), ContainerId = request.Form["formContainerId"], ReloadUrl = ReloadUrl, ReloadOption = (byte)ReloadOption };
                 }
                 else
                 {
-                    jr.Data = new { Msg = Message };
+                    jr.Data = new { Msg = Message, ReloadUrl = ReloadUrl, ReloadOption = (byte)ReloadOption };
                 }
 
                 jr.ExecuteResult(context);
@@ -65,7 +82,7 @@ namespace System.Web.Mvc
                 return;
             }
 
-            if (ReloadUrl.IsNullOrEmpty() == false)
+            if (ReloadUrl.IsNullOrEmpty() == false && ReloadOption == ReloadAction.Redirect)
             {
                 HttpResponseBase response = context.HttpContext.Response;
 
