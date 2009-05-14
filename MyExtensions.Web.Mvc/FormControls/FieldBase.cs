@@ -38,6 +38,8 @@ namespace System.Web.Mvc.Html
 
         public virtual bool Required { get; set; }
 
+        public virtual bool ShowSeperatorOnEnd { get; set; }
+
         public abstract FieldType FieldType { get; }
 
         public virtual string VType { get; set; }
