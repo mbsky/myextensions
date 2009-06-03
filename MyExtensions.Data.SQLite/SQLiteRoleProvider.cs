@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Web.Security;
 
-namespace MyExtensions.Data.SQLite
+namespace System.Data.SQLite
 {
 	/// <summary>
 	/// Provides a Role implementation whose data is stored in a SQLite database.
