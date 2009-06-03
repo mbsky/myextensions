@@ -103,6 +103,7 @@
     <Compile Include="FormControls\NumberMode.cs" />
     <Compile Include="FormControls\PasswordField.cs" />
     <Compile Include="FormControls\RadioFieldList.cs" />
+    <Compile Include="FormControls\SelectFieldList.cs" />
     <Compile Include="FormControls\TextArea.cs" />
     <Compile Include="FormControls\TextField.cs" />
     <Compile Include="FormControls\TextFieldBase.cs" />
