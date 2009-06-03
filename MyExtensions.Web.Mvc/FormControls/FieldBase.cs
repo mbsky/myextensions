@@ -32,13 +32,23 @@ namespace System.Web.Mvc.Html
         public virtual string Name { get; set; }
 
         /// <summary>
+        /// 从这个字段开始新的分组的分组名称
+        /// </summary>
+        public virtual string GroupName { get; set; }
+
+        /// <summary>
+        /// OneRowFlag不为空 并且有相同的OneRowFlag值的Field 输出在同一行
+        /// </summary>
+        public virtual string OneRowFlag { get; set; }
+
+        /// <summary>
         /// 提示
         /// </summary>
         public virtual string Tip { get; set; }
 
         public virtual bool Required { get; set; }
 
-        public virtual bool ShowSeperatorOnEnd { get; set; }
+        //public virtual bool ShowSeperatorOnEnd { get; set; }
 
         public abstract FieldType FieldType { get; }
 

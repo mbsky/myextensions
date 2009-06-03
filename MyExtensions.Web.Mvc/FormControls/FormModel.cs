@@ -66,6 +66,8 @@ namespace System.Web.Mvc.Html
 
         public virtual string Prefix { get; set; }
 
+        public virtual string TemplateName { get; set; }
+
         /// <summary>
         /// 是否禁止跨域访问 prevent-cross-site-request-forgery-csrf
         /// </summary>
@@ -110,7 +112,7 @@ namespace System.Web.Mvc.Html
         public static void RenderForm(this HtmlHelper helper, FormModel model, string prefix)
         {
 
-            string templateName = defaultTemplateName;
+            string templateName = model.TemplateName.IsNullOrEmpty() ? defaultTemplateName : model.TemplateName;
 
             if (model.ControllerName.IsNullOrEmpty())
             {
