@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Security;
 
-namespace MyExtensions.Data.SQLite
+namespace System.Data.SQLite
 {
 	/// <summary>
 	/// Provides a Membership implementation whose data is stored in a SQLite database.

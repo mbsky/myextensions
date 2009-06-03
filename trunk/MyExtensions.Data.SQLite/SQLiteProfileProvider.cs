@@ -12,7 +12,7 @@ using System.Text;
 using System.Web.Profile;
 using System.Xml.Serialization;
 
-namespace MyExtensions.Data.SQLite
+namespace System.Data.SQLite
 {
 	/// <summary>
 	/// Provides a Profile implementation whose data is stored in a SQLite database.
