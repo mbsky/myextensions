@@ -4,7 +4,7 @@
  * intended to be used only for design-time IntelliSense.  Please use the
  * standard jQuery library for all production use.
  *
- * Comment version: 1.3.2a
+ * Comment version: 1.3.2b
  */
 
 /*
@@ -3205,78 +3205,78 @@ if ( document.documentElement.compareDocumentPosition ) {
 	};
 }
 
-// [vsdoc] The following function has been commented out for IntelliSense.
+// [vsdoc] The following function has been modified for IntelliSense.
 // Check to see if the browser returns elements by name when
 // querying by getElementById (and provide a workaround)
-//(function(){
-//	// We're going to inject a fake input element with a specified name
-//	var form = document.createElement("form"),
-//		id = "script" + (new Date).getTime();
-//	form.innerHTML = "<input name='" + id + "'/>";
+(function(){
+	// We're going to inject a fake input element with a specified name
+	////var form = document.createElement("form"),
+	////	id = "script" + (new Date).getTime();
+	////form.innerHTML = "<input name='" + id + "'/>";
 
-//	// Inject it into the root element, check its status, and remove it quickly
-//	var root = document.documentElement;
-//	root.insertBefore( form, root.firstChild );
+	// Inject it into the root element, check its status, and remove it quickly
+	////var root = document.documentElement;
+	////root.insertBefore( form, root.firstChild );
 
-//	// The workaround has to do additional checks after a getElementById
-//	// Which slows things down for other browsers (hence the branching)
-//	if ( !!document.getElementById( id ) ) {
-//		Expr.find.ID = function(match, context, isXML){
-//			if ( typeof context.getElementById !== "undefined" && !isXML ) {
-//				var m = context.getElementById(match[1]);
-//				return m ? m.id === match[1] || typeof m.getAttributeNode !== "undefined" && m.getAttributeNode("id").nodeValue === match[1] ? [m] : undefined : [];
-//			}
-//		};
+	// The workaround has to do additional checks after a getElementById
+	// Which slows things down for other browsers (hence the branching)
+	////if ( !!document.getElementById( id ) ) {
+		Expr.find.ID = function(match, context, isXML){
+			if ( typeof context.getElementById !== "undefined" && !isXML ) {
+				var m = context.getElementById(match[1]);
+				return m ? m.id === match[1] || typeof m.getAttributeNode !== "undefined" && m.getAttributeNode("id").nodeValue === match[1] ? [m] : undefined : [];
+			}
+		};
 
-//		Expr.filter.ID = function(elem, match){
-//			var node = typeof elem.getAttributeNode !== "undefined" && elem.getAttributeNode("id");
-//			return elem.nodeType === 1 && node && node.nodeValue === match;
-//		};
-//	}
+		Expr.filter.ID = function(elem, match){
+			var node = typeof elem.getAttributeNode !== "undefined" && elem.getAttributeNode("id");
+			return elem.nodeType === 1 && node && node.nodeValue === match;
+		};
+	////}
 
-//	root.removeChild( form );
-//})();
+	////root.removeChild( form );
+})();
 
-// [vsdoc] The following function has been commented out for IntelliSense.
-//(function(){
-//	// Check to see if the browser returns only elements
-//	// when doing getElementsByTagName("*")
+// [vsdoc] The following function has been modified for IntelliSense.
+(function(){
+	// Check to see if the browser returns only elements
+	// when doing getElementsByTagName("*")
 
-//	// Create a fake element
-//	var div = document.createElement("div");
-//	div.appendChild( document.createComment("") );
+	// Create a fake element
+	////var div = document.createElement("div");
+	////div.appendChild( document.createComment("") );
 
-//	// Make sure no comments are found
-//	if ( div.getElementsByTagName("*").length > 0 ) {
-//		Expr.find.TAG = function(match, context){
-//			var results = context.getElementsByTagName(match[1]);
+	// Make sure no comments are found
+	////if ( div.getElementsByTagName("*").length > 0 ) {
+		Expr.find.TAG = function(match, context){
+			var results = context.getElementsByTagName(match[1]);
 
-//			// Filter out possible comments
-//			if ( match[1] === "*" ) {
-//				var tmp = [];
+			// Filter out possible comments
+			if ( match[1] === "*" ) {
+				var tmp = [];
 
-//				for ( var i = 0; results[i]; i++ ) {
-//					if ( results[i].nodeType === 1 ) {
-//						tmp.push( results[i] );
-//					}
-//				}
+				for ( var i = 0; results[i]; i++ ) {
+					if ( results[i].nodeType === 1 ) {
+						tmp.push( results[i] );
+					}
+				}
 
-//				results = tmp;
-//			}
+				results = tmp;
+			}
 
-//			return results;
-//		};
-//	}
+			return results;
+		};
+	////}
 
-//	// Check to see if an attribute returns normalized href attributes
-//	div.innerHTML = "<a href='#'></a>";
-//	if ( div.firstChild && typeof div.firstChild.getAttribute !== "undefined" &&
-//			div.firstChild.getAttribute("href") !== "#" ) {
-//		Expr.attrHandle.href = function(elem){
-//			return elem.getAttribute("href", 2);
-//		};
-//	}
-// })();
+	// Check to see if an attribute returns normalized href attributes
+	////div.innerHTML = "<a href='#'></a>";
+	////if ( div.firstChild && typeof div.firstChild.getAttribute !== "undefined" &&
+	////		div.firstChild.getAttribute("href") !== "#" ) {
+		Expr.attrHandle.href = function(elem){
+			return elem.getAttribute("href", 2);
+		};
+	////}
+})();
 
 if ( document.querySelectorAll ) (function(){
 	var oldSizzle = Sizzle, div = document.createElement("div");
@@ -4539,110 +4539,54 @@ jQuery( window ).bind( 'unload', function(){
 			jQuery.event.remove( jQuery.cache[ id ].handle.elem );
 });
 
-// [vsdoc] The following function has been commented out for IntelliSense.
-//(function(){
-
-//	jQuery.support = {};
-
-//	var root = document.documentElement,
-//		script = document.createElement("script"),
-//		div = document.createElement("div"),
-//		id = "script" + (new Date).getTime();
-
-//	div.style.display = "none";
-//	
-//	div.innerHTML = '   <link/><table></table><a href="/a" style="color:red;float:left;opacity:.5;">a</a><select><option>text</option></select><object><param/></object>';
-
-//	var all = div.getElementsByTagName("*"),
-//		a = div.getElementsByTagName("a")[0];
-
-//	// Can't get basic test support
-//	if ( !all || !all.length || !a ) {
-//		return;
-//	}
-
-//	jQuery.support = {
-//		// IE strips leading whitespace when .innerHTML is used
-//		leadingWhitespace: div.firstChild.nodeType == 3,
-//		
-//		// Make sure that tbody elements aren't automatically inserted
-//		// IE will insert them into empty tables
-//		tbody: !div.getElementsByTagName("tbody").length,
-//		
-//		// Make sure that you can get all elements in an <object> element
-//		// IE 7 always returns no results
-//		objectAll: !!div.getElementsByTagName("object")[0]
-//			.getElementsByTagName("*").length,
-//		
-//		// Make sure that link elements get serialized correctly by innerHTML
-//		// This requires a wrapper element in IE
-//		htmlSerialize: !!div.getElementsByTagName("link").length,
-//		
-//		// Get the style information from getAttribute
-//		// (IE uses .cssText insted)
-//		style: /red/.test( a.getAttribute("style") ),
-//		
-//		// Make sure that URLs aren't manipulated
-//		// (IE normalizes it by default)
-//		hrefNormalized: a.getAttribute("href") === "/a",
-//		
-//		// Make sure that element opacity exists
-//		// (IE uses filter instead)
-//		opacity: a.style.opacity === "0.5",
-//		
-//		// Verify style float existence
-//		// (IE uses styleFloat instead of cssFloat)
-//		cssFloat: !!a.style.cssFloat,
-
-//		// Will be defined later
-//		scriptEval: false,
-//		noCloneEvent: true,
-//		boxModel: null
-//	};
-//	
-//	script.type = "text/javascript";
-//	try {
-//		script.appendChild( document.createTextNode( "window." + id + "=1;" ) );
-//	} catch(e){}
-
-//	root.insertBefore( script, root.firstChild );
-//	
-//	// Make sure that the execution of code works by injecting a script
-//	// tag with appendChild/createTextNode
-//	// (IE doesn't support this, fails, and uses .text instead)
-//	if ( window[ id ] ) {
-//		jQuery.support.scriptEval = true;
-//		delete window[ id ];
-//	}
-
-//	root.removeChild( script );
-
-//	if ( div.attachEvent && div.fireEvent ) {
-//		div.attachEvent("onclick", function(){
-//			// Cloning a node shouldn't copy over any
-//			// bound event handlers (IE does this)
-//			jQuery.support.noCloneEvent = false;
-//			div.detachEvent("onclick", arguments.callee);
-//		});
-//		div.cloneNode(true).fireEvent("onclick");
-//	}
-
-//	// Figure out if the W3C box model works as expected
-//	// document.body must exist before we can do this
-//	jQuery(function(){
-//		var div = document.createElement("div");
-//		div.style.width = div.style.paddingLeft = "1px";
-
-//		document.body.appendChild( div );
-//		jQuery.boxModel = jQuery.support.boxModel = div.offsetWidth === 2;
-//		document.body.removeChild( div ).style.display = 'none';
-//	});
-//})();
-
 // [vsdoc] The following function has been modified for IntelliSense.
-// var styleFloat = jQuery.support.cssFloat ? "cssFloat" : "styleFloat";
-var styleFloat = "cssFloat";
+// [vsdoc] Stubbing support properties to "false" since we simulate IE.
+(function(){
 
+	jQuery.support = {};
+
+	jQuery.support = {
+		// IE strips leading whitespace when .innerHTML is used
+		leadingWhitespace: false,
+		
+		// Make sure that tbody elements aren't automatically inserted
+		// IE will insert them into empty tables
+		tbody: false,
+		
+		// Make sure that you can get all elements in an <object> element
+		// IE 7 always returns no results
+		objectAll: false,
+		
+		// Make sure that link elements get serialized correctly by innerHTML
+		// This requires a wrapper element in IE
+		htmlSerialize: false,
+		
+		// Get the style information from getAttribute
+		// (IE uses .cssText insted)
+		style: false,
+		
+		// Make sure that URLs aren't manipulated
+		// (IE normalizes it by default)
+		hrefNormalized: false,
+		
+		// Make sure that element opacity exists
+		// (IE uses filter instead)
+		opacity: false,
+		
+		// Verify style float existence
+		// (IE uses styleFloat instead of cssFloat)
+		cssFloat: false,
+
+		// Will be defined later
+		scriptEval: false,
+		noCloneEvent: false,
+		boxModel: false
+	};
+
+})();
+
+// [vsdoc] The following member has been modified for IntelliSense.
+var styleFloat = "styleFloat";
 
 jQuery.props = {
 	"for": "htmlFor",
