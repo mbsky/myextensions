@@ -319,7 +319,9 @@ $.fn.extend({
 $.extend({
     getMsgIcon: "<img src='/Content/icons/tag_green.png' alt='' class='icon' />",
     getErrorIcon: "<img src='/Content/icons/server_error.png' alt='' class='icon' />",
-
+    getFromByContainerId: function(containerId) {
+        return $.selectFromContainer("form:first", containerId);
+    },
     getMsgContainer: function(containerId) {
         return $.selectFromContainer("div[class=message] div[class=success]:first", containerId);
     },
@@ -341,13 +343,21 @@ $.extend({
         eval("$.ajaxReloadCallback(res)");
     },
     ajaxFormCallback: function(res) {
+
         var success = typeof (res.Success) == "undefined" ? true : res.Success;
         var containerId = res.ContainerId;
 
         var sucDiv = $.getMsgContainer(containerId);
 
+        if (res.newid) {
+            var f = $.getFromByContainerId(containerId);
+            //alert(res.newid);
+            f.attr("newid", res.newid);
+        }
+
         if ((!sucDiv) || sucDiv.length == 0) {
             eval("$.ajaxFormCallbackDefault(res)");
+
             return;
         }
 
@@ -514,6 +524,16 @@ $.fn.extend({
                 var serializedForm = f.serialize();
                 var act = f.attr("action") || window.location.toString();
                 var callback = (cb && typeof (cb) == "function") ? cb : $.ajaxFormCallback;
+
+                //加入newid
+                var newid = f.attr("newid");
+                if (newid && newid != "") {
+                    //alert(newid);
+                    //serializedForm.newid = newid;
+                    serializedForm += "&newid=" + newid;
+                    //return false;
+                }
+
                 $.post(act, serializedForm, callback, "json");
                 return false;
             }
