@@ -107,6 +107,7 @@
     <Compile Include="FormControls\TextArea.cs" />
     <Compile Include="FormControls\TextField.cs" />
     <Compile Include="FormControls\TextFieldBase.cs" />
+    <Compile Include="Html\HtmlExtensions.CheckBox.cs" />
     <Compile Include="Html\FamIcon.cs" />
     <Compile Include="Html\HtmlExtensions.Icon.cs" />
     <Compile Include="Html\HtmlExtensions.Message.cs" />
