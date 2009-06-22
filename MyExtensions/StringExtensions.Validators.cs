@@ -36,6 +36,16 @@ namespace System
         }
         #endregion
 
+        #region [IsNumeric]
+        private static Regex isNumericRegex = new Regex(RegexPattern.NUMERIC, RegexOptions.Compiled);
+
+        public static bool IsNumeric(string inputString)
+        {
+            Match m = isNumericRegex.Match(inputString);
+            return m.Success;
+        } 
+        #endregion
+
         #region IsAbsolutePhysicalPath
         private static bool IsDirectorySeparatorChar(char ch)
         {
@@ -58,7 +68,7 @@ namespace System
                 return false;
             }
             return (((path[1] == ':') && IsDirectorySeparatorChar(path[2])) || IsUncSharePath(path));
-        } 
+        }
         #endregion
 
         #region IsAppRelativePath
@@ -82,7 +92,7 @@ namespace System
                 return (path[1] == '/');
             }
             return true;
-        } 
+        }
         #endregion
 
         #region [IsEmailAddress]
@@ -201,6 +211,16 @@ namespace System
             if (string.IsNullOrEmpty(inputString))
                 return false;
             return isUrlRegex.IsMatch(inputString);
+        }
+        #endregion
+
+        #region [IsHasChinese]
+        private static Regex isHasChineseRegex = new Regex(RegexPattern.HasCHINESE, RegexOptions.Compiled);
+
+        public static bool IsHasChinese(string inputString)
+        {
+            Match m = isHasChineseRegex.Match(inputString);
+            return m.Success;
         }
         #endregion
     }
