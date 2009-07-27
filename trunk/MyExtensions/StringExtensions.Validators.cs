@@ -217,7 +217,7 @@ namespace System
         #region [IsHasChinese]
         private static Regex isHasChineseRegex = new Regex(RegexPattern.HasCHINESE, RegexOptions.Compiled);
 
-        public static bool IsHasChinese(string inputString)
+        public static bool IsHasChinese(this string inputString)
         {
             Match m = isHasChineseRegex.Match(inputString);
             return m.Success;
