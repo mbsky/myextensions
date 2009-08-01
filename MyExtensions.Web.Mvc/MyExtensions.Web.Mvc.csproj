@@ -78,9 +78,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AreaViewEngine\AreaRouteHelper.cs" />
-    <Compile Include="AreaViewEngine\AreaViewEngine.cs" />
-    <Compile Include="AreaViewEngine\HtmlActionLinkExtensions.AreaViewEngine.cs" />
     <Compile Include="ControllerEx.Auto.cs" />
     <Compile Include="ControllerEx.cs" />
     <Compile Include="ControllerEx.Json.cs" />
