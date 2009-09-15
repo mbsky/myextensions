@@ -19,6 +19,8 @@ namespace System.Web.Mvc.Html
             return Icon(icon);
         }
 
+        private static string ContentIconPath = System.Web.Configuration.WebConfigurationManager.AppSettings["ContentIconPath"];
+
         /// <summary>
         /// render a icon http://www.FamFamFam.com
         /// </summary>
@@ -29,11 +31,17 @@ namespace System.Web.Mvc.Html
 
             if (icon == FamIcon.None)
             {
-
                 return string.Empty;
             }
 
-            string path = "/Content/icons/" + icon.ToString().ToCharacterSeparatedFileName('_', "png");
+            string dir = ContentIconPath.IsNullOrEmpty() ? "/Content/icons/" : ContentIconPath;
+
+            if (dir.EndsWith("/") == false)
+            {
+                dir += "/";
+            }
+
+            string path = dir + icon.ToString().ToCharacterSeparatedFileName('_', "png");
             //string style = string.Format("background-image:url({0}) !important",path);
             return string.Format("<img alt=\"\" class=\"icon\" src=\"{0}\" />", path);
         }
