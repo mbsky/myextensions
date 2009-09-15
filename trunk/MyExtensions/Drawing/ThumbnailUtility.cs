@@ -153,7 +153,7 @@ namespace System.Drawing
                 Graphics g = Graphics.FromImage(bitmap);
 
                 //set InterpolationMode
-                g.InterpolationMode = InterpolationMode.High;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                 //set HighQuality ,low speed SmoothingMode  
                 g.SmoothingMode = SmoothingMode.HighQuality;
