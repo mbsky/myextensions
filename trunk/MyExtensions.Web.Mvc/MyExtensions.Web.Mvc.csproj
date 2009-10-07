@@ -106,11 +106,10 @@
     <Compile Include="FormControls\TextFieldBase.cs" />
     <Compile Include="Html\HtmlExtensions.CheckBox.cs" />
     <Compile Include="Html\FamIcon.cs" />
-    <Compile Include="Html\HtmlExtensions.Icon.cs" />
+    <Content Include="Html\HtmlExtensions.Icon.cs" />
     <Compile Include="Html\HtmlExtensions.Message.cs" />
-    <Compile Include="Html\HtmlExtensions.SubmitLink.cs" />
     <Compile Include="Html\HtmlHelperExtensions.cs" />
-    <Compile Include="Html\HtmlIconLinkExtensions.cs" />
+    <Content Include="Html\HtmlIconLinkExtensions.cs" />
     <Compile Include="IsCurrentActionHelper.cs" />
     <Compile Include="IViewDataContainerExtensions.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
