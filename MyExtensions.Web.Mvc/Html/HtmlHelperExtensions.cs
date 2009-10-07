@@ -8,7 +8,8 @@ using System.Text.RegularExpressions;
 using System.Web.Routing;
 using Microsoft.Web.Mvc;
 
-namespace System.Web.Mvc.Html {
+namespace System.Web.Mvc.Html
+{
 
     public class HeadLink
     {
@@ -20,36 +21,42 @@ namespace System.Web.Mvc.Html {
     }
 
     [AspNetHostingPermission(System.Security.Permissions.SecurityAction.LinkDemand, Level = AspNetHostingPermissionLevel.Minimal)]
-    public static class HtmlHelperExtensions {
+    public static class HtmlHelperExtensions
+    {
 
         #region ActionImage
 
         public static string ActionImage<T>(this HtmlHelper html, Expression<Action<T>> action, string imageRelativeUrl, string alt, object imageAttributes)
-     where T : Controller {
-            string image = html.Image(imageRelativeUrl, alt, imageAttributes);
+     where T : Controller
+        {
+            MvcHtmlString image = html.Image(imageRelativeUrl, alt, imageAttributes);
             return string.Format("<a href=\"{0}\">{1}</a>",
                 html.BuildUrlFromExpression<T>(action),
-                image);
-        } 
+                image.ToHtmlString());
+        }
         #endregion
 
         #region Label
 
-        public static string Label(this HtmlHelper helper, string text) {
+        public static string Label(this HtmlHelper helper, string text)
+        {
             return String.Format("<label>{0}</label>", text);
         }
 
-        public static string Label(this HtmlHelper helper, string text, string @for) {
+        public static string Label(this HtmlHelper helper, string text, string @for)
+        {
             return String.Format("<label for=\"{0}\">{1}</label>", @for, text);
         }
         #endregion
 
         #region ConditionalLink
-        public static string ConditionalLink(this HtmlHelper html, string url, string text) {
+        public static string ConditionalLink(this HtmlHelper html, string url, string text)
+        {
             return ConditionalLink(html, url, text, null /* htmlAttributes */);
         }
 
-        public static string ConditionalLink(this HtmlHelper html, string url, string text, object htmlAttributes) {
+        public static string ConditionalLink(this HtmlHelper html, string url, string text, object htmlAttributes)
+        {
             Check.AssertNotNullOrEmpty(text, "text");
 
             string encodedText = html.Encode(text);
@@ -69,15 +76,18 @@ namespace System.Web.Mvc.Html {
 
         #region HeadLink
 
-        public static string HeadLink(this HtmlHelper htmlHelper, HeadLink headLink) {
+        public static string HeadLink(this HtmlHelper htmlHelper, HeadLink headLink)
+        {
             return htmlHelper.HeadLink(headLink.Rel, headLink.Href, headLink.Type, headLink.Title, headLink.HtmlAttributes);
         }
 
-        public static string HeadLink(this HtmlHelper htmlHelper, string rel, string href, string type, string title) {
+        public static string HeadLink(this HtmlHelper htmlHelper, string rel, string href, string type, string title)
+        {
             return htmlHelper.HeadLink(rel, href, type, title, null);
         }
 
-        public static string HeadLink(this HtmlHelper htmlHelper, string rel, string href, string type, string title, object htmlAttributes) {
+        public static string HeadLink(this HtmlHelper htmlHelper, string rel, string href, string type, string title, object htmlAttributes)
+        {
             TagBuilder tagBuilder = new TagBuilder("link");
 
             tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
@@ -97,41 +107,48 @@ namespace System.Web.Mvc.Html {
 
         #region Input
 
-        public static string DropDownList(this HtmlHelper htmlHelper, string name, SelectList selectList, object htmlAttributes, bool isEnabled) {
+        public static string DropDownList(this HtmlHelper htmlHelper, string name, SelectList selectList, object htmlAttributes, bool isEnabled)
+        {
             RouteValueDictionary htmlAttributeDictionary = new RouteValueDictionary(htmlAttributes);
 
-            if (!isEnabled) {
+            if (!isEnabled)
+            {
                 htmlAttributeDictionary["disabled"] = "disabled";
 
                 StringBuilder inputItemBuilder = new StringBuilder();
-                inputItemBuilder.AppendLine(htmlHelper.DropDownList(string.Format("{0}_view", name), selectList, htmlAttributeDictionary));
-                inputItemBuilder.AppendLine(htmlHelper.Hidden(name, selectList.SelectedValue));
+
+                inputItemBuilder.AppendLine(htmlHelper.DropDownList(string.Format("{0}_view", name), selectList, htmlAttributeDictionary).ToHtmlString());
+                inputItemBuilder.AppendLine(htmlHelper.Hidden(name, selectList.SelectedValue).ToHtmlString());
                 return inputItemBuilder.ToString();
             }
 
-            return htmlHelper.DropDownList(name, selectList, htmlAttributeDictionary);
+            return htmlHelper.DropDownList(name, selectList, htmlAttributeDictionary).ToHtmlString();
         }
 
-        public static string RadioButton(this HtmlHelper htmlHelper, string name, object value, bool isChecked, object htmlAttributes, bool isEnabled) {
+        public static string RadioButton(this HtmlHelper htmlHelper, string name, object value, bool isChecked, object htmlAttributes, bool isEnabled)
+        {
             RouteValueDictionary htmlAttributeDictionary = new RouteValueDictionary(htmlAttributes);
 
-            if (!isEnabled) {
+            if (!isEnabled)
+            {
                 htmlAttributeDictionary["disabled"] = "disabled";
 
                 StringBuilder inputItemBuilder = new StringBuilder();
-                inputItemBuilder.AppendLine(htmlHelper.RadioButton(string.Format("{0}_view", name), value, isChecked, htmlAttributeDictionary));
+                inputItemBuilder.AppendLine(htmlHelper.RadioButton(string.Format("{0}_view", name), value, isChecked, htmlAttributeDictionary).ToHtmlString());
                 if (isChecked)
-                    inputItemBuilder.AppendLine(htmlHelper.Hidden(name, value));
+                    inputItemBuilder.AppendLine(htmlHelper.Hidden(name, value).ToHtmlString());
                 return inputItemBuilder.ToString();
             }
 
-            return htmlHelper.RadioButton(name, value, isChecked, htmlAttributeDictionary);
+            return htmlHelper.RadioButton(name, value, isChecked, htmlAttributeDictionary).ToHtmlString();
         }
 
-        public static string TextBox(this HtmlHelper htmlHelper, string name, object value, object htmlAttributes, bool isEnabled) {
+        public static string TextBox(this HtmlHelper htmlHelper, string name, object value, object htmlAttributes, bool isEnabled)
+        {
             RouteValueDictionary htmlAttributeDictionary = new RouteValueDictionary(htmlAttributes);
 
-            if (!isEnabled) {
+            if (!isEnabled)
+            {
                 htmlAttributeDictionary["disabled"] = "disabled";
 
                 StringBuilder inputItemBuilder = new StringBuilder();
@@ -140,15 +157,18 @@ namespace System.Web.Mvc.Html {
                 return inputItemBuilder.ToString();
             }
 
-            return htmlHelper.TextBox(name, value, htmlAttributeDictionary);
+            return htmlHelper.TextBox(name, value, htmlAttributeDictionary).ToHtmlString();
         }
 
-        public static string Button(this HtmlHelper htmlHelper, string name, string buttonContent, object htmlAttributes) {
+        public static string Button(this HtmlHelper htmlHelper, string name, string buttonContent, object htmlAttributes)
+        {
             return htmlHelper.Button(name, buttonContent, new RouteValueDictionary(htmlAttributes));
         }
 
-        public static string Button(this HtmlHelper htmlHelper, string name, string buttonContent, IDictionary<string, object> htmlAttributes) {
-            TagBuilder tagBuilder = new TagBuilder("button") {
+        public static string Button(this HtmlHelper htmlHelper, string name, string buttonContent, IDictionary<string, object> htmlAttributes)
+        {
+            TagBuilder tagBuilder = new TagBuilder("button")
+            {
                 InnerHtml = buttonContent
             };
             tagBuilder.MergeAttributes(htmlAttributes);
@@ -159,16 +179,20 @@ namespace System.Web.Mvc.Html {
 
         #region Link
 
-        public static string Link(this HtmlHelper htmlHelper, string linkText, string href) {
+        public static string Link(this HtmlHelper htmlHelper, string linkText, string href)
+        {
             return Link(htmlHelper, linkText, href, null);
         }
 
-        public static string Link(this HtmlHelper htmlHelper, string linkText, string href, object htmlAttributes) {
+        public static string Link(this HtmlHelper htmlHelper, string linkText, string href, object htmlAttributes)
+        {
             return htmlHelper.Link(linkText, href, new RouteValueDictionary(htmlAttributes));
         }
 
-        public static string Link(this HtmlHelper htmlHelper, string linkText, string href, IDictionary<string, object> htmlAttributes) {
-            TagBuilder tagBuilder = new TagBuilder("a") {
+        public static string Link(this HtmlHelper htmlHelper, string linkText, string href, IDictionary<string, object> htmlAttributes)
+        {
+            TagBuilder tagBuilder = new TagBuilder("a")
+            {
                 InnerHtml = linkText
             };
             tagBuilder.MergeAttributes(htmlAttributes);
@@ -180,11 +204,13 @@ namespace System.Web.Mvc.Html {
 
         #region ScriptBlock
 
-        public static string ScriptBlock(this HtmlHelper htmlHelper, string type, string src) {
+        public static string ScriptBlock(this HtmlHelper htmlHelper, string type, string src)
+        {
             return htmlHelper.ScriptBlock(type, src, null);
         }
 
-        public static string ScriptBlock(this HtmlHelper htmlHelper, string type, string src, object htmlAttributes) {
+        public static string ScriptBlock(this HtmlHelper htmlHelper, string type, string src, object htmlAttributes)
+        {
             TagBuilder tagBuilder = new TagBuilder("script");
 
             tagBuilder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
@@ -223,23 +249,28 @@ namespace System.Web.Mvc.Html {
 
         #region UnorderedList
 
-        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, string> generateContent) {
+        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, string> generateContent)
+        {
             return UnorderedList<T>(htmlHelper, items, (t, i) => generateContent(t));
         }
 
-        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, string> generateContent, string cssClass) {
+        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, string> generateContent, string cssClass)
+        {
             return UnorderedList<T>(htmlHelper, items, (t, i) => generateContent(t), cssClass, null, null);
         }
 
-        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, int, string> generateContent) {
+        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, int, string> generateContent)
+        {
             return UnorderedList<T>(htmlHelper, items, generateContent, null);
         }
 
-        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, int, string> generateContent, string cssClass) {
+        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, int, string> generateContent, string cssClass)
+        {
             return UnorderedList<T>(htmlHelper, items, generateContent, cssClass, null, null);
         }
 
-        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, int, string> generateContent, string cssClass, string itemCssClass, string alternatingItemCssClass) {
+        public static string UnorderedList<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, Func<T, int, string> generateContent, string cssClass, string itemCssClass, string alternatingItemCssClass)
+        {
             if (items == null || items.Count() == 0) return "";
 
             StringBuilder sb = new StringBuilder(100);
@@ -249,7 +280,8 @@ namespace System.Web.Mvc.Html {
             if (!string.IsNullOrEmpty(cssClass))
                 sb.AppendFormat(" class=\"{0}\"", cssClass);
             sb.Append(">");
-            foreach (T item in items) {
+            foreach (T item in items)
+            {
                 StringBuilder sbClass = new StringBuilder(40);
 
                 if (counter == 0)
