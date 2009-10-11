@@ -112,6 +112,7 @@
     <Content Include="Html\HtmlIconLinkExtensions.cs" />
     <Compile Include="IsCurrentActionHelper.cs" />
     <Compile Include="IViewDataContainerExtensions.cs" />
+    <Compile Include="ModelBinders\JsonBinderAttribute.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControllerEx.XmlResults.cs" />
