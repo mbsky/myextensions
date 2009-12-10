@@ -20,7 +20,7 @@ namespace System.Linq
                 return obj;
 
             return null;
-        } 
+        }
         #endregion
 
         #region SortBy
@@ -65,34 +65,46 @@ namespace System.Linq
         #endregion
 
         #region ApplyOrderByClause
-        public static IQueryable<T> ApplyOrderByClause<T>(this IQueryable<T> query, string column)
+
+        private static IQueryable<T> innerApplyOrderByClause<T>(this IQueryable<T> query, string column, string dir)
         {
+            if (column.IsNullOrEmpty())
+            {
+                return query;
+            }
+
             PropertyInfo columnPropInfo = typeof(T).GetProperty(column);
 
             var entityParam = Expression.Parameter(typeof(T), "e");                    // {e}
             var columnExpr = Expression.MakeMemberAccess(entityParam, columnPropInfo); // {e.column}
             var lambda = Expression.Lambda(columnExpr, entityParam);                   // {e => e.column}
 
-            var call = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { typeof(T), columnPropInfo.PropertyType }, query.Expression, lambda);
+            MethodCallExpression call = null;
+            switch (dir.ToLower())
+            {
+                default:
+                    call = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { typeof(T), columnPropInfo.PropertyType }, query.Expression, lambda);
+                    break;
+                case "desc":
+                    call = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { typeof(T), columnPropInfo.PropertyType }, query.Expression, lambda);
+                    break;
+            }
 
             query = query.Provider.CreateQuery<T>(call);
+
 
             return query;
         }
 
+        public static IQueryable<T> ApplyOrderByClause<T>(this IQueryable<T> query, string column)
+        {
+            return innerApplyOrderByClause(query, column, "asc");
+
+        }
+
         public static IQueryable<T> ApplyOrderByDescendingClause<T>(this IQueryable<T> query, string column)
         {
-            PropertyInfo columnPropInfo = typeof(T).GetProperty(column);
-
-            var entityParam = Expression.Parameter(typeof(T), "e");                    // {e}
-            var columnExpr = Expression.MakeMemberAccess(entityParam, columnPropInfo); // {e.column}
-            var lambda = Expression.Lambda(columnExpr, entityParam);                   // {e => e.column}
-
-            var call = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { typeof(T), columnPropInfo.PropertyType }, query.Expression, lambda);
-
-            query = query.Provider.CreateQuery<T>(call);
-
-            return query;
+            return innerApplyOrderByClause(query, column, "desc");
         }
         #endregion
     }

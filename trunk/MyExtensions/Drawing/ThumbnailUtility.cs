@@ -155,6 +155,9 @@ namespace System.Drawing
                 //set InterpolationMode
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
+                //set CompositingQuality
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
                 //set HighQuality ,low speed SmoothingMode  
                 g.SmoothingMode = SmoothingMode.HighQuality;
 
