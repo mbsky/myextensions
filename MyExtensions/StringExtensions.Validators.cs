@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Text;
 
 namespace System
 {
@@ -222,6 +223,148 @@ namespace System
             Match m = isHasChineseRegex.Match(inputString);
             return m.Success;
         }
+        #endregion
+
+        #region [IsChineseLetter]
+        /// <summary>
+        /// 在unicode 字符串中，中文的范围是在4E00..9FFF:CJK Unified Ideographs。通过对字符的unicode编码进行判断来确定字符是否为中文。 
+        /// </summary>
+        /// <remarks>http://blog.csdn.net/qiujiahao/archive/2007/08/09/1733169.aspx</remarks>
+        /// <param name="input"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static bool IsChineseLetter(this string input, int index)
+        {
+            int code = 0;
+            int chfrom = Convert.ToInt32("4e00", 16);    //范围（0x4e00～0x9fff）转换成int（chfrom～chend）
+            int chend = Convert.ToInt32("9fff", 16);
+            if (input != "")
+            {
+                code = Char.ConvertToUtf32(input, index);    //获得字符串input中指定索引index处字符unicode编码
+
+                if (code >= chfrom && code <= chend)
+                {
+                    return true;     //当code在中文范围内返回true
+
+                }
+                else
+                {
+                    return false;    //当code不在中文范围内返回false
+                }
+            }
+            return false;
+        } //
+        #endregion
+
+        #region [IsGBCode]
+        /// <summary>
+        /// 判断一个word是否为GB2312编码的汉字
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static bool IsGBCode(this string word)
+        {
+            byte[] bytes = Encoding.GetEncoding("GB2312").GetBytes(word);
+            if (bytes.Length <= 1)  // if there is only one byte, it is ASCII code or other code
+            {
+                return false;
+            }
+            else
+            {
+                byte byte1 = bytes[0];
+                byte byte2 = bytes[1];
+                if (byte1 >= 176 && byte1 <= 247 && byte2 >= 160 && byte2 <= 254)    //判断是否是GB2312
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        } 
+        #endregion
+
+        #region [IsGBKCode]
+        /// <summary>
+        /// 判断一个word是否为GBK编码的汉字
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static bool IsGBKCode(this string word)
+        {
+            byte[] bytes = Encoding.GetEncoding("GBK").GetBytes(word.ToString());
+            if (bytes.Length <= 1)  // if there is only one byte, it is ASCII code
+            {
+                return false;
+            }
+            else
+            {
+                byte byte1 = bytes[0];
+                byte byte2 = bytes[1];
+                if (byte1 >= 129 && byte1 <= 254 && byte2 >= 64 && byte2 <= 254)     //判断是否是GBK编码
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        } 
+        #endregion
+
+        #region [IsBig5Code]
+        /// <summary>
+        /// 判断一个word是否为GBK编码的汉字
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static bool IsBig5Code(this string word)
+        {
+            byte[] bytes = Encoding.GetEncoding("Big5").GetBytes(word.ToString());
+            if (bytes.Length <= 1)  // if there is only one byte, it is ASCII code
+            {
+                return false;
+            }
+            else
+            {
+                byte byte1 = bytes[0];
+                byte byte2 = bytes[1];
+                if ((byte1 >= 129 && byte1 <= 254) && ((byte2 >= 64 && byte2 <= 126) || (byte2 >= 161 && byte2 <= 254)))     //判断是否是Big5编码
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        } 
+        #endregion
+
+        #region [IsOnlyContainsChinese]
+        /// <summary>
+        /// 给定一个字符串，判断其是否只包含有汉字
+        /// </summary>
+        /// <param name="testStr"></param>
+        /// <returns></returns>
+        public static bool IsOnlyContainsChinese(this string testStr)
+        {
+            char[] words = testStr.ToCharArray();
+            foreach (char word in words)
+            {
+                if (IsGBCode(word.ToString()) || IsGBKCode(word.ToString()))  // it is a GB2312 or GBK chinese word
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }  
         #endregion
     }
 }
