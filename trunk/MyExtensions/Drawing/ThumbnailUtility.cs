@@ -159,7 +159,7 @@ namespace System.Drawing
                 g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
 
                 //set HighQuality ,low speed SmoothingMode  
-                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //clear the Graphics and fill with Transparent background color 
                 g.Clear(Color.Transparent);
@@ -169,9 +169,19 @@ namespace System.Drawing
                 new System.Drawing.Rectangle(x, y, ow, oh),
                 System.Drawing.GraphicsUnit.Pixel);
 
+                ImageCodecInfo myImageCodecInfo = ImageCodecInfo.GetImageEncoders()[0];
+
+                var myEncoder = Encoder.Quality;
+                var myEncoderParameters = new EncoderParameters(1);
+                // 在这里设置图片的质量等级为95L. 
+                var myEncoderParameter = new EncoderParameter(myEncoder, 95L); 
+
+                myEncoderParameters.Param[0] = myEncoderParameter;
+
                 try
                 {
-                    bitmap.Save(config.Path, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    // System.Drawing.Imaging.ImageFormat.Jpeg
+                    bitmap.Save(config.Path, myImageCodecInfo, myEncoderParameters);
                 }
                 catch (System.Exception e)
                 {
@@ -179,6 +189,9 @@ namespace System.Drawing
                 }
                 finally
                 {
+                    myEncoderParameter.Dispose(); 
+                    myEncoderParameters.Dispose(); 
+
                     originalImage.Dispose();
                     bitmap.Dispose();
                     g.Dispose();
