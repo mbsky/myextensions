@@ -132,21 +132,23 @@ namespace System.Net
             Check.Assert(Url.IsUrl(), "Invalid Url!");
 
             if (charset == "" || charset == null) charset = "gb2312";
-            string text1 = "";
+            string output = "";
             try
             {
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
                 HttpWebResponse res = (HttpWebResponse)req.GetResponse();
                 Stream stream1 = res.GetResponseStream();
                 StreamReader reader1 = new StreamReader(stream1, Encoding.GetEncoding(charset));
-                text1 = reader1.ReadToEnd();
+                output = reader1.ReadToEnd();
                 stream1.Close();
                 res.Close();
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
+                throw;
             }
-            return text1;
+
+            return output;
 
         }
 
@@ -172,7 +174,7 @@ namespace System.Net
         /// <param name="Url">远程url</param>
         /// <param name="Path">保存到的路径</param>
         /// <returns></returns>
-        public string RemoteSave(string Url,string charset, string Path)
+        public string RemoteSave(string Url, string charset, string Path)
         {
 
             string src = GetRemoteHtmlCode(Url, charset);
