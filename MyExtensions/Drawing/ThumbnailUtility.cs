@@ -169,10 +169,23 @@ namespace System.Drawing
                 new System.Drawing.Rectangle(x, y, ow, oh),
                 System.Drawing.GraphicsUnit.Pixel);
 
-                ImageCodecInfo myImageCodecInfo = ImageCodecInfo.GetImageEncoders()[0];
+                ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+                ImageCodecInfo ici = null;
+                foreach (ImageCodecInfo codec in codecs)
+                {
+                    if (codec.MimeType.IndexOf("jpeg") > -1)
+                    {
+                        ici = codec;
+                    }
+                }
 
                 var myEncoder = Encoder.Quality;
                 var myEncoderParameters = new EncoderParameters(1);
+
+                //ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+                //ImageCodecInfo ici = null;
+
+
                 // 在这里设置图片的质量等级为95L. 
                 var myEncoderParameter = new EncoderParameter(myEncoder, 95L); 
 
@@ -181,7 +194,7 @@ namespace System.Drawing
                 try
                 {
                     // System.Drawing.Imaging.ImageFormat.Jpeg
-                    bitmap.Save(config.Path, myImageCodecInfo, myEncoderParameters);
+                    bitmap.Save(config.Path, ici, myEncoderParameters);
                 }
                 catch (System.Exception e)
                 {
