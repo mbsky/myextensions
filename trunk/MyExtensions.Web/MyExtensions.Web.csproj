@@ -55,6 +55,7 @@
     <Compile Include="Data\JsonPersistable.cs" />
     <Compile Include="Data\XmlPersistable.cs" />
     <Compile Include="FastEvalExtensions.cs" />
+    <Compile Include="HttpApplicationExtensions.cs" />
     <Compile Include="HttpContextExtensions.cs" />
     <Compile Include="HttpHandlers\CompressionHandler.cs" />
     <Compile Include="HttpRequestExtensions.cs" />
