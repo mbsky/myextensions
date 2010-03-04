@@ -8,8 +8,8 @@
     <ProjectGuid>{1BD71E5F-E346-49A0-8E32-C6B61245351C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JobHunter.Web.Security</RootNamespace>
-    <AssemblyName>JobHunter.Web.Security</AssemblyName>
+    <RootNamespace>MyExtensions.Web.Security</RootNamespace>
+    <AssemblyName>MyExtensions.Web.Security</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
