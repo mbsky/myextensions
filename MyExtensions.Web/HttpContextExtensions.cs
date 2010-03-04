@@ -1,6 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Web;
 using System;
+using Microsoft.Win32;
 
 namespace System.Web
 {
@@ -19,7 +20,7 @@ namespace System.Web
             return String.Equals(context.Request.Url.Host, "localhost", StringComparison.InvariantCultureIgnoreCase)
                 && context.GetUserIpAddress() == HttpContext.Current.Request.ServerVariables["LOCAL_ADDR"]
                 && context.Request.UserHostAddress == "127.0.0.1";
-        } 
+        }
         #endregion
 
         #region IsEncodingAccepted
@@ -34,7 +35,7 @@ namespace System.Web
         {
             if (context != null)
                 context.Response.AppendHeader("Content-encoding", encoding);
-        } 
+        }
         #endregion
 
         #region HttpCompressable
@@ -111,7 +112,17 @@ namespace System.Web
             }
 
             return result;
-        } 
+        }
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static int GetIISMajorVersion(this HttpContext context)
+        {
+            return context.ApplicationInstance.GetIISMajorVersion();
+        }
     }
 }
