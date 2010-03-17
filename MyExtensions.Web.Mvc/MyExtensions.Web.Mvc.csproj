@@ -44,6 +44,10 @@
       <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -85,6 +89,7 @@
     <Compile Include="ControllerEx.Auto.cs" />
     <Compile Include="ControllerEx.cs" />
     <Compile Include="ControllerEx.Json.cs" />
+    <Compile Include="Controllers\BaseAccountController.cs" />
     <Compile Include="FormControls\ActionButton.cs" />
     <Compile Include="FormControls\BaseActionCaller.cs" />
     <Compile Include="FormControls\CheckBox.cs" />
@@ -118,6 +123,7 @@
     <Compile Include="IViewDataContainerExtensions.cs" />
     <Compile Include="ModelBinders\JsonBinderAttribute.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControllerEx.XmlResults.cs" />
     <Compile Include="Results\AutoResult.cs" />
