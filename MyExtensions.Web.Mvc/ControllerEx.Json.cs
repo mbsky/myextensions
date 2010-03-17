@@ -87,5 +87,15 @@ namespace System.Web.Mvc
                 ContentEncoding = contentEncoding
             };
         }
+
+        protected virtual JsonResult Success(string Message)
+        {
+            return Json(new { Msg = Message, Success = true });
+        }
+
+        protected virtual JsonResult Failure(string Message)
+        {
+            return Json(new { Err = Message, Success = false });
+        }
     }
 }

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.Web.Mvc.dll</HintPath>
@@ -130,6 +134,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyExtensions.Data\MyExtensions.Data.csproj">
+      <Project>{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}</Project>
+      <Name>MyExtensions.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyExtensions.Web\MyExtensions.Web.csproj">
       <Project>{37E17105-7211-4F58-8A28-7947852E8657}</Project>
       <Name>MyExtensions.Web</Name>
