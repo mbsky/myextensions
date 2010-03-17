@@ -15,7 +15,7 @@ namespace MyExtensions.Web.Security
     {
         private const int DefaultMinRequiredPasswordLength = 8;
         private const string EmailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-        private const string getUserSql = "SELECT u.UserId, u.UserName, u.Email, u.Comment, u.Enabled, u.DateCreated, u.DateLastLogin, u.DateLastActivity, s.DateLastPasswordChange FROM [Users] u INNER JOIN [UserSecurity] s On u.UserId = s.UserId ";
+        private const string getUserSql = "SELECT u.UserId, u.UserName, u.Email, u.Comment, u.Enabled, u.DateCreated, u.DateLastLogin, u.DateLastActivity, s.DateLastPasswordChange, s.Question FROM [Users] u INNER JOIN [UserSecurity] s On u.UserId = s.UserId ";
 
         #region Initialization and configuration
 
@@ -939,7 +939,8 @@ namespace MyExtensions.Web.Security
             DateTime lastLoginDate = new DateTime(); if (reader["DateLastLogin"] != DBNull.Value) lastLoginDate = System.Convert.ToDateTime(reader["DateLastLogin"]);
             DateTime lastActivityDate = new DateTime(); if (reader["DateLastActivity"] != DBNull.Value) lastLoginDate = System.Convert.ToDateTime(reader["DateLastActivity"]);
             DateTime lastPasswordChangedDate = System.Convert.ToDateTime(reader["DateLastPasswordChange"]);
-            return new MembershipUser(this.Name, username, providerUserKey, email, string.Empty, comment, isApproved, isLockedOut, creationDate, lastLoginDate, lastActivityDate, lastPasswordChangedDate, new DateTime());
+            string passwordQuestion = (string)reader["Question"];
+            return new MembershipUser(this.Name, username, providerUserKey, email, passwordQuestion, comment, isApproved, isLockedOut, creationDate, lastLoginDate, lastActivityDate, lastPasswordChangedDate, new DateTime());
         }
 
         const string MD5PasswordFlagStr = "MD5PasswordFlag";

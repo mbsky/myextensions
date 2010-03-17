@@ -61,6 +61,12 @@
     <Compile Include="SimpleSqlProfileProvider.cs" />
     <Compile Include="SimpleSqlRoleProvider.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyExtensions.Data\MyExtensions.Data.csproj">
+      <Project>{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}</Project>
+      <Name>MyExtensions.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
