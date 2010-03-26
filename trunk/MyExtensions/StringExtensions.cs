@@ -97,6 +97,11 @@ namespace System
         /// <param name="format"></param>
         /// <param name="provider"></param>
         /// <param name="source"></param>
+        /// <example>
+        /// <code>
+        /// "{CurrentTime} - {ProcessName}".FormatWith(new { CurrentTime = DateTime.Now, ProcessName = p.ProcessName });
+        /// </code>
+        /// </example>
         /// <returns></returns>
         public static string FormatWith(this string format, IFormatProvider provider, object source)
         {
@@ -152,7 +157,7 @@ namespace System
         #region SafeTrim
         public static string SafeTrim(this string obj, params char[] trimChars)
         {
-            return obj == null ? null : obj.Trim(trimChars);
+            return obj == null ? string.Empty : obj.Trim(trimChars);
         }
         #endregion
 
@@ -257,6 +262,9 @@ namespace System
         /// <exception cref="ArgumentNullException">Thrown if str is null.</exception>
         public static string Left(this string str, int length)
         {
+            if (str.IsNullOrEmpty())
+                return string.Empty;
+
             if (length >= str.Length)
                 return str;
 

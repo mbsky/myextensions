@@ -1,11 +1,12 @@
-﻿using System.IO.Compression;
-using System.Web;
-using System;
-using Microsoft.Win32;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO.Compression;
 
 namespace System.Web
 {
-    public static class HttpContextExtensions
+    public static class HttpContextBaseExtensions
     {
         #region IsConnectingLocally
         /// <summary>
@@ -13,7 +14,7 @@ namespace System.Web
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static bool IsConnectingLocally(this HttpContext context)
+        public static bool IsConnectingLocally(this HttpContextBase context)
         {
             Check.Require(context, "context");
 
@@ -24,14 +25,14 @@ namespace System.Web
         #endregion
 
         #region IsEncodingAccepted
-        public static bool IsEncodingAccepted(this HttpContext context, string encoding)
+        public static bool IsEncodingAccepted(this HttpContextBase context, string encoding)
         {
             if (context != null)
                 return context.Request.Headers["Accept-encoding"] != null && context.Request.Headers["Accept-encoding"].Contains(encoding);
             return false;
         }
 
-        public static void SetEncoding(this System.Web.HttpContext context, string encoding)
+        public static void SetEncoding(this HttpContextBase context, string encoding)
         {
             if (context != null)
                 context.Response.AppendHeader("Content-encoding", encoding);
@@ -45,11 +46,11 @@ namespace System.Web
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static bool HttpCompressable(this HttpContext context)
+        public static bool HttpCompressable(this HttpContextBase context)
         {
             Check.Require(context, "context");
 
-            HttpRequest request = context.Request;
+            var request = context.Request;
 
             string ua = request.UserAgent != null ? request.UserAgent.ToLowerInvariant() : "";
 
@@ -62,11 +63,11 @@ namespace System.Web
         /// <summary>
         ///  ExecuteHttpCompression must be userd in Page's OnLoad event
         /// </summary>
-        public static void ExecuteHttpCompression(this HttpContext context)
+        public static void ExecuteHttpCompression(this HttpContextBase context)
         {
             if (context.HttpCompressable())
             {
-                HttpResponse response = context.Response;
+                var response = context.Response;
 
                 if (context.IsEncodingAccepted("gzip"))
                 {
@@ -92,7 +93,7 @@ namespace System.Web
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public static string GetUserIpAddress(this HttpContext context)
+        public static string GetUserIpAddress(this HttpContextBase context)
         {
             if (context == null) return string.Empty;
 
@@ -121,14 +122,14 @@ namespace System.Web
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static int GetIISMajorVersion(this HttpContext context)
+        public static int GetIISMajorVersion(this HttpContextBase context)
         {
             return context.ApplicationInstance.GetIISMajorVersion();
         }
         #endregion
 
         #region GetFromCacheOrMethod
-        public static T GetFromCacheOrMethod<T>(this HttpContext context, string cacheKey, int cacheSeconds, Func<T> getObjectAction) where T : new()
+        public static T GetFromCacheOrMethod<T>(this HttpContextBase context, string cacheKey, int cacheSeconds, Func<T> getObjectAction) where T : new()
         {
             T data = (T)context.Cache[cacheKey];
 
@@ -140,7 +141,7 @@ namespace System.Web
             }
 
             return data;
-        } 
+        }
         #endregion
     }
 }
