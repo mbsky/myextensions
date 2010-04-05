@@ -31,9 +31,17 @@ namespace System
 
         public static string GetFirstMatch(this string _source, string start, string end)
         {
+            return _source.GetFirstMatch(start, end, true, true);
+        }
+
+        public static string GetFirstMatch(this string _source, string start, string end, bool appendStart, bool appendEnd)
+        {
             string groupName = "content";
             string regex = @"^.*" + start + "(?<" + groupName + ">.+?)" + end + ".*$";
-            return start + _source.GetValueUseRegex(regex, groupName) + end;
+
+            return (appendStart ? start : string.Empty)
+                + _source.GetValueUseRegex(regex, groupName)
+                + (appendEnd ? end : string.Empty);
         }
 
         static Regex regex1 = new Regex(@"<script[\s\s]+</script *>", RegexOptions.IgnoreCase);

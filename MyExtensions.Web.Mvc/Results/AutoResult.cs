@@ -50,7 +50,7 @@ namespace System.Web.Mvc
             ViewDataDictionary ViewData = controller.ViewData;
 
             ModelStateDictionary modelState = ViewData.ModelState;
-
+            
             if (request.IsAjaxRequest())
             {
 
@@ -64,9 +64,6 @@ namespace System.Web.Mvc
                 JsonResultEx jr = new JsonResultEx(provider)
                 {
                 };
-
-                //ReloadUrl = reloadUrl;
-                //ReloadOption = reloadOption;
 
                 if (!modelState.IsValid)
                 {
@@ -96,6 +93,7 @@ namespace System.Web.Mvc
             ViewResult vr = new ViewResult()
             {
                 ViewData = controller.ViewData,
+                ViewName = "Message"
             };
 
             vr.ExecuteResult(context);

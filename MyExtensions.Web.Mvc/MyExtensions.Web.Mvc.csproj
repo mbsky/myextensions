@@ -95,6 +95,10 @@
     <Compile Include="ControllerEx.Json.cs" />
     <Compile Include="Controllers\BaseAccountController.cs" />
     <Compile Include="CustomUnityControllerFactory.cs" />
+    <Compile Include="Filters\CompressFilter.cs" />
+    <Compile Include="Filters\ContentCacheFilter.cs" />
+    <Compile Include="Filters\LazyCacheFilter.cs" />
+    <Compile Include="Filters\ResponseWrapper.cs" />
     <Compile Include="FormControls\ActionButton.cs" />
     <Compile Include="FormControls\BaseActionCaller.cs" />
     <Compile Include="FormControls\CheckBox.cs" />
