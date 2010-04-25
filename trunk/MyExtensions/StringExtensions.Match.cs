@@ -8,7 +8,17 @@ namespace System
 {
     public static class StringExtensionsMatch
     {
-        public static string GetFirstMatch(this string _source, string regex)
+        public static string GetSplit(this string _source, string regex, int index)
+        {
+            if (_source.IsNullOrEmpty())
+                return string.Empty;
+
+            var matches = Regex.Split(_source, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
+            return matches[index];
+        }
+
+        public static string GetMatch(this string _source, string regex, int groupIndex)
         {
             if (_source.IsNullOrEmpty())
                 return string.Empty;
@@ -17,16 +27,26 @@ namespace System
 
             if (TitleMatch.Success)
 
-                return TitleMatch.Groups[1].Value;
+                return TitleMatch.Groups[groupIndex].Value;
 
             return string.Empty;
         }
 
+        public static string GetFirstMatch(this string _source, string regex)
+        {
+            return GetMatch(_source, regex, 1);
+        }
+
         public static string GetValueUseRegex(this string text, string regex, string groupName)
         {
-            Regex rgClass = new Regex(regex, RegexOptions.Singleline);
+            Regex rgClass = new Regex(regex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
             Match match = rgClass.Match(text);
-            return match.Groups[groupName].Value;
+
+            if (match.Success)
+                return match.Groups[groupName].Value;
+
+            return string.Empty;
         }
 
         public static string GetFirstMatch(this string _source, string start, string end)
@@ -44,6 +64,7 @@ namespace System
                 + (appendEnd ? end : string.Empty);
         }
 
+        #region WipeScript
         static Regex regex1 = new Regex(@"<script[\s\s]+</script *>", RegexOptions.IgnoreCase);
         static Regex regex2 = new Regex(@" href *= *[\s\s]*script *:", RegexOptions.IgnoreCase);
         static Regex regex3 = new Regex(@" on[\s\s]*=", RegexOptions.IgnoreCase);
@@ -64,6 +85,7 @@ namespace System
             html = regex5.Replace(html, String.Empty); //过滤frameset   
             return html;
         }
+        #endregion
 
     }
 }
