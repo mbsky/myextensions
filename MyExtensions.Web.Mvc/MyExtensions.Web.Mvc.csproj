@@ -93,7 +93,6 @@
     <Compile Include="ControllerEx.Auto.cs" />
     <Compile Include="ControllerEx.cs" />
     <Compile Include="ControllerEx.Json.cs" />
-    <Compile Include="Controllers\BaseAccountController.cs" />
     <Compile Include="CustomUnityControllerFactory.cs" />
     <Compile Include="Filters\CompressFilter.cs" />
     <Compile Include="Filters\ContentCacheFilter.cs" />
@@ -132,7 +131,6 @@
     <Compile Include="IViewDataContainerExtensions.cs" />
     <Compile Include="ModelBinders\JsonBinderAttribute.cs" />
     <Compile Include="ModelStateDictionaryExtensions.cs" />
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControllerEx.XmlResults.cs" />
     <Compile Include="Results\AutoResult.cs" />
@@ -190,6 +188,10 @@
     <None Include="Scripts\jQuery.Common.js.gz" />
     <None Include="Scripts\jquery.fn.Extensions.js.de" />
     <None Include="Scripts\jquery.fn.Extensions.js.gz" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
