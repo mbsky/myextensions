@@ -37,6 +37,11 @@ namespace System
             return GetMatch(_source, regex, 1);
         }
 
+        public static string GetValueUseRegex(this string text, string regex)
+        {
+            return GetValueUseRegex(text, regex, "data");
+        }
+
         public static string GetValueUseRegex(this string text, string regex, string groupName)
         {
             Regex rgClass = new Regex(regex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
