@@ -32,19 +32,54 @@ namespace System
             return string.Empty;
         }
 
-        public static string GetFirstMatch(this string _source, string regex)
+        public static IList<string[]> GetMatches(this string _source, string pattern, int limit)
         {
-            return GetMatch(_source, regex, 1);
+            Regex rgClass = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var matches = rgClass.Matches(_source);
+
+            int outputCount = limit <= 0 ? matches.Count : (matches.Count >= limit ? limit : matches.Count);
+
+            List<string[]> res = new List<string[]>(outputCount);
+
+            for (int i = 0; i < outputCount; i++)
+            {
+                var match = matches[i];
+
+                if (match.Success)
+                {
+                    List<string> arr = new List<string>(match.Groups.Count);
+
+                    for (int j = 0; j < match.Groups.Count; j++)
+                    {
+                        arr.Add(match.Groups[j].Value);
+                    }
+
+                    res.Add(arr.ToArray());
+                }
+                else
+                {
+                    outputCount++;
+                }
+
+
+            }
+
+            return res;
         }
 
-        public static string GetValueUseRegex(this string text, string regex)
+        public static string GetFirstMatch(this string _source, string pattern)
         {
-            return GetValueUseRegex(text, regex, "data");
+            return GetMatch(_source, pattern, 1);
         }
 
-        public static string GetValueUseRegex(this string text, string regex, string groupName)
+        public static string GetValueUseRegex(this string text, string pattern)
         {
-            Regex rgClass = new Regex(regex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            return GetValueUseRegex(text, pattern, "data");
+        }
+
+        public static string GetValueUseRegex(this string text, string pattern, string groupName)
+        {
+            Regex rgClass = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
             Match match = rgClass.Match(text);
 
