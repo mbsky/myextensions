@@ -32,6 +32,11 @@ namespace System
             return string.Empty;
         }
 
+        public static IList<string[]> GetMatches(this string _source, string pattern)
+        {
+            return _source.GetMatches(pattern, 0);
+        }
+
         public static IList<string[]> GetMatches(this string _source, string pattern, int limit)
         {
             Regex rgClass = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
