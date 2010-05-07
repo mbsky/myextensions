@@ -77,6 +77,11 @@ namespace System
             return GetMatch(_source, pattern, 1);
         }
 
+        public static string GetFirstMatch(this string _source, string pattern, int groupIndex)
+        {
+            return GetMatch(_source, pattern, groupIndex);
+        }
+
         public static string GetValueUseRegex(this string text, string pattern)
         {
             return GetValueUseRegex(text, pattern, "data");
@@ -101,12 +106,46 @@ namespace System
 
         public static string GetFirstMatch(this string _source, string start, string end, bool appendStart, bool appendEnd)
         {
-            string groupName = "content";
-            string regex = @"^.*" + start + "(?<" + groupName + ">.+?)" + end + ".*$";
+            if (_source.IsNullOrEmpty())
+                return string.Empty;
 
-            return (appendStart ? start : string.Empty)
-                + _source.GetValueUseRegex(regex, groupName)
-                + (appendEnd ? end : string.Empty);
+            int sidx = _source.IndexOf(start);
+
+            if (sidx == -1)
+                return string.Empty;
+
+            /*
+string text = @"/content/alternate-1.aspx000000";
+string start = @"/content/";
+             
+string end = @".aspx";
+
+_source = @"alternate-1.aspx";
+
+ */
+
+            _source = _source.Substring(sidx);
+
+            sidx = 0;
+
+            int eidx = _source.IndexOf(end);
+
+            if (eidx == -1)
+                return string.Empty;
+
+            _source = _source.Substring(0, eidx);
+
+            if (!appendStart)
+            {
+                //_source = _source.ReplaceFirst(start, string.Empty);
+
+                _source = _source.Substring(start.Length);
+            }
+
+            if (appendEnd)
+                _source += end;
+
+            return _source;
         }
 
         #region WipeScript
