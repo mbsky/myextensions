@@ -114,16 +114,6 @@ namespace System
             if (sidx == -1)
                 return string.Empty;
 
-            /*
-string text = @"/content/alternate-1.aspx000000";
-string start = @"/content/";
-             
-string end = @".aspx";
-
-_source = @"alternate-1.aspx";
-
- */
-
             _source = _source.Substring(sidx);
 
             sidx = 0;
