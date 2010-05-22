@@ -121,6 +121,66 @@ namespace MyExtensions.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void GetFirstMatchTest4()
+        {
+            string text = @"/content/alternate-1.aspx";
+            string start = @"/content/";
+            string end = @".aspx";
+            string expected = "alternate-1";
+            string actual;
+            actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
+            Assert.AreEqual(expected, actual);
+
+            expected = @"/content/alternate-1";
+            actual = StringExtensionsMatch.GetFirstMatch(text, start, end, true, false);
+            Assert.AreEqual(expected, actual);
+
+            text = @"
+      <option value=""> size </option>
+      
+                  
+	      <option> XS (0-2) </option> 
+	         
+	      <option> S (4-6) </option> 
+	         
+	      <option> M (8-10) </option> 
+	         
+	      <option> L (12-14) </option> 
+	         
+	      <option> XL (16-18) </option> 
+	          
+    </select>
+            ";
+            start = @"<option value=""> size </option>";
+            end = @"</select>";
+            expected = @"
+      
+                  
+	      <option> XS (0-2) </option> 
+	         
+	      <option> S (4-6) </option> 
+	         
+	      <option> M (8-10) </option> 
+	         
+	      <option> L (12-14) </option> 
+	         
+	      <option> XL (16-18) </option> 
+	          
+    ";
+            actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
+            Assert.AreEqual(expected, actual);
+
+            text = @"<!-- Display a drop-down list box for each attribute --><select name=""size_0"" id=""size_0"" style=""""onChange=""""class=""sel-size""><option value=""""> size </option><option> 32A </option> <option> 32B </option> <option> 32C </option> <option> 32D </option> <option> 32DD </option> <option> 34A </option> <option> 34B </option> <option> 34C </option> <option> 34D </option> <option> 34DD </option> <option> 36A </option> <option> 36B </option> <option> 36C </option> <option> 36D </option> <option> 36DD </option> <option> 38A </option> <option> 38B </option> <option> 38C </option> <option> 38D </option> <option> 38DD </option> <option> 40C </option> <option> 40D </option> <option> 40DD </option> </select><select name=""color_0"" id=""color_0"" style=""""onChange=""""class=""sel-color""><option value="""">  color </option><option value=""367-buff""> buff </option> <option value=""h28-evening blush""> evening blush </option> <option value=""h32-shell pink""> shell pink </option> <option value=""h90-red""> red </option> <option value=""092-white""> white </option> <option value=""c07-heather charcoal""> heather charcoal </option> <option value=""dl3-black""> black </option> </select><!-- Quantity is an attribute that is hardcoded --><select name=""quantity_0""style=""""onChange=""""class=""sel-quantity""><option value=""""> quantity </option><option> 1 </option><option> 2 </option><option> 3 </option><option> 4 </option><option> 5 </option></select></div><!-- end droplist div --><div id=""atp-msg-0"" class=""atp-msg""><div class=""atp-msg-window""><span class=""atp-msg-cntnr""></span>";
+
+            start = @"<option value=""""> size </option>";
+            end = @"</select>";
+            expected = @"<option> 32A </option> <option> 32B </option> <option> 32C </option> <option> 32D </option> <option> 32DD </option> <option> 34A </option> <option> 34B </option> <option> 34C </option> <option> 34D </option> <option> 34DD </option> <option> 36A </option> <option> 36B </option> <option> 36C </option> <option> 36D </option> <option> 36DD </option> <option> 38A </option> <option> 38B </option> <option> 38C </option> <option> 38D </option> <option> 38DD </option> <option> 40C </option> <option> 40D </option> <option> 40DD </option> ";
+
+            actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
+            Assert.AreEqual(expected, actual);
+        }
+
         /// <summary>
         ///A test for GetMatches
         ///</summary>
@@ -129,12 +189,12 @@ namespace MyExtensions.Tests
         {
 
             string _source = @"
-i'm not running
-sanli is running
-lufeng is running
-xiaotian is running
-i'm not running
-";
+            i'm not running
+            sanli is running
+            lufeng is running
+            xiaotian is running
+            i'm not running
+            ";
             string pattern = @"([a-z]+)\sis\s([a-z]+)";
             int limit = 0;
 
@@ -143,7 +203,7 @@ i'm not running
             actual = StringExtensionsMatch.GetMatches(_source, pattern, limit);
 
             int i = 0;
-            
+
             Assert.AreEqual("sanli is running", actual[0][0]);
             Assert.AreEqual("sanli", actual[0][1]);
             Assert.AreEqual("running", actual[0][2]);

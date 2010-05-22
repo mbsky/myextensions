@@ -1,6 +1,7 @@
 
 using System;
 using System.IO;
+using System.Globalization;
 
 namespace System.Web.HttpHandlers
 {
@@ -70,9 +71,37 @@ namespace System.Web.HttpHandlers
 
             if (File.Exists(filepath))
             {
-                context.Response.WriteFile(filepath);
+                WriteFile(context, filepath);
             }
         }
+
+        private void WriteFile(HttpContext context, string _sourceFile)
+        {
+            var LastWriteTime = File.GetLastWriteTime(_sourceFile);
+
+            if (!String.IsNullOrEmpty(context.Request.Headers["If-Modified-Since"]))
+            {
+                CultureInfo provider = CultureInfo.InvariantCulture;
+
+                var lastMod = DateTime.ParseExact(context.Request.Headers["If-Modified-Since"], "r", provider).ToLocalTime();
+
+                if (lastMod == LastWriteTime)
+                {
+                    context.Response.StatusCode = 304;
+                    context.Response.StatusDescription = "Not Modified";
+                    return;
+                }
+            }
+
+            context.Response.Cache.SetLastModified(LastWriteTime);
+            context.Response.Cache.SetExpires(DateTime.Now.AddSeconds(60));
+            context.Response.Cache.SetCacheability(HttpCacheability.Public);
+            context.Response.Cache.SetNoServerCaching();
+            context.Response.WriteFile(_sourceFile);
+
+            context.Response.End();
+        }
+
         #endregion
     }
 }
