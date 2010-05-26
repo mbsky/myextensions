@@ -56,12 +56,13 @@ namespace System.Web.Data
         {
             //Readonly Property
             get
-            {
+            {   //2010-01-26T17:11:38+01:00
                 //Get LastModifiedDate
-                this._lastmodifiedday = _lastmod.Day;
-                this._lastmodifiedmonth = _lastmod.Month;
-                this._lastmodifiedyear = _lastmod.Year;
-                return string.Format("{0}-{1}-{2}", _lastmodifiedyear, _lastmodifiedmonth, _lastmodifiedday);
+                return _lastmod.ToString("yyyy-MM-dd") + "T" + _lastmod.ToString("HH:mm:ss") + "+01:00";
+                //this._lastmodifiedday = _lastmod.Day;
+                //this._lastmodifiedmonth = _lastmod.Month;
+                //this._lastmodifiedyear = _lastmod.Year;
+                //return string.Format("{0}-{1}-{2}", _lastmodifiedyear, _lastmodifiedmonth, _lastmodifiedday);
             }
         }
 
