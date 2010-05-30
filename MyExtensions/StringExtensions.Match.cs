@@ -114,28 +114,30 @@ namespace System
             if (sidx == -1)
                 return string.Empty;
 
-            _source = _source.Substring(sidx);
-
-            sidx = 0;
-
             int eidx = _source.IndexOf(end);
 
             if (eidx == -1)
                 return string.Empty;
 
-            _source = _source.Substring(0, eidx);
+            int contentlength = eidx - sidx - start.Length;
 
-            if (!appendStart)
-            {
-                //_source = _source.ReplaceFirst(start, string.Empty);
+            int startIndex = appendStart ? sidx : sidx + start.Length;
 
-                _source = _source.Substring(start.Length);
-            }
+            int length = contentlength + (appendStart ? start.Length : 0) + (appendEnd ? end.Length : 0);
 
-            if (appendEnd)
-                _source += end;
+            Console.WriteLine(_source);
+            Console.WriteLine("start = " + start);
+            Console.WriteLine("end = " + end);
+            Console.WriteLine("sidx = " + sidx);
+            Console.WriteLine("eidx = " + eidx);
+            Console.WriteLine("contentlength = " + contentlength);
 
-            return _source;
+            Console.WriteLine("_source.Length = " + _source.Length);
+            Console.WriteLine("startIndex = " + startIndex);
+            Console.WriteLine("length = " + length);
+
+            return _source.Substring(startIndex, length);
+
         }
 
         #region WipeScript
