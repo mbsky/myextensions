@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MyExtensions.Tests
 {
@@ -85,6 +86,21 @@ namespace MyExtensions.Tests
 
         }
 
+        private string getHtml()
+        {
+            const string htmlfilename = "MyExtensions.Tests.test.htm";
+            Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(htmlfilename);
+
+            string html = string.Empty;
+
+            using (StreamReader sr = new StreamReader(stream))
+            {
+                html = sr.ReadToEnd();
+            }
+
+            return html;
+        }
+
         /// <summary>
         ///A test for GetFirstMatch
         ///</summary>
@@ -122,6 +138,17 @@ namespace MyExtensions.Tests
         }
 
         [TestMethod()]
+        public void GetFirstMatchTest5()
+        {
+            var text = getHtml();
+            var start = "List Price</font></a></td><td align=left><font face=\"arial\" size=\"2\">";
+            var end = "</font>";
+            var expected = "$795.00";
+            var actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
         public void GetFirstMatchTest4()
         {
             string text = @"/content/alternate-1.aspx";
@@ -131,7 +158,7 @@ namespace MyExtensions.Tests
             string actual;
             actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
             Assert.AreEqual(expected, actual);
-            
+
 
             expected = @"/content/alternate-1";
             actual = StringExtensionsMatch.GetFirstMatch(text, start, end, true, false);

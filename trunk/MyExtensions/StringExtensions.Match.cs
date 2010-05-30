@@ -114,7 +114,7 @@ namespace System
             if (sidx == -1)
                 return string.Empty;
 
-            int eidx = start == end ? _source.LastIndexOf(end) : _source.IndexOf(end);
+            int eidx = _source.Substring(sidx + start.Length).IndexOf(end) + sidx + start.Length;
 
             if (eidx == -1)
                 return string.Empty;
