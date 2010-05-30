@@ -114,7 +114,7 @@ namespace System
             if (sidx == -1)
                 return string.Empty;
 
-            int eidx = _source.IndexOf(end);
+            int eidx = start == end ? _source.LastIndexOf(end) : _source.IndexOf(end);
 
             if (eidx == -1)
                 return string.Empty;
@@ -125,16 +125,16 @@ namespace System
 
             int length = contentlength + (appendStart ? start.Length : 0) + (appendEnd ? end.Length : 0);
 
-            Console.WriteLine(_source);
-            Console.WriteLine("start = " + start);
-            Console.WriteLine("end = " + end);
-            Console.WriteLine("sidx = " + sidx);
-            Console.WriteLine("eidx = " + eidx);
-            Console.WriteLine("contentlength = " + contentlength);
+            //Console.WriteLine(_source);
+            //Console.WriteLine("start = " + start);
+            //Console.WriteLine("end = " + end);
+            //Console.WriteLine("sidx = " + sidx);
+            //Console.WriteLine("eidx = " + eidx);
+            //Console.WriteLine("contentlength = " + contentlength);
 
-            Console.WriteLine("_source.Length = " + _source.Length);
-            Console.WriteLine("startIndex = " + startIndex);
-            Console.WriteLine("length = " + length);
+            //Console.WriteLine("_source.Length = " + _source.Length);
+            //Console.WriteLine("startIndex = " + startIndex);
+            //Console.WriteLine("length = " + length);
 
             return _source.Substring(startIndex, length);
 
