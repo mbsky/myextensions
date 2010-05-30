@@ -222,17 +222,35 @@ namespace System.Web.Google
                     //image:image
                     _sitemapxml.WriteStartElement("image:image");
 
-                    _sitemapxml.WriteElementString("image:loc", img.Loc);
+                    _sitemapxml.WriteStartElement("image:loc");
+                    _sitemapxml.WriteString(img.Loc);
+                    _sitemapxml.WriteEndElement();
 
                     if (img.Caption.IsNullOrEmpty() == false)
-                        _sitemapxml.WriteElementString("image:caption", img.Caption);
+                    {
+                        _sitemapxml.WriteStartElement("image:caption");
+                        _sitemapxml.WriteString(img.Caption);
+                        _sitemapxml.WriteEndElement();
+                    }
 
                     if (img.geo_location.IsNullOrEmpty() == false)
-                        _sitemapxml.WriteElementString("image:geo_location", img.geo_location);
+                    {
+                        _sitemapxml.WriteStartElement("image:geo_location");
+                        _sitemapxml.WriteString(img.geo_location);
+                        _sitemapxml.WriteEndElement();
+                    }
                     if (img.Title.IsNullOrEmpty() == false)
-                        _sitemapxml.WriteElementString("image:title", img.Title);
+                    {
+                        _sitemapxml.WriteStartElement("image:title");
+                        _sitemapxml.WriteString(img.Title);
+                        _sitemapxml.WriteEndElement();
+                    }
                     if (img.License.IsNullOrEmpty() == false)
-                        _sitemapxml.WriteElementString("image:license", img.License);
+                    {
+                        _sitemapxml.WriteStartElement("image:license");
+                        _sitemapxml.WriteString(img.License);
+                        _sitemapxml.WriteEndElement();
+                    }
 
                     _sitemapxml.WriteEndElement();
                 }
