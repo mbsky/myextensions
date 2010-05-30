@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="CookieHelper.cs" />
     <Compile Include="Data\BasePersistable.cs" />
-    <Compile Include="Data\GoogleSitemap.cs" />
+    <Compile Include="Google\GoogleSitemap.cs" />
     <Compile Include="Data\JsonPersistable.cs" />
     <Compile Include="Data\XmlPersistable.cs" />
     <Compile Include="FastEvalExtensions.cs" />
