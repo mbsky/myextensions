@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
+    <EmbeddedResource Include="test.htm" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyExtensions\MyExtensions.csproj">
