@@ -131,9 +131,17 @@ namespace MyExtensions.Tests
             string actual;
             actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
             Assert.AreEqual(expected, actual);
+            
 
             expected = @"/content/alternate-1";
             actual = StringExtensionsMatch.GetFirstMatch(text, start, end, true, false);
+            Assert.AreEqual(expected, actual);
+
+            text = "List Price</font></a></td><td align=left><font face=\"arial\" size=\"2\">$795.00</font></td><td><font color=\"#C61344\" face=arial size=3>&nbsp; &nbsp;  only";
+            start = "List Price</font></a></td><td align=left><font face=\"arial\" size=\"2\">";
+            end = "<font color=\"#C61344\" face=arial size=3>&nbsp; &nbsp;  only";
+            expected = "$795.00</font></td><td>";
+            actual = StringExtensionsMatch.GetFirstMatch(text, start, end, false, false);
             Assert.AreEqual(expected, actual);
 
             text = @"
