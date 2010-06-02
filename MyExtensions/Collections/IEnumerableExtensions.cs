@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace System.Collections
 {
@@ -20,6 +22,28 @@ namespace System.Collections
             return builder.ToString().RightOf(separator);
         }
 
+        public static IEnumerable<T> Randomize<T>(this IEnumerable<T> target)
+        {
+            Random r = new Random();
 
+            return target.OrderBy(x => (r.Next()));
+        }
+
+        public static IEnumerable<List<T>> SplitByLength<T>(this IEnumerable<T> target, int length)
+        {
+            List<List<T>> res = new List<List<T>>();
+            int skip = 0;
+
+            int cnt = target.Count();
+
+            while (skip < cnt)
+            {
+                var lst = target.Skip(skip).Take(length).ToList();
+                res.Add(lst);
+                skip += length;
+            }
+
+            return res;
+        }
     }
 }
