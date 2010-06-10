@@ -829,7 +829,7 @@ namespace MyExtensions.Web.Security
             {
                 using (HostingEnvironment.Impersonate())
                 using (SqlConnection db = this.OpenDatabase())
-                using (SqlCommand cmd = new SqlCommand("SELECT Count(UserId) FROM Users WHERE LastActivityDate > @LastActivityDate", db))
+                using (SqlCommand cmd = new SqlCommand("SELECT Count(UserId) FROM Users WHERE DateLastActivity > @LastActivityDate", db))
                 {
                     cmd.Parameters.Add("@LastActivityDate", SqlDbType.DateTime).Value = DateTime.Now.AddMinutes(-Membership.UserIsOnlineTimeWindow);
                     return (int)cmd.ExecuteScalar();
