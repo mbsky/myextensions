@@ -32,6 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=9ad232b50c3e6444, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -43,6 +47,11 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\System.Web.Abstractions.dll</HintPath>
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -51,6 +60,7 @@
   <ItemGroup>
     <Compile Include="DynamicPropertyAccessorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SitemapTest.cs" />
     <Compile Include="StringExtensionsMatchTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +68,10 @@
     <EmbeddedResource Include="test.htm" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyExtensions.Web\MyExtensions.Web.csproj">
+      <Project>{37E17105-7211-4F58-8A28-7947852E8657}</Project>
+      <Name>MyExtensions.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyExtensions\MyExtensions.csproj">
       <Project>{B507DBC6-AA38-4C9E-9129-612FCF5DF109}</Project>
       <Name>MyExtensions</Name>
