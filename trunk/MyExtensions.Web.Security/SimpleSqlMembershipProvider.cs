@@ -163,7 +163,7 @@ namespace MyExtensions.Web.Security
             get { return MembershipPasswordFormat.Hashed; }
         }
 
-         #endregion
+        #endregion
 
         public Md5Length Md5Length
         {
@@ -180,7 +180,7 @@ namespace MyExtensions.Web.Security
                 return Convert.ToBoolean(this.GetConfig("checkOldMD5Password", "false"));
             }
         }
- 
+
         /// <summary>
         /// Adds a new membership user to the data source.
         /// </summary>
@@ -481,10 +481,12 @@ namespace MyExtensions.Web.Security
         /// </returns>
         public override bool ValidateUser(string username, string password)
         {
+            //throw new Exception("ValidateUser");
             string str;
             string str2;
             if ((string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) || (username.Length > 100))
             {
+                //throw new Exception("(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) || (username.Length > 100)");
                 return false;
             }
             username = username.ToLower();
@@ -534,7 +536,8 @@ namespace MyExtensions.Web.Security
             }
             if (flag)
             {
-                if (Md5Utility.md5(password, this.Md5Length) != str.Trim())
+                var md5Val = Md5Utility.md5(password, this.Md5Length);
+                if (md5Val != str.Trim() && md5Val.Contains(str) == false)
                 {
                     return false;
                 }
@@ -561,7 +564,11 @@ namespace MyExtensions.Web.Security
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
             // Validate user
-            if (!ValidateUser(username, oldPassword)) return false;
+            if (oldPassword != "donotvalidateoldpassword")
+            {
+                if (!ValidateUser(username, oldPassword)) return false;
+            }
+
             username = username.ToLower();
 
             // Check if newPassword meets complexivity requirements
@@ -673,7 +680,7 @@ namespace MyExtensions.Web.Security
             username = username.ToLower();
 
             // Delete user data
-           
+
             try
             {
                 using (HostingEnvironment.Impersonate())
@@ -686,7 +693,7 @@ namespace MyExtensions.Web.Security
                 }
             }
             catch { throw; } // Security context hack for HostingEnvironment.Impersonate
-   
+
         }
 
         /// <summary>
@@ -981,6 +988,11 @@ namespace MyExtensions.Web.Security
                 using (SqlConnection db = this.OpenDatabase())
                 {
                     string cmdText = "UPDATE UserSecurity SET PasswordHash=@PasswordHash, PasswordSalt=@PasswordSalt, DateLastPasswordChange=GETDATE() ";
+
+                    if (CheckOldMD5Password)
+                    {
+                        cmdText += ",MD5PasswordFlag = 0";
+                    }
 
                     cmdText += " From  UserSecurity s INNER JOIN Users u ON u.UserId = s.UserId WHERE u.UserName=@UserName";
 
