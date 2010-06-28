@@ -29,7 +29,7 @@ namespace System.Web.HttpHandlers
         /// <param name="context"></param>
         public void ProcessRequest(System.Web.HttpContext context)
         {
-            
+
             string requestpath = context.Request.FilePath.ToLower();
 
             string originpath = requestpath.Substring(0, requestpath.LastIndexOf("."));
@@ -40,6 +40,10 @@ namespace System.Web.HttpHandlers
             {
                 context.Response.ContentType = "text/css";
             }
+            else if (originpath.EndsWith(".js"))
+            {
+                context.Response.ContentType = "application/x-javascript";
+            }
 
             if (context.IsEncodingAccepted(GZIP))
             {
@@ -49,13 +53,14 @@ namespace System.Web.HttpHandlers
                 {
                     context.SetEncoding(GZIP);
 
-                    context.Response.WriteFile(gz);
+                    //context.Response.WriteFile(gz);
+
+                    WriteFile(context, gz);
 
                     return;
                 }
             }
-            
-            if (context.IsEncodingAccepted(DEFLATE))
+            else if (context.IsEncodingAccepted(DEFLATE))
             {
                 string de = filepath + ".de";
 
@@ -63,7 +68,9 @@ namespace System.Web.HttpHandlers
                 {
                     context.SetEncoding(DEFLATE);
 
-                    context.Response.WriteFile(de);
+                    //context.Response.WriteFile(de);
+
+                    WriteFile(context, de);
 
                     return;
                 }
