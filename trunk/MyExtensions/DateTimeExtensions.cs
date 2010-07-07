@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace System
 {
@@ -10,13 +11,66 @@ namespace System
         public static string RelativeDate(this DateTime date)
         {
             var timespan = DateTime.Now.Subtract(date);
+
+            //check Accept-Language 
+
+            var acceptLang = string.Empty;
+
+            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                acceptLang = HttpContext.Current.Request.Headers["Accept-Language"];
+            }
+
             if (timespan.Days > 1)
-                return date.ToString();
+            {
+                switch (acceptLang)
+                {
+                    default:
+                        return date.ToString();
+                    case "zh-CN":
+                        return date.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+            }
             if (timespan.Hours > 1)
-                return string.Format("Over {0} hours ago.", timespan.Hours);
+            {
+                string tpl = "Over {0} hours ago.";
+
+                switch (acceptLang)
+                {
+                    case "zh-CN":
+                        tpl = "{0}小时以前。";
+                        break;
+                }
+
+                return string.Format(tpl, timespan.Hours);
+            }
+
             if (timespan.Minutes > 1)
-                return string.Format("{0} minutes ago.", timespan.Minutes);
-            return string.Format("{0} seconds ago.", timespan.Seconds);
+            {
+                string tpl = "Over {0} minutes ago.";
+
+                switch (acceptLang)
+                {
+                    case "zh-CN":
+                        tpl = "{0}分钟以前。";
+                        break;
+                }
+
+                return string.Format(tpl, timespan.Minutes);
+            }
+            else
+            {
+                string tpl = "{0} seconds ago.";
+
+                switch (acceptLang)
+                {
+                    case "zh-CN":
+                        tpl = "{0}秒以前。";
+                        break;
+                }
+
+                return string.Format(tpl, timespan.Seconds);
+            }
         }
 
         public static int DaysLeft(this DateTime date)
