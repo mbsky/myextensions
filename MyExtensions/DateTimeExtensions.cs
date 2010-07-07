@@ -19,5 +19,21 @@ namespace System
             return string.Format("{0} seconds ago.", timespan.Seconds);
         }
 
+        public static int DaysLeft(this DateTime date)
+        {
+            return DateTime.Today.Subtract(date).Days;
+        }
+
+        public static int HolidayDaysLeft(this DateTime date)
+        {
+            var xdate = new DateTime(date.Year, date.Month, date.Day);
+
+            if (date.Date <= DateTime.Today.Date)
+            {
+                xdate = xdate.AddYears(1);
+            }
+
+            return xdate.DaysLeft();
+        }
     }
 }
