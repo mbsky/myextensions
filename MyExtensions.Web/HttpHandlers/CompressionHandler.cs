@@ -32,7 +32,7 @@ namespace System.Web.HttpHandlers
 
             string requestpath = context.Request.FilePath.ToLower();
 
-            string originpath = requestpath.Substring(0, requestpath.LastIndexOf("."));
+            string originpath = requestpath.Substring(0, requestpath.LastIndexOf(".")).ToLower();
 
             string filepath = context.Server.MapPath(originpath);
 
@@ -42,7 +42,8 @@ namespace System.Web.HttpHandlers
             }
             else if (originpath.EndsWith(".js"))
             {
-                context.Response.ContentType = "application/x-javascript";
+                //context.Response.ContentType = "application/x-javascript";
+                context.Response.ContentType = "text/javascript";
             }
 
             if (context.IsEncodingAccepted(GZIP))
