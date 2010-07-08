@@ -15,7 +15,8 @@ namespace MyExtensions.Web.Security
     {
         private const int DefaultMinRequiredPasswordLength = 8;
         private const string EmailPattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-        private const string getUserSql = "SELECT u.UserId, u.UserName, u.Email, u.Comment, u.Enabled, u.DateCreated, u.DateLastLogin, u.DateLastActivity, s.DateLastPasswordChange, s.Question FROM [Users] u INNER JOIN [UserSecurity] s On u.UserId = s.UserId ";
+        //private const string getUserSql = "SELECT u.UserId, u.UserName, u.Email, u.Comment, u.Enabled, u.DateCreated, u.DateLastLogin, u.DateLastActivity, s.DateLastPasswordChange, s.Question FROM [Users] u INNER JOIN [UserSecurity] s On u.UserId = s.UserId ";
+        private const string getUserSql = "SELECT u.UserId, u.UserName, u.Email, u.Enabled, u.DateCreated, u.DateLastLogin, u.DateLastActivity, s.DateLastPasswordChange, s.Question FROM [Users] u INNER JOIN [UserSecurity] s On u.UserId = s.UserId ";
 
         #region Initialization and configuration
 
@@ -867,10 +868,11 @@ namespace MyExtensions.Web.Security
             {
                 using (HostingEnvironment.Impersonate())
                 using (SqlConnection db = this.OpenDatabase())
-                using (SqlCommand cmd = new SqlCommand("UPDATE Users SET Email=@Email, Comment=@Comment, Enabled=@Enabled WHERE UserName=@UserName", db))
+                //using (SqlCommand cmd = new SqlCommand("UPDATE Users SET Email=@Email, Comment=@Comment, Enabled=@Enabled WHERE UserName=@UserName", db))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Users SET Email=@Email, Enabled=@Enabled WHERE UserName=@UserName", db))
                 {
                     cmd.Parameters.Add("@Email", SqlDbType.VarChar, 100).Value = user.Email.ToLower();
-                    cmd.Parameters.Add("@Comment", SqlDbType.Text).Value = user.Comment;
+                    //cmd.Parameters.Add("@Comment", SqlDbType.Text).Value = user.Comment;
                     cmd.Parameters.Add("@Enabled", SqlDbType.Bit).Value = user.IsApproved;
                     cmd.Parameters.Add("@UserName", SqlDbType.NVarChar, 100).Value = user.UserName.ToLower();
                     cmd.ExecuteNonQuery();
@@ -921,7 +923,7 @@ namespace MyExtensions.Web.Security
                 string username = userTable.Rows[i]["UserName"] as string;
                 object providerUserKey = userTable.Rows[i]["UserId"];
                 string email = userTable.Rows[i]["Email"] as string;
-                string comment = ""; if (userTable.Rows[i]["Comment"] != DBNull.Value) comment = userTable.Rows[i]["Comment"] as string;
+                string comment = ""; //if (userTable.Rows[i]["Comment"] != DBNull.Value) comment = userTable.Rows[i]["Comment"] as string;
                 bool isApproved = System.Convert.ToBoolean(userTable.Rows[i]["Enabled"]);
                 bool isLockedOut = !System.Convert.ToBoolean(userTable.Rows[i]["Enabled"]);
                 DateTime creationDate = System.Convert.ToDateTime(userTable.Rows[i]["DateCreated"]);
@@ -939,7 +941,7 @@ namespace MyExtensions.Web.Security
             string username = System.Convert.ToString(reader["UserName"]);
             object providerUserKey = reader["UserId"];
             string email = System.Convert.ToString(reader["Email"]);
-            string comment = ""; if (reader["Comment"] != DBNull.Value) comment = System.Convert.ToString(reader["Comment"]);
+            string comment = ""; //if (reader["Comment"] != DBNull.Value) comment = System.Convert.ToString(reader["Comment"]);
             bool isApproved = System.Convert.ToBoolean(reader["Enabled"]);
             bool isLockedOut = !System.Convert.ToBoolean(reader["Enabled"]);
             DateTime creationDate = System.Convert.ToDateTime(reader["DateCreated"]);

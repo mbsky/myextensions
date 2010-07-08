@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Data.SQLite", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Web.Security", "MyExtensions.Web.Security\MyExtensions.Web.Security.csproj", "{1BD71E5F-E346-49A0-8E32-C6B61245351C}"
 EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "MyExtensionsSqlDesign", "MyExtensionsSqlDesign\MyExtensionsSqlDesign.dbproj", "{F5B83470-B610-4363-AEB6-C4EA1DBE9794}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -62,6 +64,12 @@ Global
 		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
