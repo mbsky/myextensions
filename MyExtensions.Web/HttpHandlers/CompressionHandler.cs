@@ -89,9 +89,17 @@ namespace System.Web.HttpHandlers
 
             if (!String.IsNullOrEmpty(context.Request.Headers["If-Modified-Since"]))
             {
-                CultureInfo provider = CultureInfo.InvariantCulture;
+                
 
-                var lastMod = DateTime.ParseExact(context.Request.Headers["If-Modified-Since"], "r", provider).ToLocalTime();
+                var ModifiedSince = context.Request.Headers["If-Modified-Since"];
+
+                // ie6 fix //Thu, 10 Jun 2010 03:14:54 GMT; length=38523
+                if (ModifiedSince.Contains("; length"))
+                {
+                    ModifiedSince = ModifiedSince.Substring(0, ModifiedSince.IndexOf("; length"));
+                }
+
+                var lastMod = DateTime.ParseExact(ModifiedSince, "r", CultureInfo.InvariantCulture).ToLocalTime();
 
                 if (lastMod == LastWriteTime)
                 {
