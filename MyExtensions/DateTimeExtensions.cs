@@ -78,16 +78,39 @@ namespace System
             return DateTime.Today.Subtract(date).Days;
         }
 
-        public static int HolidayDaysLeft(this DateTime date)
+        public static int HolidayDaysLeft(int Month, int Day)
         {
-            var xdate = new DateTime(date.Year, date.Month, date.Day);
+            int Year = DateTime.Today.Year;
 
-            if (date.Date <= DateTime.Today.Date)
+            var xdate = new DateTime(Year, Month, Day);
+
+            if (xdate <= DateTime.Today.Date)
             {
                 xdate = xdate.AddYears(1);
             }
 
             return xdate.DaysLeft();
         }
+
+        public static DateTime GetDate(int year, int month, DayOfWeek dayOfWeek, int weekOfMonth)
+        {
+            // TODO: some range checking (>0, for example)
+            DateTime day = new DateTime(year, month, 1);
+            while (day.DayOfWeek != dayOfWeek) day = day.AddDays(1);
+            if (weekOfMonth > 0)
+            {
+                return day.AddDays(7 * (weekOfMonth - 1));
+            }
+            else
+            { // treat as last
+                DateTime last = day;
+                while ((day = day.AddDays(7)).Month == last.Month)
+                {
+                    last = day;
+                }
+                return last;
+            }
+        }
+
     }
 }
