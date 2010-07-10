@@ -75,7 +75,7 @@ namespace System
 
         public static int DaysLeft(this DateTime date)
         {
-            return DateTime.Today.Subtract(date).Days;
+            return date.Subtract(DateTime.Today).Days;
         }
 
         public static int HolidayDaysLeft(int Month, int Day)
