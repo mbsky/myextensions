@@ -14,5 +14,7 @@ namespace System.Web.Mvc
         public string[] Options { get; set; }
 
         public string Callback { get; set; }
+
+        public string id { get; set; }
     }
 }
