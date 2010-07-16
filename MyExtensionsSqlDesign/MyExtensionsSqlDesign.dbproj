@@ -182,4 +182,9 @@
       <SubType>Code</SubType>
     </PostDeploy>
   </ItemGroup>
+  <ItemGroup>
+    <NotInBuild Include="MyExtensionsSqlDesign.files">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
+  </ItemGroup>
 </Project>

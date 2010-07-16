@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+      Before you import this file, you must define the 'MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30' property to point to the directory where this file is located. 
+      Failure to define this property will result in a build error.
+-->
+  <ItemGroup>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_GetUserPasswordQuestion.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_GetUserPasswordQuestion.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_UsersInRoles_Delete.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_UsersInRoles_Delete.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_UsersInRoles_FindUsersInRole.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_UsersInRoles_FindUsersInRole.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_UsersInRoles_GetRolesForUser.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_UsersInRoles_GetRolesForUser.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_UsersInRoles_GetUsersInRole.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_UsersInRoles_GetUsersInRole.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_UsersInRoles_Insert.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_UsersInRoles_Insert.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_UsersInRoles_IsUserInRole.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_UsersInRoles_IsUserInRole.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_Users_Delete.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_Users_Delete.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Programmability\Stored Procedures\usp_Users_Insert.proc.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\usp_Users_Insert.proc.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Keys\Roles.PK_Roles.pkey.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\Roles.PK_Roles.pkey.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Keys\Users.PK_Users.pkey.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\Users.PK_Users.pkey.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Keys\Users.UK_Users_UserName.ukey.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\Users.UK_Users_UserName.ukey.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Keys\UserSecurity.PK_UserSecurity.pkey.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\UserSecurity.PK_UserSecurity.pkey.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Keys\UsersInRoles.PK_UsersInRoles.pkey.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\UsersInRoles.PK_UsersInRoles.pkey.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Roles.table.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\Roles.table.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\Users.table.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\Users.table.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\UserSecurity.table.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\UserSecurity.table.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="$(MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30)\Schema Objects\Schemas\dbo\Tables\UsersInRoles.table.sql">
+      <Link>MyExtensionsSqlDesignBasePath_9_7_2010_04_09_30\UsersInRoles.table.sql</Link>
+      <SubType>Code</SubType>
+    </Build>
+  </ItemGroup>
+</Project>
