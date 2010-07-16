@@ -55,11 +55,15 @@ namespace System.Web.Data
         /// </summary>
         protected void LoadData()
         {
-            _path = HttpContext.Current.Server.MapPath(GetDataFilename());
+            _path = getPath();
             lock (_path)
             {
                 //first check, if the object is maybe already in the cache
-                object o = HttpContext.Current.Cache[_path];
+                object o = null;
+
+                if (HttpContext.Current != null)
+                    o = HttpContext.Current.Cache[_path];
+
                 if (o != null)
                 {
                     _data = (T)o;
@@ -99,17 +103,29 @@ namespace System.Web.Data
 
         protected virtual void InsertCache(string key, object data, CacheDependency cd)
         {
+            if (HttpContext.Current == null)
+                return;
+
             HttpContext.Current.Cache.Insert(key, data, cd, System.Web.Caching.Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(15), CacheItemPriority.Normal, null);
         }
 
         protected abstract void Serialize(string path, T _data);
+
+        string getPath()
+        {
+            if (HttpContext.Current == null)
+            {
+                return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, typeof(T).Name + ".config");
+            }
+            return HttpContext.Current.Server.MapPath(GetDataFilename());
+        }
 
         /// <summary>
         /// Persists the data back to the filesystem
         /// </summary>
         public void SaveData()
         {
-            _path = HttpContext.Current.Server.MapPath(GetDataFilename());
+            _path = getPath();
             lock (_path)
             {
                 try
@@ -151,7 +167,8 @@ namespace System.Web.Data
                     try
                     {
                         File.Delete(_path);
-                        HttpContext.Current.Cache.Remove(_path);
+                        if (HttpContext.Current != null)
+                            HttpContext.Current.Cache.Remove(_path);
                     }
                     catch { success = false; }
                 }
