@@ -7,7 +7,7 @@ namespace System.Web.Mvc
 {
     public abstract partial class ControllerEx : Controller
 	{
-        protected virtual ActionResult Auto(ConfirmOptionsModel option)
+        protected virtual ActionResult Confirm(ConfirmOptionsModel option)
         {
             Check.AssertNotNullOrEmpty(option, "option");
 
