@@ -82,6 +82,11 @@ namespace System.Drawing
                 switch (config.Mode)
                 {
                     case ThumbnailMode.FixedHeightAndWidth:
+                        float sx = (float)config.Width / (float)ow;
+                        float sy = (float)config.Height / (float)oh;
+                        float scale = Math.Min(1, Math.Min(sx, sy));
+                        towidth = (int)(ow * scale);
+                        toheight = (int)(oh * scale);
                         break;
                     case ThumbnailMode.FixedHeightAndWidthByPercent:
                         toheight = originalImage.Height * config.Width / originalImage.Width;
