@@ -40,7 +40,7 @@ namespace System
         #region [IsNumeric]
         private static Regex isNumericRegex = new Regex(RegexPattern.NUMERIC, RegexOptions.Compiled);
 
-        public static bool IsNumeric(string inputString)
+        public static bool IsNumeric(this string inputString)
         {
             Match m = isNumericRegex.Match(inputString);
             return m.Success;
