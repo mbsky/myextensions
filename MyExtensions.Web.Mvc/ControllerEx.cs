@@ -152,7 +152,7 @@ where T : new()
                 orderedQuery = query.AsQueryable();
             }
 
-            int skip = start - 1;
+            int skip = start; // -1;
 
             if (skip < 0)
                 skip = 0;
