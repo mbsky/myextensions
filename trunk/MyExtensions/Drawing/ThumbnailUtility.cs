@@ -176,9 +176,11 @@ namespace System.Drawing
                 g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //clear the Graphics and fill with Transparent background color 
-                //g.Clear(Color.Transparent);
 
-                g.Clear(Color.White);
+                if (config.IsPng)
+                    g.Clear(Color.Transparent);
+                else
+                    g.Clear(Color.White);
 
                 // render
                 g.DrawImage(originalImage, new System.Drawing.Rectangle(0, 0, towidth, toheight),
