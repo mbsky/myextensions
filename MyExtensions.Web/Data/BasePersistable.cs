@@ -113,11 +113,26 @@ namespace System.Web.Data
 
         string getPath()
         {
+            string cfgfile = typeof(T).Name + ".config";
+
             if (HttpContext.Current == null)
             {
-                return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, typeof(T).Name + ".config");
+                return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cfgfile);
             }
-            return HttpContext.Current.Server.MapPath(GetDataFilename());
+            else
+            {
+                string appPath = System.Web.Configuration.WebConfigurationManager.AppSettings["appPath"];
+
+                if (appPath.IsNullOrEmpty())
+                    appPath = "~/";
+
+                if (appPath.EndsWith("/") == false)
+                {
+                    appPath += "/";
+                }
+
+                return HttpContext.Current.Server.MapPath(string.Format("{0}App_Data/{1}", appPath, cfgfile)); 
+            }
         }
 
         /// <summary>
@@ -176,9 +191,9 @@ namespace System.Web.Data
             return success;
         }
 
-        public virtual string GetDataFilename()
-        {
-            return string.Format("~/App_Data/{0}.config", typeof(T).Name);
-        }
+        //public virtual string GetDataFilename()
+        //{
+        //    return string.Format("{0}.config", typeof(T).Name);
+        //}
     }
 }

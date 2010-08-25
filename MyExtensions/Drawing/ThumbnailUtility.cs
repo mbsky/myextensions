@@ -29,7 +29,11 @@ namespace System.Drawing
         /// <summary>
         /// Percent By the Lower one of Height And Width
         /// </summary>
-        PercentByLowLength
+        PercentByLowLength,
+        /// <summary>
+        /// 
+        /// </summary>
+        FixedBox
     }
 
     /// <summary>
@@ -47,6 +51,8 @@ namespace System.Drawing
         public int Height { get; set; }
 
         public ThumbnailMode Mode { get; set; }
+
+        public bool IsPng { get; set; }
     }
 
     public static class ThumbnailUtility
@@ -82,6 +88,9 @@ namespace System.Drawing
                 switch (config.Mode)
                 {
                     case ThumbnailMode.FixedHeightAndWidth:
+
+                        break;
+                    case ThumbnailMode.FixedBox:
                         float sx = (float)config.Width / (float)ow;
                         float sy = (float)config.Height / (float)oh;
                         float scale = Math.Min(1, Math.Min(sx, sy));
@@ -167,7 +176,9 @@ namespace System.Drawing
                 g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //clear the Graphics and fill with Transparent background color 
-                g.Clear(Color.Transparent);
+                //g.Clear(Color.Transparent);
+
+                g.Clear(Color.White);
 
                 // render
                 g.DrawImage(originalImage, new System.Drawing.Rectangle(0, 0, towidth, toheight),
@@ -176,11 +187,23 @@ namespace System.Drawing
 
                 ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
                 ImageCodecInfo ici = null;
+
                 foreach (ImageCodecInfo codec in codecs)
                 {
-                    if (codec.MimeType.IndexOf("jpeg") > -1)
+
+                    if (config.IsPng)
                     {
-                        ici = codec;
+                        if (codec.MimeType.IndexOf("png") > -1)
+                        {
+                            ici = codec;
+                        }
+                    }
+                    else
+                    {
+                        if (codec.MimeType.IndexOf("jpeg") > -1)
+                        {
+                            ici = codec;
+                        }
                     }
                 }
 
@@ -192,7 +215,7 @@ namespace System.Drawing
 
 
                 // 在这里设置图片的质量等级为95L. 
-                var myEncoderParameter = new EncoderParameter(myEncoder, 95L); 
+                var myEncoderParameter = new EncoderParameter(myEncoder, 95L);
 
                 myEncoderParameters.Param[0] = myEncoderParameter;
 
@@ -207,8 +230,8 @@ namespace System.Drawing
                 }
                 finally
                 {
-                    myEncoderParameter.Dispose(); 
-                    myEncoderParameters.Dispose(); 
+                    myEncoderParameter.Dispose();
+                    myEncoderParameters.Dispose();
 
                     originalImage.Dispose();
                     bitmap.Dispose();
