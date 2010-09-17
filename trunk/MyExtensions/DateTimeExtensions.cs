@@ -21,7 +21,7 @@ namespace System
                 acceptLang = HttpContext.Current.Request.Headers["Accept-Language"];
             }
 
-            if (timespan.Days > 1)
+            if (timespan.Days >= 1)
             {
                 switch (acceptLang)
                 {
@@ -31,7 +31,7 @@ namespace System
                         return date.ToString("yyyy-MM-dd HH:mm:ss");
                 }
             }
-            if (timespan.Hours > 1)
+            if (timespan.Hours >= 1)
             {
                 string tpl = "Over {0} hours ago.";
 
@@ -45,7 +45,7 @@ namespace System
                 return string.Format(tpl, timespan.Hours);
             }
 
-            if (timespan.Minutes > 1)
+            if (timespan.Minutes >= 1)
             {
                 string tpl = "Over {0} minutes ago.";
 
