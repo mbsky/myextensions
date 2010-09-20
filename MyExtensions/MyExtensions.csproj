@@ -79,6 +79,7 @@
     <Compile Include="StringExtensions.Validators.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ForEachItem.cs" />
     <Compile Include="DecimalExtensions.cs" />
     <Compile Include="StringExtensions.Chinese.cs" />
     <Compile Include="StringExtensions.Match.cs" />
