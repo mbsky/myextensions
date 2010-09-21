@@ -18,8 +18,9 @@ namespace System
 
             if (HttpContext.Current != null && HttpContext.Current.Request != null)
             {
-                acceptLang = HttpContext.Current.Request.Headers["Accept-Language"];
+                acceptLang = HttpContext.Current.Request.UserLanguages[0].ToLower();
             }
+
 
             if (timespan.Days >= 1)
             {
@@ -27,7 +28,7 @@ namespace System
                 {
                     default:
                         return date.ToString();
-                    case "zh-CN":
+                    case "zh-cn": 
                         return date.ToString("yyyy-MM-dd HH:mm:ss");
                 }
             }
@@ -37,7 +38,7 @@ namespace System
 
                 switch (acceptLang)
                 {
-                    case "zh-CN":
+                    case "zh-cn": 
                         tpl = "{0}小时以前。";
                         break;
                 }
@@ -51,7 +52,7 @@ namespace System
 
                 switch (acceptLang)
                 {
-                    case "zh-CN":
+                    case "zh-cn": 
                         tpl = "{0}分钟以前。";
                         break;
                 }
@@ -64,7 +65,7 @@ namespace System
 
                 switch (acceptLang)
                 {
-                    case "zh-CN":
+                    case "zh-cn": 
                         tpl = "{0}秒以前。";
                         break;
                 }
