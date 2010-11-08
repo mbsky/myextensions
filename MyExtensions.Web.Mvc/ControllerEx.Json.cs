@@ -10,8 +10,6 @@ namespace System.Web.Mvc
 {
     public abstract partial class ControllerEx : Controller
     {
-        // TODO DefaultJsonProvider AppSettings
-
         public virtual JsonProvider DefaultJsonProvider
         {
             get
@@ -57,12 +55,6 @@ namespace System.Web.Mvc
 
         protected virtual JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonProvider jsonProvider)
         {
-            /*
-            if (!ViewData.ModelState.IsValid)
-            {
-                /// ToDo: write json errors
-            }
-            */
             return new JsonResultEx(jsonProvider)
             {
                 Data = data,
@@ -73,13 +65,6 @@ namespace System.Web.Mvc
 
         protected virtual JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonSerializerSettings settings)
         {
-            /*
-            if (!ViewData.ModelState.IsValid)
-            {
-                /// ToDo: write json errors
-            }
-            */
-
             return new JsonResultEx(JsonProvider.Newtonsoft, settings)
             {
                 Data = data,
@@ -95,7 +80,7 @@ namespace System.Web.Mvc
 
         protected virtual JsonResult Failure(string Message)
         {
-            return Json(new { Err = Message, Success = false });
+            return Json(new { Msg = Message, Success = false });
         }
     }
 }
