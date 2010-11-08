@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions", "MyExtensions\MyExtensions.csproj", "{B507DBC6-AA38-4C9E-9129-612FCF5DF109}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Data", "MyExtensions.Data\MyExtensions.Data.csproj", "{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Web", "MyExtensions.Web\MyExtensions.Web.csproj", "{37E17105-7211-4F58-8A28-7947852E8657}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Web.Mvc", "MyExtensions.Web.Mvc\MyExtensions.Web.Mvc.csproj", "{3D63E324-807C-4FF9-9B1D-3AB067FBA416}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Tests", "MyExtensions.Tests\MyExtensions.Tests.csproj", "{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{25F0C3A1-64FD-4CD2-9BF2-B927950CBE9C}"
+	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		MyExtensions.vsmdi = MyExtensions.vsmdi
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Data.SQLite", "MyExtensions.Data.SQLite\MyExtensions.Data.SQLite.csproj", "{86D5EEAF-09DA-4AD9-86CB-293D1C2C998C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExtensions.Web.Security", "MyExtensions.Web.Security\MyExtensions.Web.Security.csproj", "{1BD71E5F-E346-49A0-8E32-C6B61245351C}"
+EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "MyExtensionsSqlDesign", "MyExtensionsSqlDesign\MyExtensionsSqlDesign.dbproj", "{F5B83470-B610-4363-AEB6-C4EA1DBE9794}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MyExtensions.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B507DBC6-AA38-4C9E-9129-612FCF5DF109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B507DBC6-AA38-4C9E-9129-612FCF5DF109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B507DBC6-AA38-4C9E-9129-612FCF5DF109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B507DBC6-AA38-4C9E-9129-612FCF5DF109}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22192BF8-8D95-4CB5-9F8B-C2D60C16D239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37E17105-7211-4F58-8A28-7947852E8657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37E17105-7211-4F58-8A28-7947852E8657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37E17105-7211-4F58-8A28-7947852E8657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37E17105-7211-4F58-8A28-7947852E8657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D63E324-807C-4FF9-9B1D-3AB067FBA416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DBBD16-69EB-41B2-B13F-0DE9AFF181FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86D5EEAF-09DA-4AD9-86CB-293D1C2C998C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D5EEAF-09DA-4AD9-86CB-293D1C2C998C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D5EEAF-09DA-4AD9-86CB-293D1C2C998C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D5EEAF-09DA-4AD9-86CB-293D1C2C998C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD71E5F-E346-49A0-8E32-C6B61245351C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B83470-B610-4363-AEB6-C4EA1DBE9794}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
