@@ -72,10 +72,12 @@ namespace System.Linq
             {
                 return query;
             }
+            
+            var type = typeof(T);
 
-            PropertyInfo columnPropInfo = typeof(T).GetProperty(column);
+            PropertyInfo columnPropInfo = type.GetProperty(column);
 
-            var entityParam = Expression.Parameter(typeof(T), "e");                    // {e}
+            var entityParam = Expression.Parameter(type, "e");                         // {e}
             var columnExpr = Expression.MakeMemberAccess(entityParam, columnPropInfo); // {e.column}
             var lambda = Expression.Lambda(columnExpr, entityParam);                   // {e => e.column}
 
@@ -83,10 +85,10 @@ namespace System.Linq
             switch (dir.ToLower())
             {
                 default:
-                    call = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { typeof(T), columnPropInfo.PropertyType }, query.Expression, lambda);
+                    call = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { type, columnPropInfo.PropertyType }, query.Expression, lambda);
                     break;
                 case "desc":
-                    call = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { typeof(T), columnPropInfo.PropertyType }, query.Expression, lambda);
+                    call = Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { type, columnPropInfo.PropertyType }, query.Expression, lambda);
                     break;
             }
 
