@@ -28,10 +28,10 @@ namespace System.Linq
 
         #region PagedList
 
-        public static PagedList<T> GetPagedList<T>(this IQueryable<T> query, int? page, int? pagesize)
-where T : new()
+        public static IQueryable<T> GetPagedQuery<T>(this IQueryable<T> query, int? page, int? pagesize, out int total)
+        // where T : new()
         {
-            int total = query.Count();
+            total = query.Count();
 
             if (page.HasValue == false)
             {
@@ -45,17 +45,25 @@ where T : new()
 
             int skip = (page.Value - 1) * pagesize.Value;
 
-            var data = query.Skip(skip).Take(pagesize.Value);
+            return query.Skip(skip).Take(pagesize.Value);
+        }
+
+        public static PagedList<T> GetPagedList<T>(this IQueryable<T> query, int? page, int? pagesize)
+        // where T : new()
+        {
+            int total = 0;
+
+            var data = GetPagedQuery(query, page, pagesize,out total);
 
             return new PagedList<T>(data.ToList(), page.Value, pagesize.Value, total);
         }
 
-        public static PagedList<T> GetPagedList<T>(this IQueryable<T> query, int start, int limit, string sort, string dir)
-where T : new()
+        public static IQueryable<T> GetPagedQuery<T>(this IQueryable<T> query, int start, int limit, string sort, string dir, out int page, out int total)
+        // where T : new()
         {
             Check.Assert(limit != 0);
 
-            int page = 1;
+            page = 1;
 
             if (start != 0)
             {
@@ -67,7 +75,7 @@ where T : new()
                 }
             }
 
-            int total = query.Count();
+            total = query.Count();
 
             IQueryable<T> orderedQuery = null;
 
@@ -92,7 +100,17 @@ where T : new()
             if (skip < 0)
                 skip = 0;
 
-            var data = orderedQuery.Skip(skip).Take(limit);
+            return orderedQuery.Skip(skip).Take(limit);
+
+        }
+
+        public static PagedList<T> GetPagedList<T>(this IQueryable<T> query, int start, int limit, string sort, string dir)
+        // where T : new()
+        {
+            int page = 1;
+            int total = 0;
+
+            var data = GetPagedQuery(query, start, limit, sort, dir, out page, out total);
 
             return new PagedList<T>(data.ToList(), page, limit, total);
         }
