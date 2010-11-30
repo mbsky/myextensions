@@ -160,6 +160,9 @@ namespace System.Drawing
                         break;
                 }
 
+                config.Width = towidth;
+                config.Height = toheight;
+
                 //new Bitmap instance
                 Image bitmap = new Bitmap(towidth, toheight);
 
